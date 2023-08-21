@@ -1,8 +1,3 @@
-vim.api.nvim_create_autocmd('BufEnter', {
-	command = "if winnr('$') == 1 && bufname() =~ glob2regpat('term:*/bin/bash') | quit | endif",
-	nested = true,
-})
-
 vim.cmd([[
 	augroup vimrc
 	  au BufReadPre * setlocal foldmethod=indent
@@ -35,6 +30,7 @@ vim.cmd([[
 		 autocmd BufWinEnter ?* if MakeViewCheck() | silent! loadview | endif
 	augroup END
 ]])
+
 local function tab_win_closed(winnr)
 	local api = require "nvim-tree.api"
 	local tabnr = vim.api.nvim_win_get_tabpage(winnr)
@@ -63,10 +59,15 @@ local function tab_win_closed(winnr)
 	end
 end
 
+local id1 = vim.api.nvim_create_augroup("close", {clear = true})
 vim.api.nvim_create_autocmd("WinClosed", {
 	callback = function()
 		local winnr = tonumber(vim.fn.expand("<amatch>"))
 		vim.schedule_wrap(tab_win_closed(winnr))
 	end,
-	nested = true
+	group = id1
+})
+vim.api.nvim_create_autocmd('BufEnter', {
+	command = "if winnr('$') == 1 && bufname() =~ glob2regpat('term:*/bin/bash') | quit | endif",
+	group = id1,
 })

@@ -8,7 +8,11 @@ return {
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-	'rmagatti/goto-preview',
+	{
+		'rmagatti/goto-preview',
+		event = "LspAttach",
+		opts = {},
+	},
 	{ 'kevinhwang91/nvim-bqf', ft = 'qf' },
 	{ "rcarriga/nvim-dap-ui", dependecies = { "mfussenegger/nvim-dap" } },
 	{
@@ -64,7 +68,11 @@ return {
 		'mattn/vim-gist',
 		dependecies = { 'mattn/webapi-vim' }
 	},
-	"Fildo7525/pretty_hover",
+	{
+		"Fildo7525/pretty_hover",
+		event = "LspAttach",
+		opts = {}
+	},
 	{
 		'phaazon/hop.nvim',
 		branch = 'v2', -- optional but strongly recommended

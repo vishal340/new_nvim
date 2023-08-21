@@ -53,7 +53,7 @@ local on_attach = function(client, bufnr)
 end
 return {
 	'neovim/nvim-lspconfig',                    -- Configurations for Nvim LSP
-	lazy = true,
+	-- lazy = true,
 	init = function()
 		local lspconfig = require('lspconfig')
 		local lsp_defaults = lspconfig.util.default_config
