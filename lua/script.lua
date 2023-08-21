@@ -59,15 +59,26 @@ local function tab_win_closed(winnr)
 	end
 end
 
+local function term_auto_close()
+	for i, x in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if vim.fn.bufname(vim.fn.winbufnr(x)) == vim.fn.glob2regpat('*.*') then
+			break
+		elseif vim.fn.bufname(vim.fn.winbufnr(x)) == vim.fn.glob2regpat('term:*/bin/bash') then
+			vim.api.nvim_win_close(x,true)
+		end
+	end
+end
 local id1 = vim.api.nvim_create_augroup("close", {clear = true})
+vim.api.nvim_create_autocmd('BufEnter', {
+	callback = function ()
+		term_auto_close()
+	end,
+	group = id1,
+})
 vim.api.nvim_create_autocmd("WinClosed", {
 	callback = function()
 		local winnr = tonumber(vim.fn.expand("<amatch>"))
-		vim.schedule_wrap(tab_win_closed(winnr))
+			vim.schedule_wrap(tab_win_closed(winnr))
 	end,
 	group = id1
-})
-vim.api.nvim_create_autocmd('BufEnter', {
-	command = "if winnr('$') == 1 && bufname() =~ glob2regpat('term:*/bin/bash') | quit | endif",
-	group = id1,
 })

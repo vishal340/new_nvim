@@ -79,6 +79,16 @@ vim.keymap.set('i', '<M-F>', '<C-o>:HopWord<cr>')
 keymap("n", "<leader>r", ":SnipRun<cr>", opts)
 keymap("v", "<leader>r", ":'<,'>SnipRun<cr>", opts)
 
+vim.keymap.set({"i"}, "<TAB>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<TAB>", function() ls.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<S-TAB>", function() ls.jump(-1) end, {silent = true})
+
+vim.keymap.set({"i", "s"}, "<C-E>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, {silent = true})
+
 keymap("v", "<localleader>hc", ":<c-u>HSHighlight<CR>", opts)
 keymap("v", "<localleader>hr", ":<c-u>HSRmHighlight<CR>", opts)
 
