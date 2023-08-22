@@ -9,6 +9,7 @@
 			"\t return 0;",
 			"}"
 		],
-		"description": "code snippet for less includes"
+		"description": "code snippet for less includes",
+		"scope": "cpp"
 	}
 }
