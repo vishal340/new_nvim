@@ -102,6 +102,7 @@ return {
 		}
 
 		lspconfig.lua_ls.setup({
+			single_file_support = true,
 			settings = {
 				Lua = {
 					runtime = {
@@ -114,7 +115,7 @@ return {
 					},
 					workspace = {
 						-- Make the server aware of Neovim runtime files
-						library = vim.api.nvim_get_runtime_file("", true),
+						library = vim.env.VIMRUNTIME,
 						checkThirdParty = false,
 					},
 					-- Do not send telemetry data containing a randomized but unique identifier

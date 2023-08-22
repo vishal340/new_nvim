@@ -4,7 +4,6 @@ return {
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-cmdline',
 	'saadparwaiz1/cmp_luasnip',
-	{ "petertriho/cmp-git", dependecies = "nvim-lua/plenary.nvim" ,opts = {}},
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	{"https://git.sr.ht/~whynothugo/lsp_lines.nvim", opts = {}},
@@ -49,6 +48,7 @@ return {
 	{
 		'ruifm/gitlinker.nvim',
 		dependecies = 'nvim-lua/plenary.nvim',
+		opts = {}
 	},
 	{
 		'pwntester/octo.nvim',
@@ -58,7 +58,7 @@ return {
 			'nvim-tree/nvim-web-devicons',
 		},
 	},
-	{ 'sindrets/diffview.nvim', dependecies = 'nvim-lua/plenary.nvim' },
+	'sindrets/diffview.nvim',
 	{
 		'mattn/vim-gist',
 		dependecies = { 'mattn/webapi-vim' }
@@ -72,14 +72,6 @@ return {
 		'phaazon/hop.nvim',
 		branch = 'v2', -- optional but strongly recommended
 		opts= { keys = 'etovxqpdygfblzhckisuran' }
-	},
-	{
-		"luckasRanarison/nvim-devdocs",
-		dependecies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"nvim-treesitter/nvim-treesitter",
-	   	},
 	},
 	"Pocco81/HighStr.nvim",
 	"tpope/vim-dadbod",

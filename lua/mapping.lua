@@ -1,6 +1,7 @@
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 vim.cmd('verbose imap <tab>')
+
 --TODO: the line below doesn't work as intended
 keymap('n', 'gft', ':tabnew <bar> :edit <cfile><cr>')
 keymap('n', 'gfv', ':vs <bar> :edit <cfile><cr>')

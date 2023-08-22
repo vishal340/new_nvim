@@ -29,18 +29,43 @@ vim.cmd([[
 		 autocmd BufWritePre,BufWinLeave ?* if MakeViewCheck() | silent! mkview | endif
 		 autocmd BufWinEnter ?* if MakeViewCheck() | silent! loadview | endif
 	augroup END
-]])
+
+	function DisableSyntaxTreesitter()
+		 if exists(':TSBufDisable')
+			  exec 'TSBufDisable autotag'
+			  exec 'TSBufDisable highlight'
+			  exec 'TSBufDisable incremental_selection'
+			  exec 'TSBufDisable indent'
+			  exec 'TSBufDisable playground'
+			  exec 'TSBufDisable rainbow'
+			  exec 'TSBufDisable refactor.highlight_definitions'
+			  exec 'TSBufDisable refactor.navigation'
+			  exec 'TSBufDisable refactor.smart_rename'
+			  exec 'TSBufDisable refactor.highlight_current_scope'
+			  exec 'TSBufDisable textobjects.swap'
+			  " exec 'TSBufDisable textobjects.move'
+			  exec 'TSBufDisable textobjects.lsp_interop'
+			  exec 'TSBufDisable textobjects.select'
+		 endif
+
+		 set foldmethod=manual
+	endfunction
+
+	augroup BigFileDisable
+		 autocmd!
+		 autocmd BufReadPre,FileReadPre * if getfsize(expand("%")) > 512 * 1024 | exec DisableSyntaxTreesitter() | endif
+	augroup END
+	]])
 
 local function term_auto_close(cur)
 	local l = vim.api.nvim_tabpage_list_wins(0)
 	for i, x in pairs(l) do
 		if vim.fn.winbufnr(x) ~= cur and string.match(vim.fn.bufname(vim.fn.winbufnr(x)), ".*%.[a-zA-Z]+$") then
-			-- vim.cmd"quit"
 			return
 		end
 	end
 	if vim.fn.tabpagenr('$') > 1 then
-		vim.cmd"tabclose"
+			vim.cmd"tabclose"
 	else
 		vim.cmd"quitall"
 	end
@@ -49,7 +74,11 @@ end
 local id1 = vim.api.nvim_create_augroup("termclose", {clear = true})
 vim.api.nvim_create_autocmd('QuitPre', {
 	callback = function ()
-		term_auto_close(vim.fn.winbufnr(0))
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("q:yy:q<cr>",true,false,true),'n',true)
+		print(vim.fn.getreg('+'))
+		-- term_auto_close(vim.fn.winbufnr(0))
 	end,
 	group = id1,
 })
+
+-- vim.api.nvim_create_user_command("Yankcommand",mytest,{nargs = '?'})
