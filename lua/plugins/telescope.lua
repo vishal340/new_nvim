@@ -1,4 +1,3 @@
-
 return {
 	'nvim-telescope/telescope.nvim', branch = '0.1.x',
 	dependencies = { 
@@ -97,7 +96,7 @@ return {
 			 buffers = {
 				previewer = true,
 				layout_config = {
-				  width = 0.7,
+				  width = 0.9,
 				  prompt_position = "top",
 				},
 				find_files = {
@@ -117,14 +116,14 @@ return {
 			 builtin = {
 				previewer = true,
 				layout_config = {
-				  width = 0.7,
+				  width = 0.95,
 				  prompt_position = "top",
 				},
 			 },
 			 find_files = {
 				previewer = true,
 				layout_config = {
-				  width = 0.7,
+				  width = 0.9,
 				  prompt_position = "top",
 				},
 			 },
@@ -140,8 +139,8 @@ return {
 			 live_grep = {
 				layout_strategy = "vertical",
 				layout_config = {
-				  width = 0.9,
-				  height = 0.9,
+				  width = 0.95,
+				  height = 0.95,
 				  preview_cutoff = 1,
 				  mirror = false,
 				},
@@ -149,8 +148,8 @@ return {
 			 lsp_implementations = {
 				layout_strategy = "vertical",
 				layout_config = {
-				  width = 0.9,
-				  height = 0.9,
+				  width = 0.95,
+				  height = 0.95,
 				  preview_cutoff = 1,
 				  mirror = false,
 				},
@@ -158,8 +157,8 @@ return {
 			 lsp_references = {
 				layout_strategy = "vertical",
 				layout_config = {
-				  width = 0.9,
-				  height = 0.9,
+				  width = 0.95,
+				  height = 0.95,
 				  preview_cutoff = 1,
 				  mirror = false,
 				},
@@ -173,8 +172,6 @@ return {
 			 },
 		  },
 	  }
-	  -- TODO fzf extension is not working with line below
-		-- require('telescope').load_extension('fzf')
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
 		  local layout = require("telescope.pickers.window").get_initial_window_options(self)
 		  local prompt = layout.prompt

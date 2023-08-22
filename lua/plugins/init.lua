@@ -7,14 +7,14 @@ return {
 	{ "petertriho/cmp-git", dependecies = "nvim-lua/plenary.nvim" ,opts = {}},
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
-	"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+	{"https://git.sr.ht/~whynothugo/lsp_lines.nvim", opts = {}},
 	{
 		'rmagatti/goto-preview',
 		event = "LspAttach",
 		opts = {},
 	},
 	{ 'kevinhwang91/nvim-bqf', ft = 'qf' },
-	{ "rcarriga/nvim-dap-ui", dependecies = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui", dependecies = { "mfussenegger/nvim-dap" }, opts = {}},
 	{
 		'folke/neodev.nvim',
 		opts = {
@@ -23,11 +23,6 @@ return {
 	},
 	'jbyuki/one-small-step-for-vimkind',
 	"rafamadriz/friendly-snippets",
-	'nvim-treesitter/nvim-treesitter-textobjects',
-	{ 
-		'nvim-telescope/telescope-fzf-native.nvim',
-		build = 'make',
-	},
 	{
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
