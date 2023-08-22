@@ -59,43 +59,33 @@ local function tab_win_closed(winnr)
 	end
 end
 
-local function term_auto_close()
+local function term_auto_close(cur)
 	local l = vim.api.nvim_tabpage_list_wins(0)
-	local c = 0
 	for i, x in pairs(l) do
-		print(x)
-		c = c+1
-		if vim.cmd("echo bufname(winbufnr($x)) =~ '\\.[a-zA-Z]\\+$'") == "1" then
+		if vim.fn.winbufnr(x) ~= cur and string.match(vim.fn.bufname(vim.fn.winbufnr(x)), ".*%.[a-zA-Z]+$") then
+			-- vim.cmd"quit"
 			return
 		end
 	end
-	for i, x in pairs(l) do
-		if vim.api.nvim_command_output("echo bufname(winbufnr($x)) =~ 'term:.*\\/bin\\/bash$'") then
-			if c > 1 then
-				vim.api.nvim_win_close(x,true)
-			else
-				vim.cmd "quit"
-			end
-		end
+	if vim.fn.tabpagenr('$') > 1 then
+		vim.cmd"tabclose"
+	else
+		vim.cmd"quitall"
 	end
 end
 
-local id1 = vim.api.nvim_create_augroup("close", {clear = true})
-vim.api.nvim_create_autocmd('BufEnter', {
+local id1 = vim.api.nvim_create_augroup("termclose", {clear = true})
+vim.api.nvim_create_autocmd('QuitPre', {
 	callback = function ()
-		if vim.eval'{bufname(winbufnr(win_getid())) =~ "\\.[a-zA-Z]\\+$"}' then
-			print("true")
-		else
-			print("false")
-		end
-		-- term_auto_close()
+		term_auto_close(vim.fn.winbufnr(0))
 	end,
 	group = id1,
 })
-vim.api.nvim_create_autocmd("WinClosed", {
-	callback = function()
-		local winnr = tonumber(vim.fn.expand("<amatch>"))
-			vim.schedule_wrap(tab_win_closed(winnr))
-	end,
-	group = id1
-})
+-- local id2 = vim.api.nvim_create_augroup("treeclose", {clear = true})
+-- vim.api.nvim_create_autocmd("WinClosed", {
+-- 	callback = function()
+-- 		local winnr = tonumber(vim.fn.expand("<amatch>"))
+-- 			vim.schedule_wrap(tab_win_closed(winnr))
+-- 	end,
+-- 	group = id1
+-- })
