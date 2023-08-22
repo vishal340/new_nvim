@@ -74,11 +74,7 @@ end
 local id1 = vim.api.nvim_create_augroup("termclose", {clear = true})
 vim.api.nvim_create_autocmd('QuitPre', {
 	callback = function ()
-		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("q:yy:q<cr>",true,false,true),'n',true)
-		print(vim.fn.getreg('+'))
-		-- term_auto_close(vim.fn.winbufnr(0))
+		term_auto_close(vim.fn.winbufnr(0))
 	end,
 	group = id1,
 })
-
--- vim.api.nvim_create_user_command("Yankcommand",mytest,{nargs = '?'})
