@@ -2,6 +2,7 @@ return {
 		'nvim-lualine/lualine.nvim',
 		dependencies = {'nvim-tree/nvim-web-devicons'},
 	config = function()
+		local function num() return vim.fn.tabpagenr() end
 		require('lualine').setup {
 		  options = {
 			 icons_enabled = true,
@@ -24,7 +25,7 @@ return {
 		  sections = {
 			 lualine_a = {'mode'},
 			 lualine_b = {'branch', 'diff', 'diagnostics'},
-			 lualine_x = {'fileformat', 'filetype'},
+			 lualine_x = {num,'fileformat', 'filetype'},
 			 lualine_y = {'progress'},
 			 lualine_z = {'location'}
 		  },

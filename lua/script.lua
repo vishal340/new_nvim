@@ -4,32 +4,7 @@ vim.cmd([[
 	  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 	augroup END
 
-	if !exists("g:skipview_files")
-		 let g:skipview_files = []
-	endif
-	function! MakeViewCheck()
-		 if &l:diff | return 0 | endif
-		 if &buftype != '' | return 0 | endif
-		 if expand('%') =~ '\[.*\]' | return 0 | endif
-		 if empty(glob(expand('%:p'))) | return 0 | endif
-		 if &modifiable == 0 | return 0 | endif
-		 if len($TEMP) && expand('%:p:h') == $TEMP | return 0 | endif
-		 if len($TMP) && expand('%:p:h') == $TMP | return 0 | endif
-		 let file_name = expand('%:p')
-		 for ifiles in g:skipview_files
-			  if file_name =~ ifiles
-					return 0
-			  endif
-		 endfor
-		 return 1
-	endfunction
-	augroup AutoView
-		 autocmd!
-		 " Autosave & Load Views.
-		 autocmd BufWritePre,BufWinLeave ?* if MakeViewCheck() | silent! mkview | endif
-		 autocmd BufWinEnter ?* if MakeViewCheck() | silent! loadview | endif
-	augroup END
-
+	"the script below disabless treesitter syntax on big files
 	function DisableSyntaxTreesitter()
 		 if exists(':TSBufDisable')
 			  exec 'TSBufDisable autotag'
@@ -56,6 +31,8 @@ vim.cmd([[
 		 autocmd BufReadPre,FileReadPre * if getfsize(expand("%")) > 512 * 1024 | exec DisableSyntaxTreesitter() | endif
 	augroup END
 	]])
+
+--The below 2 autocmd close any terminal and nerdtree window if there are no windows in that tabpage
 
 local capture=""
 local id2 = vim.api.nvim_create_augroup("cmdline",{clear = true})

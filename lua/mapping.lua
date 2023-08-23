@@ -120,8 +120,6 @@ keymap('v', '<localleader>de', ':lua require("dapui").eval()<cr>', opts)
 keymap('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', opts)
 keymap('n', '<leader>ef', '<cmd>NvimTreeFocus<cr>', opts)
 
--- require('telescope').load_extension('fzf')
-
 local find_files_from_project_git_root = function()
   local function is_git_repo()
     vim.fn.system("git rev-parse --is-inside-work-tree")

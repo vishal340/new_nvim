@@ -2,6 +2,7 @@ return {
 	'nvim-telescope/telescope.nvim', branch = '0.1.x',
 	dependencies = { 
 		'nvim-lua/plenary.nvim',
+		'nvim-telescope/telescope-fzf-native.nvim',
 	},
 	lazy = true,
 	config = function()
@@ -172,6 +173,7 @@ return {
 			 },
 		  },
 	  }
+		require('telescope').load_extension('fzf')
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
 		  local layout = require("telescope.pickers.window").get_initial_window_options(self)
 		  local prompt = layout.prompt
