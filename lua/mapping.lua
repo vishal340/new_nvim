@@ -72,11 +72,6 @@ vim.keymap.set({ "i", "s" }, "<C-x>", function()
 	end
 end, { silent = true })
 
-vim.keymap.set('', 'f', ':HopChar1<cr>', { remap = true })
-vim.keymap.set('', 'F', ':HopWord<cr>', { remap = true })
-vim.keymap.set('i', '<M-f>', '<C-o>:HopChar1<cr>')
-vim.keymap.set('i', '<M-F>', '<C-o>:HopWord<cr>')
-
 keymap("n", "<leader>r", ":SnipRun<cr>", opts)
 keymap("v", "<leader>r", ":'<,'>SnipRun<cr>", opts)
 

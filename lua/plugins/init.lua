@@ -68,11 +68,6 @@ return {
 		event = "LspAttach",
 		opts = {}
 	},
-	{
-		'phaazon/hop.nvim',
-		branch = 'v2', -- optional but strongly recommended
-		opts= { keys = 'etovxqpdygfblzhckisuran' }
-	},
 	"Pocco81/HighStr.nvim",
 	"tpope/vim-dadbod",
 	'kristijanhusak/vim-dadbod-ui',
