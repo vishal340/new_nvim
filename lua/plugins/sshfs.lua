@@ -1,6 +1,6 @@
 return {
 	'nosduco/remote-sshfs.nvim',
-	lazy = true,
+	event = "VeryLazy",
 	config = function()
 		require('remote-sshfs').setup{
 		  connections = {

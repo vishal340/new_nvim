@@ -4,7 +4,7 @@ return {
 		'nvim-lua/plenary.nvim',
 		'nvim-telescope/telescope-fzf-native.nvim',
 	},
-	lazy = true,
+	event = "VeryLazy",
 	optional = true,
 	opts = function(_, opts)
       local function flash(prompt_bufnr)

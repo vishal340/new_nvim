@@ -1,7 +1,7 @@
 return {
 	"lalitmee/browse.nvim",
 	dependecies = { "nvim-telescope/telescope.nvim" },
-	lazy = true,
+	event = "VeryLazy",
 	opts = {
 		provider = "duckduckgo",
 		bookmarks = {

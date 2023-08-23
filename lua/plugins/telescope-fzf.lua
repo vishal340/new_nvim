@@ -2,6 +2,6 @@
 -- I suggest install it using cmake
 return {
 	'nvim-telescope/telescope-fzf-native.nvim',
-	lazy = true,
+	event = "VeryLazy",
 	build = 'make',
 }

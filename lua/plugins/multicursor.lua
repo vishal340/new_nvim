@@ -5,7 +5,7 @@ return {
 		'nvim-treesitter/nvim-treesitter',
 		'smoka7/hydra.nvim',
 		},
-		lazy = true,
+		event = "VeryLazy",
 		opts = {},
 		cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
 		keys = {

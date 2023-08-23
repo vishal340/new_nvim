@@ -9,27 +9,27 @@ local function my_on_attach(bufnr)
 	vim.keymap.set('n', 'h', api.node.open.horizontal, opt('Open: Horizontal Split'))
 end
 return {
- "nvim-tree/nvim-tree.lua",
-  version = "*",
-  lazy = false,
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-  },
-  config = function()
-    require("nvim-tree").setup {
-		 on_attach = my_on_attach,
-		 sort_by = "case_sensitive",
-		 open_on_tab = true,
-		 view = {
-			 adaptive_size = true,
-		 },
-		 renderer = {
-			 group_empty = true,
-		 },
-		 filters = {
-			 dotfiles = false,
-			 git_ignored = false,
-		 },
-	 }
-  end,
+	"nvim-tree/nvim-tree.lua",
+	version = "*",
+	event = "VeryLazy",
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+	},
+	config = function()
+		require("nvim-tree").setup {
+			on_attach = my_on_attach,
+			sort_by = "case_sensitive",
+			open_on_tab = true,
+			view = {
+				adaptive_size = true,
+			},
+			renderer = {
+				group_empty = true,
+			},
+			filters = {
+				dotfiles = false,
+				git_ignored = false,
+			},
+		}
+	end,
 }
