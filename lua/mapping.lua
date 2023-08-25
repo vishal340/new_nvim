@@ -43,6 +43,10 @@ keymap('n', '<leader>*', 'g* :let $str=getreg("/")<cr> :Ggrep -q $str')
 keymap('n', "<leader>bt", ":highlight Normal guibg=NONE<cr>")
 keymap('n', "<leader>bb", ":highlight Normal guibg=BLACK<cr>")
 keymap('c', "<M-h>", "vert h ")
+keymap('i', '<M-h>', '<right>', opts)
+keymap('i', '<M-j>', '<down>', opts)
+keymap('i', '<M-k>', '<up>', opts)
+keymap('i', '<M-l>', '<left>', opts)
 keymap('i', '<M-w>', '<C-o>w', opts)
 keymap('i', '<M-W>', '<C-o>W', opts)
 keymap('i', '<M-b>', '<C-o>b', opts)
@@ -75,67 +79,67 @@ end, { silent = true })
 keymap("n", "<leader>r", ":SnipRun<cr>", opts)
 keymap("v", "<leader>r", ":'<,'>SnipRun<cr>", opts)
 
-vim.keymap.set({"i"}, "<TAB>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<TAB>", function() ls.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<S-TAB>", function() ls.jump(-1) end, {silent = true})
+vim.keymap.set({ "i" }, "<TAB>", function() ls.expand() end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<TAB>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<S-TAB>", function() ls.jump(-1) end, { silent = true })
 
-vim.keymap.set({"i", "s"}, "<C-E>", function()
+vim.keymap.set({ "i", "s" }, "<C-E>", function()
 	if ls.choice_active() then
 		ls.change_choice(1)
 	end
-end, {silent = true})
+end, { silent = true })
 
 keymap("v", "<localleader>hc", ":<c-u>HSHighlight<CR>", opts)
 keymap("v", "<localleader>hr", ":<c-u>HSRmHighlight<CR>", opts)
 
-keymap("n", "<leader>b","<cmd>lua require('browse').input_search()<cr>", opts)
-keymap("n", "<localleader>b","<cmd>lua require('browse').browse(bookmarks)<cr>", opts)
-keymap("n", "<localleader>bd","<cmd>lua require('browse.devdocs').search_with_filetype()<cr>", opts)
+keymap("n", "<leader>b", "<cmd>lua require('browse').input_search()<cr>", opts)
+keymap("n", "<localleader>b", "<cmd>lua require('browse').browse(bookmarks)<cr>", opts)
+keymap("n", "<localleader>bd", "<cmd>lua require('browse.devdocs').search_with_filetype()<cr>", opts)
 
-keymap('n', '<localleader>dc', function() require('dap').continue() end ,opts)
-keymap('n', '<localleader>dsv', function() require('dap').step_over() end ,opts)
-keymap('n', '<localleader>dsi', function() require('dap').step_into() end ,opts)
-keymap('n', '<localleader>dso', function() require('dap').step_out() end ,opts)
-keymap('n', '<localleader>db', function() require('dap').toggle_breakpoint() end ,opts)
-keymap('n', '<localleader>dr', function() require('dap').repl.open() end ,opts)
-keymap('n', '<localleader>dl', function() require('dap').run_last() end ,opts)
-keymap({'n', 'v'}, '<localleader>dh', function()
+keymap('n', '<localleader>dc', function() require('dap').continue() end, opts)
+keymap('n', '<localleader>dsv', function() require('dap').step_over() end, opts)
+keymap('n', '<localleader>dsi', function() require('dap').step_into() end, opts)
+keymap('n', '<localleader>dso', function() require('dap').step_out() end, opts)
+keymap('n', '<localleader>db', function() require('dap').toggle_breakpoint() end, opts)
+keymap('n', '<localleader>dr', function() require('dap').repl.open() end, opts)
+keymap('n', '<localleader>dl', function() require('dap').run_last() end, opts)
+keymap({ 'n', 'v' }, '<localleader>dh', function()
 	require('dap.ui.widgets').hover()
- end ,opts)
-keymap({'n', 'v'}, '<localleader>dp', function()
+end, opts)
+keymap({ 'n', 'v' }, '<localleader>dp', function()
 	require('dap.ui.widgets').preview()
- end ,opts)
+end, opts)
 keymap('n', '<localleader>df', function()
 	local widgets = require('dap.ui.widgets')
 	widgets.centered_float(widgets.frames)
- end ,opts)
+end, opts)
 keymap('n', '<localleader>dfs', function()
 	local widgets = require('dap.ui.widgets')
 	widgets.centered_float(widgets.scopes)
- end ,opts)
+end, opts)
 
-keymap('n', '<localleader>dt',':lua require("dapui").toggle()<cr>', opts)
+keymap('n', '<localleader>dt', ':lua require("dapui").toggle()<cr>', opts)
 keymap('v', '<localleader>de', ':lua require("dapui").eval()<cr>', opts)
 
 keymap('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', opts)
 keymap('n', '<leader>ef', '<cmd>NvimTreeFocus<cr>', opts)
 
 local find_files_from_project_git_root = function()
-  local function is_git_repo()
-    vim.fn.system("git rev-parse --is-inside-work-tree")
-    return vim.v.shell_error == 0
-  end
-  local function get_git_root()
-    local dot_git_path = vim.fn.finddir(".git", ".;")
-    return vim.fn.fnamemodify(dot_git_path, ":h")
-  end
-  local opts = {}
-  if is_git_repo() then
-    opts = {
-      cwd = get_git_root(),
-    }
-  end
-  require("telescope.builtin").find_files(opts)
+	local function is_git_repo()
+		vim.fn.system("git rev-parse --is-inside-work-tree")
+		return vim.v.shell_error == 0
+	end
+	local function get_git_root()
+		local dot_git_path = vim.fn.finddir(".git", ".;")
+		return vim.fn.fnamemodify(dot_git_path, ":h")
+	end
+	local opt = {}
+	if is_git_repo() then
+		opt = {
+			cwd = get_git_root(),
+		}
+	end
+	require("telescope.builtin").find_files(opt)
 end
 
 local live_grep_from_project_git_root = function()
@@ -150,23 +154,23 @@ local live_grep_from_project_git_root = function()
 		return vim.fn.fnamemodify(dot_git_path, ":h")
 	end
 
-	local opts = {}
+	local opt = {}
 
 	if is_git_repo() then
-		opts = {
+		opt = {
 			cwd = get_git_root(),
 		}
 	end
 
-	require("telescope.builtin").live_grep(opts)
+	require("telescope.builtin").live_grep(opt)
 end
 
-keymap('n', '<leader>ff',function()
-		find_files_from_project_git_root()
-	end)
+keymap('n', '<leader>ff', function()
+	find_files_from_project_git_root()
+end)
 keymap('n', '<leader>fg', function()
-		live_grep_from_project_git_root()
-	end)
+	live_grep_from_project_git_root()
+end)
 keymap('n', '<leader>fm', ':Telescope marks preview=true<cr>')
 keymap('n', '<leader>fb', ':Telescope buffers<cr>')
 keymap('n', '<leader>fh', ':Telescope help_tags preview=true<cr>')
@@ -183,7 +187,6 @@ end)
 keymap('n', '<localleader>gs', function()
 	require('telescope.builtin').git_status()
 end)
-require('telescope').load_extension 'remote-sshfs'
 local api = require('remote-sshfs.api')
 vim.keymap.set('n', '<localleader>rc', api.connect, {})
 vim.keymap.set('n', '<localleader>rd', api.disconnect, {})

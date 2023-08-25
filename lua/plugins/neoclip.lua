@@ -1,6 +1,5 @@
 return {
-	'nosduco/remote-sshfs.nvim',
-	event = "VeryLazy",
+	"AckslD/nvim-neoclip.lua",
 	dependencies = { 'nvim-telescope/telescope.nvim' },
 	opts = {}
 }

@@ -6,19 +6,24 @@ return {
 	'saadparwaiz1/cmp_luasnip',
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
-	{"https://git.sr.ht/~whynothugo/lsp_lines.nvim", opts = {}},
+	{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim", opts = {} },
 	{
 		'rmagatti/goto-preview',
 		event = "LspAttach",
 		opts = {},
 	},
-	{ 'kevinhwang91/nvim-bqf', ft = 'qf' },
-	{ "rcarriga/nvim-dap-ui", dependecies = { "mfussenegger/nvim-dap" }, opts = {}},
+	{ 'kevinhwang91/nvim-bqf',                        ft = 'qf' },
 	{
 		'folke/neodev.nvim',
 		opts = {
-			library = { plugins = { "nvim-dap-ui" }, types = true }
+			library = { plugins = { "nvim-dap-ui" }, types = true, lspconfig = true }
 		}
+	},
+	{
+		"rcarriga/nvim-dap-ui",
+		event = 'VeryLazy',
+		dependecies = { "mfussenegger/nvim-dap" },
+		opts = {}
 	},
 	'jbyuki/one-small-step-for-vimkind',
 	"rafamadriz/friendly-snippets",
@@ -30,7 +35,7 @@ return {
 	"tpope/vim-repeat",
 	{
 		"ur4ltz/surround.nvim",
-		opts = {mappings_style = "surround"},
+		opts = { mappings_style = "surround" },
 	},
 	{
 		'numToStr/Comment.nvim',
@@ -39,6 +44,7 @@ return {
 	{
 		"iamcco/markdown-preview.nvim",
 		build = "cd app && npm install",
+		event = "LspAttach",
 		setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
 		ft = "markdown",
 	},
@@ -46,12 +52,8 @@ return {
 	'lewis6991/gitsigns.nvim',
 	"tpope/vim-fugitive",
 	{
-		'ruifm/gitlinker.nvim',
-		dependecies = 'nvim-lua/plenary.nvim',
-		opts = {}
-	},
-	{
 		'pwntester/octo.nvim',
+		event = "VeryLazy",
 		dependencies = {
 			'nvim-lua/plenary.nvim',
 			'nvim-telescope/telescope.nvim',
@@ -61,6 +63,7 @@ return {
 	'sindrets/diffview.nvim',
 	{
 		'mattn/vim-gist',
+		event = "VeryLazy",
 		dependecies = { 'mattn/webapi-vim' }
 	},
 	{
@@ -73,5 +76,5 @@ return {
 	'kristijanhusak/vim-dadbod-ui',
 	'rhysd/vim-grammarous',
 	'mbbill/undotree',
- 	--'norcalli/nvim-colorizer.lua',
+	--'norcalli/nvim-colorizer.lua',
 }
