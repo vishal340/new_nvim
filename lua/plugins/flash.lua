@@ -2,12 +2,9 @@ return {
 	"folke/flash.nvim",
 	event = "VeryLazy",
 	opts = {},
-	config = function()
-		require("flash").toggle()
-	end,
 	keys = {
 		{
-			"<F5>",
+			"S",
 			mode = { "n", "x", "o" },
 			function() require("flash").jump() end,
 			desc =
@@ -19,14 +16,13 @@ return {
 			function()
 				require("flash").jump({
 					pattern = vim.fn.expand("<cword>"),
-					continue = true
 				})
 			end,
 			desc =
 			"Flash word search"
 		},
 		{
-			"<F6>",
+			"<localleader>s",
 			mode = { "n", "o", "x" },
 			function() require("flash").treesitter() end,
 			desc =
@@ -47,7 +43,7 @@ return {
 			"Treesitter Search"
 		},
 		{
-			"<F2>",
+			"<C-s>",
 			mode = { "c" },
 			function() require("flash").toggle() end,
 			desc =

@@ -14,16 +14,16 @@ return {
 	},
 	{ 'kevinhwang91/nvim-bqf',                        ft = 'qf' },
 	{
-		'folke/neodev.nvim',
-		opts = {
-			library = { plugins = { "nvim-dap-ui" }, types = true, lspconfig = true }
-		}
-	},
-	{
 		"rcarriga/nvim-dap-ui",
 		event = 'VeryLazy',
 		dependecies = { "mfussenegger/nvim-dap" },
 		opts = {}
+	},
+	{
+		'folke/neodev.nvim',
+		opts = {
+			library = { plugins = { "nvim-dap-ui" }, types = true, lspconfig = true }
+		}
 	},
 	'jbyuki/one-small-step-for-vimkind',
 	"rafamadriz/friendly-snippets",

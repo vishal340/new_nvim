@@ -43,10 +43,6 @@ keymap('n', '<leader>*', 'g* :let $str=getreg("/")<cr> :Ggrep -q $str')
 keymap('n', "<leader>bt", ":highlight Normal guibg=NONE<cr>")
 keymap('n', "<leader>bb", ":highlight Normal guibg=BLACK<cr>")
 keymap('c', "<M-h>", "vert h ")
-keymap('i', '<M-h>', '<right>', opts)
-keymap('i', '<M-j>', '<down>', opts)
-keymap('i', '<M-k>', '<up>', opts)
-keymap('i', '<M-l>', '<left>', opts)
 keymap('i', '<M-w>', '<C-o>w', opts)
 keymap('i', '<M-W>', '<C-o>W', opts)
 keymap('i', '<M-b>', '<C-o>b', opts)
@@ -66,11 +62,11 @@ keymap("n", "<leader>s", ":vs <bar> :Startify<cr>")
 keymap("n", "<leader>S", ":sp <bar> :Startify<cr>")
 
 local ls = require("luasnip")
-vim.keymap.set({ "i" }, "<M-j>", function() ls.expand() end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<M-l>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<M-h>", function() ls.jump(-1) end, { silent = true })
+vim.keymap.set({ "i" }, "<M-h>", function() ls.expand() end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<M-j>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<M-k>", function() ls.jump(-1) end, { silent = true })
 
-vim.keymap.set({ "i", "s" }, "<C-x>", function()
+vim.keymap.set({ "i", "s" }, "<M-l>", function()
 	if ls.choice_active() then
 		ls.change_choice(1)
 	end
@@ -78,16 +74,6 @@ end, { silent = true })
 
 keymap("n", "<leader>r", ":SnipRun<cr>", opts)
 keymap("v", "<leader>r", ":'<,'>SnipRun<cr>", opts)
-
-vim.keymap.set({ "i" }, "<TAB>", function() ls.expand() end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<TAB>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<S-TAB>", function() ls.jump(-1) end, { silent = true })
-
-vim.keymap.set({ "i", "s" }, "<C-E>", function()
-	if ls.choice_active() then
-		ls.change_choice(1)
-	end
-end, { silent = true })
 
 keymap("v", "<localleader>hc", ":<c-u>HSHighlight<CR>", opts)
 keymap("v", "<localleader>hr", ":<c-u>HSRmHighlight<CR>", opts)
