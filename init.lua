@@ -14,6 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require('options')
 require('color')
-require('lazy').setup('plugins')
+require('lazy').setup(
+	'plugins',
+	{ config = { defaults = { lazy = true } } })
 require('mapping')
 require('script')

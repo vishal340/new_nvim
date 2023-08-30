@@ -6,13 +6,17 @@ return {
 	'saadparwaiz1/cmp_luasnip',
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
-	{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim", opts = {} },
+	{
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		event = "LspAttach",
+		opts = {}
+	},
 	{
 		'rmagatti/goto-preview',
 		event = "LspAttach",
 		opts = {},
 	},
-	{ 'kevinhwang91/nvim-bqf',                        ft = 'qf' },
+	{ 'kevinhwang91/nvim-bqf',       ft = 'qf' },
 	{
 		"rcarriga/nvim-dap-ui",
 		event = 'VeryLazy',
@@ -21,6 +25,7 @@ return {
 	},
 	{
 		'folke/neodev.nvim',
+		event = "LspAttach",
 		opts = {
 			library = { plugins = { "nvim-dap-ui" }, types = true, lspconfig = true }
 		}
@@ -41,6 +46,7 @@ return {
 		'numToStr/Comment.nvim',
 		opts = {}
 	},
+	'mhinz/vim-startify',
 	{
 		"iamcco/markdown-preview.nvim",
 		build = "cd app && npm install",
@@ -72,8 +78,11 @@ return {
 		opts = {}
 	},
 	"Pocco81/HighStr.nvim",
-	"tpope/vim-dadbod",
-	'kristijanhusak/vim-dadbod-ui',
+	{
+		"tpope/vim-dadbod",
+		lazy = true
+	},
+	{ 'kristijanhusak/vim-dadbod-ui' },
 	'rhysd/vim-grammarous',
 	'mbbill/undotree',
 	--'norcalli/nvim-colorizer.lua',
