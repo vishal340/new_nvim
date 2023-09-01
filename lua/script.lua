@@ -5,7 +5,7 @@ vim.cmd([[
 	augroup END
 ]])
 local id3 = vim.api.nvim_create_augroup("newtab", { clear = true })
-vim.api.nvim_create_autocmd('TabNewEntered', {
+vim.api.nvim_create_autocmd('BufEnter', {
 	command = "if bufname('%') == '' | silent! Startify | endif",
 	group = id3
 })
@@ -20,10 +20,9 @@ vim.api.nvim_create_autocmd('CmdlineLeave', {
 	group = id2
 })
 
-local function term_auto_close(cur, cmd)
-	local l = vim.api.nvim_tabpage_list_wins(0)
-	for i, x in pairs(l) do
-		if vim.fn.winbufnr(x) ~= cur and string.match(vim.fn.bufname(vim.fn.winbufnr(x)), ".*%.[a-zA-Z]+$") then
+local function auto_close(cur, cmd)
+	for x = 1, vim.fn.winnr('$') do
+		if x ~= cur and string.match(vim.fn.bufname(vim.fn.winbufnr(x)), ".*%.[a-zA-Z]+$") then
 			return
 		end
 	end
@@ -37,7 +36,9 @@ end
 local id1 = vim.api.nvim_create_augroup("termclose", { clear = true })
 vim.api.nvim_create_autocmd('QuitPre', {
 	callback = function()
-		term_auto_close(vim.fn.winbufnr(0), capture)
+		if string.match(vim.fn.bufname(vim.fn.winbufnr(0)), ".*%.[a-zA-Z]+$") and vim.fn.winnr('$') > 1 then
+			auto_close(vim.fn.winnr(), capture)
+		end
 	end,
 	group = id1,
 })
