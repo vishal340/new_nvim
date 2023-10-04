@@ -125,13 +125,6 @@ return {
 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 				-- the default case_mode is "smart_case"
 			},
-			-- dap = {
-			-- 	command = {},
-			-- 	configurations = {},
-			-- 	list_breakpoints = {},
-			-- 	variables = {},
-			-- 	frames = {}
-			-- }
 		},
 		pickers = {
 			buffers = {
@@ -149,13 +142,6 @@ return {
 				},
 			},
 			fzf = {
-				previewer = true,
-				layout_config = {
-					width = 0.95,
-					prompt_position = "top",
-				},
-			},
-			dap = {
 				previewer = true,
 				layout_config = {
 					width = 0.95,
@@ -217,7 +203,6 @@ return {
 	config = function()
 		require('telescope').load_extension('fzf')
 		require('telescope').load_extension 'remote-sshfs'
-		require('telescope').load_extension('dap')
 		require('telescope').load_extension('neoclip')
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
 			local layout = require("telescope.pickers.window").get_initial_window_options(self)
