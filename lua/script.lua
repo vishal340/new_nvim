@@ -5,7 +5,7 @@ vim.cmd([[
 	augroup END
 ]])
 local id3 = vim.api.nvim_create_augroup("newtab", { clear = true })
-vim.api.nvim_create_autocmd('BufEnter', {
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
 	command = "if bufname('%') == '' | silent! Startify | endif",
 	group = id3
 })
