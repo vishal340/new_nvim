@@ -1,12 +1,12 @@
-vim.cmd([[
-	augroup vimrc
-	  au BufReadPre * setlocal foldmethod=indent
-	  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-	augroup END
-]])
+-- vim.cmd([[
+-- 	augroup vimrc
+-- 	  au BufReadPre * setlocal foldmethod=indent
+-- 	  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+-- 	augroup END
+-- ]])
 local id3 = vim.api.nvim_create_augroup("newtab", { clear = true })
 vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
-	command = "if bufname('%') == '' | silent! Startify | endif",
+	command = "if bufname('%') == '' && &modifiable | silent! Startify | endif",
 	group = id3
 })
 --The below 2 autocmd close any terminal and nerdtree window if there are no windows in that tabpage

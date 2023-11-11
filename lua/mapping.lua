@@ -110,6 +110,8 @@ keymap('v', '<localleader>de', ':lua require("dapui").eval()<cr>', opts)
 keymap('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', opts)
 keymap('n', '<leader>ef', '<cmd>NvimTreeFocus<cr>', opts)
 
+local builtin = require("telescope.builtin")
+
 local find_files_from_project_git_root = function()
 	local function is_git_repo()
 		vim.fn.system("git rev-parse --is-inside-work-tree")
@@ -125,7 +127,7 @@ local find_files_from_project_git_root = function()
 			cwd = get_git_root(),
 		}
 	end
-	require("telescope.builtin").find_files(opt)
+	builtin.find_files(opt)
 end
 
 local live_grep_from_project_git_root = function()
@@ -148,7 +150,7 @@ local live_grep_from_project_git_root = function()
 		}
 	end
 
-	require("telescope.builtin").live_grep(opt)
+	builtin.live_grep(opt)
 end
 
 keymap('n', '<leader>ff', function()
@@ -162,16 +164,16 @@ keymap('n', '<leader>fb', ':Telescope buffers<cr>')
 keymap('n', '<leader>fh', ':Telescope help_tags preview=true<cr>')
 keymap('n', '<leader>fo', ':Telescope oldfiles preview=false<cr>')
 keymap('n', '<localleader>gc', function()
-	require('telescope.builtin').git_bcommits()
+	builtin.git_bcommits()
 end)
 keymap('v', '<localleader>gc', function()
-	require('telescope.builtin').git_bcommits_range()
+	builtin.git_bcommits_range()
 end)
 keymap('n', '<localleader>gb', function()
-	require('telescope.builtin').git_branches()
+	builtin.git_branches()
 end)
 keymap('n', '<localleader>gs', function()
-	require('telescope.builtin').git_status()
+	builtin.git_status()
 end)
 local api = require('remote-sshfs.api')
 vim.keymap.set('n', '<localleader>rc', api.connect, {})
@@ -179,7 +181,6 @@ vim.keymap.set('n', '<localleader>rd', api.disconnect, {})
 vim.keymap.set('n', '<localleader>re', api.edit, {})
 
 -- (optional) Override telescope find_files and live_grep to make dynamic based on if connected to host
-local builtin = require("telescope.builtin")
 local connections = require("remote-sshfs.connections")
 vim.keymap.set("n", "<localleader>rff", function()
 	if connections.is_connected then
