@@ -72,9 +72,6 @@ vim.keymap.set({ "i", "s" }, "<M-l>", function()
 	end
 end, { silent = true })
 
-keymap("n", "<leader>r", ":SnipRun<cr>", opts)
-keymap("v", "<leader>r", ":'<,'>SnipRun<cr>", opts)
-
 keymap("v", "<localleader>hc", ":<c-u>HSHighlight<CR>", opts)
 keymap("v", "<localleader>hr", ":<c-u>HSRmHighlight<CR>", opts)
 

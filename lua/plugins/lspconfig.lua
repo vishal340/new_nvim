@@ -52,7 +52,7 @@ local on_attach = function(client, bufnr)
 	keymap('n', 'K', '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
 end
 return {
-	'neovim/nvim-lspconfig',                    -- Configurations for Nvim LSP
+	'neovim/nvim-lspconfig', -- Configurations for Nvim LSP
 	-- event = "VeryLazy",
 	init = function()
 		local lspconfig = require('lspconfig')
@@ -91,6 +91,7 @@ return {
 				"--query-driver=/usr/lib/llvm-14/bin/clang",
 				"--all-scopes-completion",
 				"--completion-style=detailed",
+				-- "-std=c++20"
 			}
 		}
 
@@ -145,4 +146,3 @@ return {
 		}
 	end
 }
-

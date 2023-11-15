@@ -56,10 +56,7 @@ return {
 	event = "VeryLazy",
 	dependencies = {
 		'nvim-lua/plenary.nvim',
-		{
-			'nvim-telescope/telescope-fzf-native.nvim',
-			build = 'make'
-		},
+		"debugloop/telescope-undo.nvim",
 	},
 	optional = true,
 	opts = {
@@ -116,15 +113,35 @@ return {
 				"!**/.git/*",
 				"--trim",
 			},
+			preview = {
+				filesize_limit = 0.1,
+				mime_hook = function(filepath, bufnr, opts)
+					local is_image = function(filepath)
+						local image_extensions = { 'png', 'jpg' } -- Supported image formats
+						local split_path = vim.split(filepath:lower(), '.', { plain = true })
+						local extension = split_path[#split_path]
+						return vim.tbl_contains(image_extensions, extension)
+					end
+					if is_image(filepath) then
+						local term = vim.api.nvim_open_term(bufnr, {})
+						local function send_output(_, data, _)
+							for _, d in ipairs(data) do
+								vim.api.nvim_chan_send(term, d .. '\r\n')
+							end
+						end
+						vim.fn.jobstart(
+							{
+								'chafa', filepath -- Terminal image viewer command
+							},
+							{ on_stdout = send_output, stdout_buffered = true, pty = true })
+					else
+						require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid,
+							"Binary cannot be previewed")
+					end
+				end,
+			},
 		},
 		extensions = {
-			fzf = {
-				fuzzy = true,           -- false will only do exact matching
-				override_generic_sorter = true, -- override the generic sorter
-				override_file_sorter = true, -- override the file sorter
-				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-				-- the default case_mode is "smart_case"
-			},
 		},
 		pickers = {
 			buffers = {
@@ -135,13 +152,6 @@ return {
 				},
 			},
 			builtin = {
-				previewer = true,
-				layout_config = {
-					width = 0.95,
-					prompt_position = "top",
-				},
-			},
-			fzf = {
 				previewer = true,
 				layout_config = {
 					width = 0.95,
@@ -201,9 +211,9 @@ return {
 		},
 	},
 	config = function()
-		require('telescope').load_extension('fzf')
 		require('telescope').load_extension 'remote-sshfs'
 		require('telescope').load_extension('neoclip')
+		require("telescope").load_extension("undo")
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
 			local layout = require("telescope.pickers.window").get_initial_window_options(self)
 			local prompt = layout.prompt
@@ -214,7 +224,6 @@ return {
 			local width = vim.api.nvim_win_get_width(self.original_win_id)
 			local height = vim.api.nvim_win_get_height(self.original_win_id)
 			local pos = vim.api.nvim_win_get_position(self.original_win_id)
-			local wline = pos[1] + 1
 			local wcol = pos[2] + 1
 
 			-- Height
@@ -239,7 +248,7 @@ return {
 				rows = { preview, results, prompt }
 			end
 			local next_line = 1 + padding / 2
-			for k, v in pairs(rows) do
+			for _, v in pairs(rows) do
 				if v.height ~= 0 then
 					v.line = next_line
 					next_line = v.line + padding + v.height

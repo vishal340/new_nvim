@@ -16,13 +16,7 @@ return {
 		event = "LspAttach",
 		opts = {},
 	},
-	{ 'kevinhwang91/nvim-bqf',       ft = 'qf' },
-	{
-		"rcarriga/nvim-dap-ui",
-		event = 'VeryLazy',
-		dependecies = { "mfussenegger/nvim-dap" },
-		opts = {}
-	},
+	{ 'kevinhwang91/nvim-bqf', ft = 'qf' },
 	{
 		'folke/neodev.nvim',
 		event = "LspAttach",
@@ -55,7 +49,10 @@ return {
 		ft = "markdown",
 	},
 	"mfussenegger/nvim-jdtls",
-	'lewis6991/gitsigns.nvim',
+	{
+		'lewis6991/gitsigns.nvim',
+		opts = {}
+	},
 	"tpope/vim-fugitive",
 	{
 		'pwntester/octo.nvim',
@@ -77,13 +74,14 @@ return {
 		event = "LspAttach",
 		opts = {}
 	},
-	"Pocco81/HighStr.nvim",
 	{
-		"tpope/vim-dadbod",
-		lazy = true
+		"ibhagwan/fzf-lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("fzf-lua").setup({})
+		end
 	},
-	{ 'kristijanhusak/vim-dadbod-ui' },
+	"Pocco81/HighStr.nvim",
 	'rhysd/vim-grammarous',
-	'mbbill/undotree',
 	--'norcalli/nvim-colorizer.lua',
 }

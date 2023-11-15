@@ -1,6 +1,6 @@
 vim.cmd([[
-" autocmd BufWinLeave *.cpp,*.hpp,*.h if &modifiable == 1 && &readonly == 0 | silent! exe "normal gg=GZZ" | endif
-
+setlocal tabstop=2
+setlocal shiftwidth=2
 function! SetMkfile()
 	let filemk = "Makefile"
 	let pathmk = "./"
