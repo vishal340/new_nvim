@@ -9,6 +9,7 @@ return {
 		'hrsh7th/cmp-path',
 		'hrsh7th/cmp-cmdline',
 		"petertriho/cmp-git",
+		'saadparwaiz1/cmp_luasnip',
 	},
 	config = function()
 		local cmp = require 'cmp'

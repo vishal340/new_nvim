@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
 	keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<cr>', bufopts)
 	keymap('n', '<leader>dl', function()
 		require("telescope.builtin").diagnostics()
-	end, opts)
+	end, bufopts)
 	keymap('n', '<leader>dh', '<cmd>lua vim.diagnostic.hide()<cr>', bufopts)
 	keymap('n', '<leader>ds', '<cmd>lua vim.diagnostic.show()<cr>', bufopts)
 	keymap('n', '<leader>gft', '<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', bufopts)
@@ -53,7 +53,7 @@ local on_attach = function(client, bufnr)
 end
 return {
 	'neovim/nvim-lspconfig', -- Configurations for Nvim LSP
-	-- event = "VeryLazy",
+	-- event = "LspAttach",
 	init = function()
 		local lspconfig = require('lspconfig')
 		local lsp_defaults = lspconfig.util.default_config
@@ -88,10 +88,10 @@ return {
 			cmd = {
 				"clangd",
 				"--header-insertion=never",
-				"--query-driver=/usr/lib/llvm-14/bin/clang",
+				"--query-driver=/usr/lib/llvm-13/bin/clang++",
 				"--all-scopes-completion",
 				"--completion-style=detailed",
-				-- "-std=c++20"
+				"-std=c++20"
 			}
 		}
 

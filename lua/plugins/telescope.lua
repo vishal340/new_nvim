@@ -214,6 +214,7 @@ return {
 		require('telescope').load_extension 'remote-sshfs'
 		require('telescope').load_extension('neoclip')
 		require("telescope").load_extension("undo")
+		require('telescope').load_extension("notify")
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
 			local layout = require("telescope.pickers.window").get_initial_window_options(self)
 			local prompt = layout.prompt

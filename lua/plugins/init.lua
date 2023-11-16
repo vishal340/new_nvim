@@ -3,6 +3,7 @@ return {
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-cmdline',
+	"petertriho/cmp-git",
 	'saadparwaiz1/cmp_luasnip',
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
@@ -62,6 +63,7 @@ return {
 			'nvim-telescope/telescope.nvim',
 			'nvim-tree/nvim-web-devicons',
 		},
+		opts = {},
 	},
 	'sindrets/diffview.nvim',
 	{
