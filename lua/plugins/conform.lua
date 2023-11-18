@@ -2,10 +2,10 @@ return {
 	'stevearc/conform.nvim',
 	opts = {
 		formatters_by_ft = {
-			cpp = { "clang-format" },
-			c = { "clang-format" },
-			python = { "black" },
+			cpp = { "clang_format" },
+			c = { "clang_format" },
 			java = { "clang_format" },
+			python = { "black" },
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
 			rust = { "rustfmt" },

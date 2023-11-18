@@ -4,13 +4,6 @@ return {
 	opts = {},
 	keys = {
 		{
-			"S",
-			mode = { "n", "x", "o" },
-			function() require("flash").jump() end,
-			desc =
-			"Flash"
-		},
-		{
 			"*",
 			mode = { "n", "x", "o" },
 			function()
@@ -22,7 +15,7 @@ return {
 			"Flash word search"
 		},
 		{
-			"<localleader>s",
+			"S",
 			mode = { "n", "o", "x" },
 			function() require("flash").treesitter() end,
 			desc =

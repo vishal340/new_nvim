@@ -3,7 +3,6 @@ return {
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-cmdline',
-	"petertriho/cmp-git",
 	'saadparwaiz1/cmp_luasnip',
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
@@ -17,15 +16,7 @@ return {
 		event = "LspAttach",
 		opts = {},
 	},
-	{ 'kevinhwang91/nvim-bqf', ft = 'qf' },
-	{
-		'folke/neodev.nvim',
-		event = "LspAttach",
-		opts = {
-			library = { plugins = { "nvim-dap-ui" }, types = true, lspconfig = true }
-		}
-	},
-	'jbyuki/one-small-step-for-vimkind',
+	{ "folke/neodev.nvim", opts = {} },
 	"rafamadriz/friendly-snippets",
 	{
 		'windwp/nvim-autopairs',
@@ -46,7 +37,7 @@ return {
 		"iamcco/markdown-preview.nvim",
 		build = "cd app && npm install",
 		event = "LspAttach",
-		setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+		init = function() vim.g.mkdp_filetypes = { "markdown" } end,
 		ft = "markdown",
 	},
 	"mfussenegger/nvim-jdtls",
@@ -55,21 +46,12 @@ return {
 		opts = {}
 	},
 	"tpope/vim-fugitive",
-	{
-		'pwntester/octo.nvim',
-		event = "VeryLazy",
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'nvim-telescope/telescope.nvim',
-			'nvim-tree/nvim-web-devicons',
-		},
-		opts = {},
-	},
 	'sindrets/diffview.nvim',
+	'mattn/webapi-vim',
 	{
 		'mattn/vim-gist',
+		lazy = true,
 		event = "VeryLazy",
-		dependecies = { 'mattn/webapi-vim' }
 	},
 	{
 		"Fildo7525/pretty_hover",
@@ -78,12 +60,13 @@ return {
 	},
 	{
 		"ibhagwan/fzf-lua",
+		lazy = true,
+		event = "VeryLazy",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require("fzf-lua").setup({})
 		end
 	},
 	"Pocco81/HighStr.nvim",
-	'rhysd/vim-grammarous',
 	--'norcalli/nvim-colorizer.lua',
 }

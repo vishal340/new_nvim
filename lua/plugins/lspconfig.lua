@@ -53,7 +53,9 @@ local on_attach = function(client, bufnr)
 end
 return {
 	'neovim/nvim-lspconfig', -- Configurations for Nvim LSP
-	-- event = "LspAttach",
+	dependencies = {
+		'hrsh7th/cmp-nvim-lsp',
+	},
 	init = function()
 		local lspconfig = require('lspconfig')
 		local lsp_defaults = lspconfig.util.default_config
@@ -88,10 +90,9 @@ return {
 			cmd = {
 				"clangd",
 				"--header-insertion=never",
-				"--query-driver=/usr/lib/llvm-13/bin/clang++",
+				"--query-driver=/usr/lib/llvm-13/bin/clang++-15",
 				"--all-scopes-completion",
 				"--completion-style=detailed",
-				"-std=c++20"
 			}
 		}
 

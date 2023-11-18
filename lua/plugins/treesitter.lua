@@ -1,6 +1,5 @@
 return {
 	'nvim-treesitter/nvim-treesitter',
-	dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
 	build = ':TSUpdate',
 	event = "VeryLazy",
 	opts = {
@@ -15,8 +14,5 @@ return {
 				end
 			end,
 		},
-		ensure_installed = { 'org', 'rust', 'toml', 'html', 'vim', 'c', 'cpp', 'go', 'lua', 'bash', 'http', 'json', 'llvm',
-			'java', 'cuda', 'yaml', 'cmake', 'latex', 'make', 'regex', 'python', 'markdown', 'vimdoc', 'comment',
-			'typescript', 'javascript' },
 	}
 }

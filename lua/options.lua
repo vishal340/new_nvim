@@ -50,14 +50,15 @@ vim.g.startify_files_number = 30
 --separated by branch name(if not main branch).
 --before opening the branch first jump to that branch then open it
 
-vim.cmd("let g:startify_lists = [{ 'type': 'files',     'header': ['   MRU']},{ 'type': 'sessions',  'header': ['   Sessions']},]")
+vim.cmd(
+	"let g:startify_lists = [{ 'type': 'files',     'header': ['   MRU']},{ 'type': 'sessions',  'header': ['   Sessions']},]")
 vim.g.markdown_fenced_languages = { "cpp", "c", "rust", "go", "lua", "bash", "javascript", "typescript", "python" }
 
 vim.g.gist_token = "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"
 vim.g.gist_clip_command = 'xclip -selection clipboard'
 vim.g.gist_show_privates = 1
 
-vim.g.mkdp_browser = '/usr/bin/firefox'
+-- vim.g.mkdp_browser = '/usr/bin/firefox'
 vim.g.mkdp_auto_start = 1
 vim.g.mkdp_auto_close = 1
 vim.g.mkdp_command_for_global = 1
