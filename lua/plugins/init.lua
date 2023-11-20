@@ -7,9 +7,9 @@ return {
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	{
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		event = "LspAttach",
-		opts = {}
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
 	},
 	{
 		'rmagatti/goto-preview',
@@ -68,5 +68,9 @@ return {
 		end
 	},
 	"Pocco81/HighStr.nvim",
-	--'norcalli/nvim-colorizer.lua',
+	{
+		'AckslD/messages.nvim',
+		opts = {}
+	},
+	'romainl/vim-qf',
 }

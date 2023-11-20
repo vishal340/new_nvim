@@ -4,6 +4,7 @@ vim.cmd('verbose imap <tab>')
 
 --TODO: the line below doesn't work as intended
 keymap('n', 'gft', ':tabnew <bar> :edit <cfile><cr>')
+
 keymap('n', 'gfv', ':vs <bar> :edit <cfile><cr>')
 keymap('n', 'gfh', ':sp <bar> :edit <cfile><cr>')
 keymap('n', '<leader>cl', ':nohlsearch<cr>')
@@ -25,7 +26,7 @@ keymap('i', '<C-h>', '<C-o><C-w>h')
 keymap('i', '<C-j>', '<C-o><C-w>j')
 keymap('i', '<C-k>', '<C-o><C-w>k')
 keymap('i', '<C-l>', '<C-o><C-w>l')
---In insert mode, pressing ctrl + numpad's+ increases the font
+--In insert mode, pressing ctrl + numpad's+/- increases/decreases the font respectively
 keymap('i', '<C-kPlus>', '<Esc>call AdjustFontSize(1)<CR>a')
 keymap('i', '<C-kMinus>', '<Esc>:call AdjustFontSize(-1)<CR>a')
 keymap('t', '<C-h>', '<C-\\><C-n><C-w>h')
