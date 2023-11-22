@@ -21,8 +21,6 @@ return {
 			mapping = cmp.mapping.preset.insert({
 				['<TAB>'] = cmp.mapping.select_next_item(),
 				['<S-TAB>'] = cmp.mapping.select_prev_item(),
-				['<C-y>'] = cmp.mapping.scroll_docs(-4),
-				['<C-e>'] = cmp.mapping.scroll_docs(4),
 				['<C-a>'] = cmp.mapping.abort(),
 				['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 			}),

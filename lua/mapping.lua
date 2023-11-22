@@ -15,8 +15,8 @@ keymap('n', '<leader><right>', ':vertical resize +5<cr>')
 keymap('n', '<leader><left>', ':vertical resize -5<cr>')
 keymap('n', '<leader><up>', ':resize +2<cr>')
 keymap('n', '<leader><down>', ':resize -2<cr>')
-keymap('n', '<leader>t', ":let $VIM_DIR=expand('%:p:h')<cr> :40vs <bar> terminal<cr>i cd $VIM_DIR<cr>")
-keymap('n', '<leader>T', ":let $VIM_DIR=expand('%:p:h')<cr> :10sp <bar> terminal<cr>i cd $VIM_DIR<cr>")
+-- keymap('n', '<leader>t', ":let $VIM_DIR=expand('%:p:h')<cr> :40vs <bar> terminal<cr>i cd $VIM_DIR<cr>")
+-- keymap('n', '<leader>T', ":let $VIM_DIR=expand('%:p:h')<cr> :10sp <bar> terminal<cr>i cd $VIM_DIR<cr>")
 keymap('n', '<leader><tab>', ':tabnew<space>')
 keymap('n', '<C-h>', '<C-w>h')
 keymap('n', '<C-j>', '<C-w>j')
@@ -173,24 +173,11 @@ end)
 keymap('n', '<localleader>gs', function()
 	builtin.git_status()
 end)
-local api = require('remote-sshfs.api')
-vim.keymap.set('n', '<localleader>rc', api.connect, {})
-vim.keymap.set('n', '<localleader>rd', api.disconnect, {})
-vim.keymap.set('n', '<localleader>re', api.edit, {})
 
--- (optional) Override telescope find_files and live_grep to make dynamic based on if connected to host
-local connections = require("remote-sshfs.connections")
-vim.keymap.set("n", "<localleader>rff", function()
-	if connections.is_connected then
-		api.find_files()
-	else
-		builtin.find_files()
-	end
-end, {})
-vim.keymap.set("n", "<localleader>rfg", function()
-	if connections.is_connected then
-		api.live_grep()
-	else
-		builtin.live_grep()
-	end
-end, {})
+vim.cmd([[
+autocmd TermEnter term://*toggleterm#*
+      \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+nnoremap <silent><leader>t <Cmd>exe v:count1 . "ToggleTerm direction=horizontal"<CR>
+nnoremap <silent><leader>T <Cmd>exe v:count1 . "ToggleTerm size=40 direction=vertical"<CR>
+nnoremap <silent><C-t> :ToggleTerm<CR>
+]])

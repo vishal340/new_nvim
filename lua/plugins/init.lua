@@ -73,4 +73,12 @@ return {
 		opts = {}
 	},
 	'romainl/vim-qf',
+	{
+		'akinsho/toggleterm.nvim',
+		version = "*",
+		opts = {
+			autochdir = true,
+			direction = 'float',
+		},
+	},
 }

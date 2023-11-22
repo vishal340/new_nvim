@@ -76,7 +76,7 @@ return {
 			}
 		}
 		lspconfig.eslint.setup({
-			on_attach = function(client, bufnr)
+			on_attach = function(_, bufnr)
 				vim.api.nvim_create_autocmd("BufWritePre", {
 					buffer = bufnr,
 					command = "EslintFixAll",
@@ -85,6 +85,7 @@ return {
 		})
 		lspconfig.jsonls.setup {}
 		lspconfig.rust_analyzer.setup {}
+		require 'lspconfig'.taplo.setup {}
 
 		lspconfig.clangd.setup {
 			cmd = {

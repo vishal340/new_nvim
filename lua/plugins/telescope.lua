@@ -212,7 +212,6 @@ return {
 		},
 	},
 	config = function()
-		require('telescope').load_extension 'remote-sshfs'
 		require('telescope').load_extension('neoclip')
 		require("telescope").load_extension("undo")
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
