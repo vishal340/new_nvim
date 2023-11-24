@@ -59,9 +59,6 @@ keymap('i', '<M-d>', '<C-o>d', opts)
 keymap('i', '<M-y>', '<C-o>y', opts)
 keymap('i', '<M-s>', '<C-o>s', opts)
 
-keymap("n", "<leader>s", ":vs <bar> :Startify<cr>")
-keymap("n", "<leader>S", ":sp <bar> :Startify<cr>")
-
 local ls = require("luasnip")
 vim.keymap.set({ "i" }, "<M-h>", function() ls.expand() end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<M-k>", function() ls.jump(1) end, { silent = true })

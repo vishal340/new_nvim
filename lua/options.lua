@@ -39,7 +39,9 @@ vim.diagnostic.config({
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.g.startify_session_dir = '~/.config/nvim/sessions/'
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.g.startify_session_autoload = 0
 vim.g.startify_session_delete_buffers = 0
 vim.g.startify_session_number = 20
@@ -50,8 +52,12 @@ vim.g.startify_files_number = 30
 --separated by branch name(if not main branch).
 --before opening the branch first jump to that branch then open it
 
-vim.cmd(
-	"let g:startify_lists = [{ 'type': 'files',     'header': ['   MRU']},{ 'type': 'sessions',  'header': ['   Sessions']},]")
+vim.cmd([[
+	"let g:startify_lists = [
+			\{ 'type': 'files',     'header': ['   MRU']},
+			\{ 'type': 'sessions',  'header': ['   Sessions']},
+			\]
+			]])
 vim.g.markdown_fenced_languages = { "cpp", "c", "rust", "go", "lua", "bash", "javascript", "typescript", "python" }
 
 vim.g.gist_token = "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"
