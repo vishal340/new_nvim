@@ -50,12 +50,23 @@ local on_attach = function(client, bufnr)
 	keymap('n', '<leader>ds', '<cmd>lua vim.diagnostic.show()<cr>', bufopts)
 	keymap('n', '<leader>gft', '<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', bufopts)
 	keymap('n', 'K', '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
+	-- keymap('n', '<leader>ih', function()
+	-- 	if vim.lsp.inlay_hint.is_enabled(0) then
+	-- 		vim.lsp.inlay_hint.enable(0, false)
+	-- 	else
+	-- 		vim.lsp.inlay_hint.enable(0, true)
+	-- 	end
+	-- end)
 end
+
 return {
 	'neovim/nvim-lspconfig', -- Configurations for Nvim LSP
 	dependencies = {
 		'hrsh7th/cmp-nvim-lsp',
 	},
+	-- opts = {
+	-- 	inlay_hint = { enable = true },
+	-- },
 	init = function()
 		local lspconfig = require('lspconfig')
 		local lsp_defaults = lspconfig.util.default_config
@@ -67,7 +78,7 @@ return {
 		lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		lsp_defaults.on_attach = on_attach
-		require 'lspconfig'.ruff_lsp.setup {
+		lspconfig.ruff_lsp.setup {
 			init_options = {
 				settings = {
 					-- Any extra CLI arguments for `ruff` go here.
@@ -85,7 +96,7 @@ return {
 		})
 		lspconfig.jsonls.setup {}
 		lspconfig.rust_analyzer.setup {}
-		require 'lspconfig'.taplo.setup {}
+		lspconfig.taplo.setup {}
 
 		lspconfig.clangd.setup {
 			cmd = {
@@ -98,11 +109,6 @@ return {
 		}
 
 		lspconfig.gopls.setup {}
-
-		lspconfig.asm_lsp.setup {
-			filetype = { "asm", "s", "S", "vmasm" },
-			command = "asm-lsp"
-		}
 
 		lspconfig.lua_ls.setup({
 			single_file_support = true,
@@ -137,6 +143,7 @@ return {
 		lspconfig.html.setup {}
 		lspconfig.cmake.setup {}
 		lspconfig.dockerls.setup {}
+		lspconfig.docker_compose_language_service.setup {}
 		lspconfig.gradle_ls.setup {}
 
 		lspconfig.ltex.setup {

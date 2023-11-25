@@ -81,4 +81,13 @@ return {
 			direction = 'float',
 		},
 	},
+	{
+		"ryanmsnyder/toggleterm-manager.nvim",
+		dependencies = {
+			"akinsho/toggleterm.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-lua/plenary.nvim", -- only needed because it's a dependency of telescope
+		},
+		config = true,
+	}
 }

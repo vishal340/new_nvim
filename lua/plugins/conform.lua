@@ -6,8 +6,6 @@ return {
 			c = { "clang_format" },
 			java = { "clang_format" },
 			python = { "black" },
-			javascript = { "prettierd" },
-			typescript = { "prettierd" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 		},
