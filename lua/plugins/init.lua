@@ -89,5 +89,10 @@ return {
 			"nvim-lua/plenary.nvim", -- only needed because it's a dependency of telescope
 		},
 		config = true,
-	}
+	},
+	{
+		'echasnovski/mini.files',
+		version = '*',
+		opts = {},
+	},
 }

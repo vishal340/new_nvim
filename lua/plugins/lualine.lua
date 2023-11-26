@@ -5,7 +5,7 @@ return {
 		local function num() return vim.fn.tabpagenr() end
 		require('lualine').setup {
 			sections = {
-				lualine_c = {},
+				lualine_c = { 'filename' },
 				lualine_x = { num, 'fileformat', 'filetype' },
 			},
 			inactive_sections = {
