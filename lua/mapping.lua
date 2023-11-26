@@ -198,8 +198,9 @@ end)
 vim.cmd([[
 autocmd TermEnter term://*toggleterm#*
       \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-nnoremap <silent><C-t> <Cmd>exe v:count1 . "ToggleTerm direction=horizontal"<CR>
-nnoremap <silent><leader>t :ToggleTerm<CR>
+nnoremap <silent><leader>T <Cmd>exe v:count1 . "ToggleTerm direction=horizontal"<CR>
+nnoremap <silent><leader>t <Cmd>exe v:count1 . "ToggleTerm size=40 direction=vertical"<CR>
+nnoremap <silent><C-t> :ToggleTerm<CR>
 ]])
 
 keymap('n', '<leader>*', ':Ggrep! -q <cword> <bar> cclose <bar> Telescope quickfix<cr>')

@@ -3,12 +3,17 @@ setlocal shiftwidth=2
 setlocal tabstop=2
 ]])
 local jdtls = require('jdtls')
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 local cmp_nvim_lsp = require('cmp_nvim_lsp')
 local client_capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = cmp_nvim_lsp.default_capabilities(client_capabilities)
 local workspace = os.getenv "HOME" .. "/workspace/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
+	flags = {
+		allow_incremental_sync = true,
+	},
 	capabilities = capabilities,
 	-- The command that starts the language server
 	-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -52,11 +57,36 @@ local config = {
 	-- One dedicated LSP server & client will be started per unique root_dir
 	root_dir = require('jdtls.setup').find_root({ '.git', 'mvnw', 'gradlew' }),
 
+	on_attach = function(client, bufnr)
+		jdtls.setup.add_commands()
+		jdtls.setup_dap({ hotcodereplace = 'auto' })
+	end,
+
 	-- Here you can configure eclipse.jdt.ls specific settings
 	-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 	-- for a list of options
 	settings = {
 		java = {
+			signatureHelp = { enabled = true },
+			completion = {
+				favoriteStaticMembers = {
+					"org.hamcrest.MatcherAssert.assertThat",
+					"org.hamcrest.Matchers.*",
+					"org.hamcrest.CoreMatchers.*",
+					"org.junit.jupiter.api.Assertions.*",
+					"java.util.Objects.requireNonNull",
+					"java.util.Objects.requireNonNullElse",
+					"org.mockito.Mockito.*"
+				},
+			},
+			configuration = {
+				runtimes = {
+					{
+						name = "JavaSE-17",
+						path = "/usr/lib/jvm/java-17-openjdk-amd64/",
+					}
+				}
+			},
 		}
 	},
 
@@ -67,9 +97,10 @@ local config = {
 	-- See https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
 	--
 	-- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
-	init_options = {
-		bundles = { vim.fn.glob("$HOME/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-0.47.0.jar", 1) },
-		extendedClientCapabilities = jdtls.extendedClientCapabilities,
+	initializationOptions = {
+		bundles =
+		"$HOME/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-0.47.0.jar",
+		extendedClientCapabilities = extendedClientCapabilities,
 	},
 }
 -- This starts a new client & server,

@@ -154,7 +154,7 @@ return {
 				}
 			}
 
-			require("dap").adapters["pwa-node"] = {
+			dap.adapters["pwa-node"] = {
 				type = "server",
 				host = "localhost",
 				port = "${port}",
@@ -174,10 +174,13 @@ return {
 					cwd = "${workspaceFolder}",
 				},
 			}
-
 			dap.configurations.java = {
 				{
 					javaExec = "java",
+					request = "launch",
+					type = "java",
+				},
+				{
 					type = 'java',
 					request = 'attach',
 					name = "Debug (Attach) - Remote",
