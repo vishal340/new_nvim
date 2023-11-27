@@ -50,13 +50,13 @@ local on_attach = function(client, bufnr)
 	keymap('n', '<leader>ds', '<cmd>lua vim.diagnostic.show()<cr>', bufopts)
 	keymap('n', '<leader>gft', '<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', bufopts)
 	keymap('n', 'K', '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
-	-- keymap('n', '<leader>ih', function()
-	-- 	if vim.lsp.inlay_hint.is_enabled(0) then
-	-- 		vim.lsp.inlay_hint.enable(0, false)
-	-- 	else
-	-- 		vim.lsp.inlay_hint.enable(0, true)
-	-- 	end
-	-- end)
+	keymap('n', '<leader>ih', function()
+		if vim.lsp.inlay_hint.is_enabled(0) then
+			vim.lsp.inlay_hint.enable(0, false)
+		else
+			vim.lsp.inlay_hint.enable(0, true)
+		end
+	end)
 end
 
 return {
@@ -64,9 +64,6 @@ return {
 	dependencies = {
 		'hrsh7th/cmp-nvim-lsp',
 	},
-	-- opts = {
-	-- 	inlay_hint = { enable = true },
-	-- },
 	init = function()
 		local lspconfig = require('lspconfig')
 		local lsp_defaults = lspconfig.util.default_config
@@ -119,15 +116,12 @@ return {
 						version = 'LuaJIT',
 					},
 					diagnostics = {
-						-- Get the language server to recognize the `vim` global
 						globals = { 'vim' },
 					},
 					workspace = {
-						-- Make the server aware of Neovim runtime files
 						library = vim.env.VIMRUNTIME,
 						checkThirdParty = false,
 					},
-					-- Do not send telemetry data containing a randomized but unique identifier
 					telemetry = {
 						enable = false,
 					},
@@ -152,6 +146,9 @@ return {
 					language = "en-us",
 				},
 			},
+		}
+		lspconfig.sqlls.setup {
+			filetypes = { "sql", "mysql", "postgres" },
 		}
 	end
 }

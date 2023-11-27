@@ -126,7 +126,7 @@ vim.api.nvim_create_autocmd('User', {
 		map_split(buf_id, 'gv', 'belowright vertical')
 	end,
 })
-keymap('n', '<leader>e', '<cmd>lua require("MiniFiles").open()<cr>', opts)
+keymap('n', '<leader>e', '<cmd>lua MiniFiles.open()<cr>', opts)
 
 local builtin = require("telescope.builtin")
 

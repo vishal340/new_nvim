@@ -67,5 +67,7 @@ return {
 				{ name = 'cmdline' }
 			})
 		})
+		vim.cmd(
+			"autocmd FileType sql,mysql,postgres lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })")
 	end
 }

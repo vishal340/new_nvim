@@ -8,6 +8,9 @@ return {
 			python = { "black" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
+			javascript = { "prettierd" },
+			postgres = { "sqlfmt" },
+			mysql = { "sqlfmt" },
 		},
 		format_on_save = {
 			lsp_fallback = true,
