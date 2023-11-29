@@ -58,15 +58,6 @@ return {
 		event = "LspAttach",
 		opts = {}
 	},
-	{
-		"ibhagwan/fzf-lua",
-		lazy = true,
-		event = "VeryLazy",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("fzf-lua").setup({})
-		end
-	},
 	"Pocco81/HighStr.nvim",
 	{
 		'AckslD/messages.nvim',

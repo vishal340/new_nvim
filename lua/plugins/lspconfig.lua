@@ -143,7 +143,7 @@ return {
 		lspconfig.ltex.setup {
 			settings = {
 				ltex = {
-					language = "en-us",
+					language = "en-US",
 				},
 			},
 		}

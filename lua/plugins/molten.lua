@@ -24,4 +24,9 @@ return {
 			vim.g.molten_auto_open_output = true
 		end,
 	},
+	{
+		"GCBallesteros/jupytext.nvim",
+		event = "BufEnter *.ipynb",
+		config = true,
+	}
 }
