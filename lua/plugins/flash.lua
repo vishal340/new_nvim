@@ -43,7 +43,7 @@ return {
 			"Toggle Flash Search"
 		},
 	},
-	init = function()
-		require("flash").toggle()
-	end
+	-- init = function()
+	-- 	require("flash").toggle()
+	-- end
 }

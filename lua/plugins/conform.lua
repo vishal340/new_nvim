@@ -9,16 +9,23 @@ return {
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 			javascript = { "prettierd" },
+			typescript = { "prettierd" },
 			postgres = { "sqlfmt" },
 			mysql = { "sqlfmt" },
+			markdown = { "prettierd" },
+			lua = { "stylua" },
 		},
 		format_on_save = {
 			lsp_fallback = true,
 			timeout_ms = 500,
 		},
-		formatters = {
-			clang_format = {
-			},
-		},
 	},
+	-- config = function()
+	-- 	vim.api.nvim_create_autocmd("BufWritePre", {
+	-- 		pattern = "*",
+	-- 		callback = function(args)
+	-- 			require("conform").format({ bufnr = args.buf })
+	-- 		end,
+	-- 	})
+	-- end
 }

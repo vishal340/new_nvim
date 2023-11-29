@@ -106,9 +106,6 @@ return {
 
 				program = "${file}", -- This configuration will launch the current file if used.
 				pythonPath = function()
-					-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-					-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-					-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
 					local cwd = vim.fn.getcwd()
 					if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
 						return cwd .. '/venv/bin/python'
@@ -159,12 +156,10 @@ return {
 				host = "localhost",
 				port = "${port}",
 				executable = {
-					command = "node",
-					-- 💀 Make sure to update this path to point to your installation
-					args = { "js-debug-adapter", "${port}" },
+					command = "js-debug-adapter",
+					args = { "${port}" },
 				}
 			}
-
 			dap.configurations.javascript = {
 				{
 					type = "pwa-node",
@@ -172,8 +167,10 @@ return {
 					name = "Launch file",
 					program = "${file}",
 					cwd = "${workspaceFolder}",
+					runtimeExecutable = "node",
 				},
 			}
+			dap.configurations.typescript = dap.configurations.javascript
 			dap.configurations.java = {
 				{
 					javaExec = "java",

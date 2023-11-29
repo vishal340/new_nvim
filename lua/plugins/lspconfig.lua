@@ -83,14 +83,7 @@ return {
 				}
 			}
 		}
-		lspconfig.eslint.setup({
-			on_attach = function(_, bufnr)
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					buffer = bufnr,
-					command = "EslintFixAll",
-				})
-			end,
-		})
+		lspconfig.tsserver.setup {}
 		lspconfig.jsonls.setup {}
 		lspconfig.rust_analyzer.setup {}
 		lspconfig.taplo.setup {}
