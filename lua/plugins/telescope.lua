@@ -17,12 +17,14 @@ local new_maker = function(filepath, bufnr, opts)
 					vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { "BINARY" })
 				end)
 			end
-		end
+		end,
 	}):sync()
 	opts = opts or {}
 
 	vim.loop.fs_stat(filepath, function(_, stat)
-		if not stat then return end
+		if not stat then
+			return
+		end
 		if stat.size > 100000 then
 			return
 		else
@@ -51,13 +53,14 @@ local function flash(prompt_bufnr)
 end
 
 return {
-	'nvim-telescope/telescope.nvim',
-	branch = '0.1.x',
+	"nvim-telescope/telescope.nvim",
+	branch = "0.1.x",
 	lazy = true,
 	event = "VeryLazy",
 	dependencies = {
-		'nvim-lua/plenary.nvim',
+		"nvim-lua/plenary.nvim",
 		"debugloop/telescope-undo.nvim",
+		"nvim-telescope/telescope-fzf-native.nvim",
 	},
 	optional = true,
 	opts = {
@@ -118,8 +121,8 @@ return {
 				filesize_limit = 0.1,
 				mime_hook = function(filepath, bufnr, opts)
 					local is_image = function(filepath)
-						local image_extensions = { 'png', 'jpg' } -- Supported image formats
-						local split_path = vim.split(filepath:lower(), '.', { plain = true })
+						local image_extensions = { "png", "jpg" } -- Supported image formats
+						local split_path = vim.split(filepath:lower(), ".", { plain = true })
 						local extension = split_path[#split_path]
 						return vim.tbl_contains(image_extensions, extension)
 					end
@@ -127,23 +130,24 @@ return {
 						local term = vim.api.nvim_open_term(bufnr, {})
 						local function send_output(_, data, _)
 							for _, d in ipairs(data) do
-								vim.api.nvim_chan_send(term, d .. '\r\n')
+								vim.api.nvim_chan_send(term, d .. "\r\n")
 							end
 						end
-						vim.fn.jobstart(
-							{
-								'chafa', filepath -- Terminal image viewer command
-							},
-							{ on_stdout = send_output, stdout_buffered = true, pty = true })
+						vim.fn.jobstart({
+							"chafa",
+							filepath, -- Terminal image viewer command
+						}, { on_stdout = send_output, stdout_buffered = true, pty = true })
 					else
-						require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid,
-							"Binary cannot be previewed")
+						require("telescope.previewers.utils").set_preview_message(
+							bufnr,
+							opts.winid,
+							"Binary cannot be previewed"
+						)
 					end
 				end,
 			},
 		},
-		extensions = {
-		},
+		extensions = {},
 		pickers = {
 			buffers = {
 				previewer = true,
@@ -212,8 +216,10 @@ return {
 		},
 	},
 	config = function()
-		require('telescope').load_extension('neoclip')
+		require("telescope").load_extension("neoclip")
 		require("telescope").load_extension("undo")
+		require("telescope").load_extension("fzf")
+		require("telescope").load_extension("frecency")
 		require("telescope.pickers.layout_strategies").buffer_window = function(self)
 			local layout = require("telescope.pickers.window").get_initial_window_options(self)
 			local prompt = layout.prompt
@@ -230,9 +236,9 @@ return {
 			prompt.height = 1
 			preview.height = self.previewer and math.floor(height * 0.4) or 0
 			results.height = height
-				 - padding
-				 - (prompt.height + padding)
-				 - (self.previewer and (preview.height + padding) or 0)
+				- padding
+				- (prompt.height + padding)
+				- (self.previewer and (preview.height + padding) or 0)
 
 			-- Line
 			local rows = {}
@@ -271,5 +277,5 @@ return {
 
 			return layout
 		end
-	end
+	end,
 }

@@ -1,9 +1,9 @@
 return {
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/cmp-buffer',
-	'hrsh7th/cmp-path',
-	'hrsh7th/cmp-cmdline',
-	'saadparwaiz1/cmp_luasnip',
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-cmdline",
+	"saadparwaiz1/cmp_luasnip",
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	{
@@ -12,16 +12,16 @@ return {
 		opts = {},
 	},
 	{
-		'rmagatti/goto-preview',
+		"rmagatti/goto-preview",
 		event = "LspAttach",
 		opts = {},
 	},
 	{ "folke/neodev.nvim", opts = {} },
 	"rafamadriz/friendly-snippets",
 	{
-		'windwp/nvim-autopairs',
+		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		opts = {}
+		opts = {},
 	},
 	"tpope/vim-repeat",
 	{
@@ -29,47 +29,49 @@ return {
 		opts = { mappings_style = "surround" },
 	},
 	{
-		'numToStr/Comment.nvim',
-		opts = {}
+		"numToStr/Comment.nvim",
+		opts = {},
 	},
-	'mhinz/vim-startify',
+	"mhinz/vim-startify",
 	{
 		"iamcco/markdown-preview.nvim",
 		build = "cd app && npm install",
 		event = "LspAttach",
-		init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
 		ft = "markdown",
 	},
 	"mfussenegger/nvim-jdtls",
 	{
-		'lewis6991/gitsigns.nvim',
-		opts = {}
+		"lewis6991/gitsigns.nvim",
+		opts = {},
 	},
 	"tpope/vim-fugitive",
-	'sindrets/diffview.nvim',
-	'mattn/webapi-vim',
+	"sindrets/diffview.nvim",
+	"mattn/webapi-vim",
 	{
-		'mattn/vim-gist',
+		"mattn/vim-gist",
 		lazy = true,
 		event = "VeryLazy",
 	},
 	{
 		"Fildo7525/pretty_hover",
 		event = "LspAttach",
-		opts = {}
+		opts = {},
 	},
 	"Pocco81/HighStr.nvim",
 	{
-		'AckslD/messages.nvim',
-		opts = {}
+		"AckslD/messages.nvim",
+		opts = {},
 	},
-	'romainl/vim-qf',
+	"romainl/vim-qf",
 	{
-		'akinsho/toggleterm.nvim',
+		"akinsho/toggleterm.nvim",
 		version = "*",
 		opts = {
 			autochdir = true,
-			direction = 'float',
+			direction = "float",
 		},
 	},
 	{
@@ -82,8 +84,13 @@ return {
 		config = true,
 	},
 	{
-		'echasnovski/mini.files',
-		version = '*',
+		"echasnovski/mini.files",
+		version = "*",
 		opts = {},
 	},
+	{
+		"nvim-telescope/telescope-fzf-native.nvim",
+		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+	},
+	"nvim-telescope/telescope-frecency.nvim",
 }
