@@ -4,6 +4,10 @@ return {
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-cmdline",
 	"saadparwaiz1/cmp_luasnip",
+	{
+		"petertriho/cmp-git",
+		opts = {},
+	},
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	{
@@ -32,6 +36,7 @@ return {
 		"numToStr/Comment.nvim",
 		opts = {},
 	},
+	"itchyny/vim-gitbranch",
 	"mhinz/vim-startify",
 	{
 		"iamcco/markdown-preview.nvim",
@@ -76,6 +81,7 @@ return {
 	},
 	{
 		"ryanmsnyder/toggleterm-manager.nvim",
+		lazy = true,
 		dependencies = {
 			"akinsho/toggleterm.nvim",
 			"nvim-telescope/telescope.nvim",
@@ -92,5 +98,4 @@ return {
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 	},
-	"nvim-telescope/telescope-frecency.nvim",
 }

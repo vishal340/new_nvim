@@ -81,11 +81,12 @@ keymap("n", "<localleader>b", "<cmd>lua require('browse').browse(bookmarks)<cr>"
 keymap("n", "<localleader>bd", "<cmd>lua require('browse.devdocs').search_with_filetype()<cr>", opts)
 
 keymap("n", "<localleader>dc", ":lua  require('dap').continue()<cr>", opts)
+keymap("n", "<localleader>drs", ":lua  require('dap').continue()<cr>", opts)
 keymap("n", "<localleader>dsv", ":lua  require('dap').step_over()<cr>", opts)
 keymap("n", "<localleader>dsi", ":lua  require('dap').step_into()<cr>", opts)
 keymap("n", "<localleader>dso", ":lua  require('dap').step_out()<cr>", opts)
 keymap("n", "<localleader>db", ":lua  require('dap').toggle_breakpoint()<cr>", opts)
-keymap("n", "<localleader>dr", ":lua  require('dap').repl.open()<cr>", opts)
+keymap("n", "<localleader>dro", ":lua  require('dap').repl.open()<cr>", opts)
 keymap("n", "<localleader>dl", ":lua  require('dap').run_last()<cr>", opts)
 keymap({ "n", "v" }, "<localleader>dh", function()
 	require("dap.ui.widgets").hover()
@@ -209,3 +210,22 @@ nnoremap <silent><C-t> :ToggleTerm<CR>
 
 keymap("n", "<leader>*", ":Ggrep! -q <cword> <bar> cclose <bar> Telescope quickfix<cr>")
 keymap("v", "<leader>*", 'y<c-u>:Ggrep! -q <c-r>" <bar> cclose <bar> Telescope quickfix<cr>')
+
+vim.cmd([[
+function! GetUniqueSessionName()
+	let l:branch = gitbranch#name()
+	let l:branch = empty(l:branch) ? '' : '-' . l:branch
+	let l:container={}
+	function container.is_git_repo()
+		let _= system("git rev-parse --is-inside-work-tree")
+		return v:shell_error==0
+	endfunction
+	if container.is_git_repo()
+		return substitute(fnamemodify(finddir(".git",".;"),":~:h") . l:branch, '/', '-', 'g')
+	endif
+	return substitute(fnamemodify(getcwd(),":~:h") . l:branch, '/', '-', 'g')
+endfunction
+]])
+
+keymap("n", "<leader>S", ":execute 'SLoad '  . GetUniqueSessionName()<cr>")
+keymap("n", "<leader>s", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
