@@ -11,11 +11,6 @@ return {
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {},
-	},
-	{
 		"rmagatti/goto-preview",
 		event = "LspAttach",
 		opts = {},
@@ -54,18 +49,15 @@ return {
 	},
 	"tpope/vim-fugitive",
 	"sindrets/diffview.nvim",
-	"mattn/webapi-vim",
 	{
 		"mattn/vim-gist",
 		lazy = true,
-		event = "VeryLazy",
 	},
 	{
 		"Fildo7525/pretty_hover",
 		event = "LspAttach",
 		opts = {},
 	},
-	"Pocco81/HighStr.nvim",
 	{
 		"AckslD/messages.nvim",
 		opts = {},

@@ -1,8 +1,8 @@
+local keymap = vim.keymap.set
 return {
 	{
 		"mfussenegger/nvim-dap",
 		lazy = true,
-		event = "VeryLazy",
 		config = function()
 			local dap = require("dap")
 			dap.adapters.codelldb = {
@@ -188,12 +188,38 @@ return {
 					port = 5005,
 				},
 			}
+			keymap("n", "<localleader>dc", ":lua  require('dap').continue()<cr>", opts)
+			keymap("n", "<localleader>drs", ":lua  require('dap').continue()<cr>", opts)
+			keymap("n", "<localleader>dsv", ":lua  require('dap').step_over()<cr>", opts)
+			keymap("n", "<localleader>dsi", ":lua  require('dap').step_into()<cr>", opts)
+			keymap("n", "<localleader>dso", ":lua  require('dap').step_out()<cr>", opts)
+			keymap("n", "<localleader>db", ":lua  require('dap').toggle_breakpoint()<cr>", opts)
+			keymap("n", "<localleader>dro", ":lua  require('dap').repl.open()<cr>", opts)
+			keymap("n", "<localleader>dl", ":lua  require('dap').run_last()<cr>", opts)
 		end,
 	},
 	{
 		"rcarriga/nvim-dap-ui",
 		lazy = true,
-		event = "VeryLazy",
 		opts = {},
+		config = function()
+			keymap({ "n", "v" }, "<localleader>dh", function()
+				require("dap.ui.widgets").hover()
+			end, opts)
+			keymap({ "n", "v" }, "<localleader>dp", function()
+				require("dap.ui.widgets").preview()
+			end, opts)
+			keymap("n", "<localleader>df", function()
+				local widgets = require("dap.ui.widgets")
+				widgets.centered_float(widgets.frames)
+			end, opts)
+			keymap("n", "<localleader>dfs", function()
+				local widgets = require("dap.ui.widgets")
+				widgets.centered_float(widgets.scopes)
+			end, opts)
+
+			keymap("n", "<localleader>dt", ':lua require("dapui").toggle()<cr>', opts)
+			keymap("v", "<localleader>de", ':lua require("dapui").eval()<cr>', opts)
+		end,
 	},
 }
