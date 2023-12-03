@@ -1,5 +1,5 @@
 return {
-	'stevearc/conform.nvim',
+	"stevearc/conform.nvim",
 	opts = {
 		formatters_by_ft = {
 			cpp = { "clang_format" },
@@ -8,11 +8,11 @@ return {
 			python = { "black" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
-			javascript = { "prettierd" },
-			typescript = { "prettierd" },
+			javascript = { "prettier" },
+			typescript = { "prettier" },
 			postgres = { "sqlfmt" },
 			mysql = { "sqlfmt" },
-			markdown = { "prettierd" },
+			markdown = { "prettier" },
 			lua = { "stylua" },
 		},
 		format_on_save = {
