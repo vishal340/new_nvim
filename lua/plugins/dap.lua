@@ -1,4 +1,5 @@
 local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
 return {
 	{
 		"mfussenegger/nvim-dap",
@@ -70,7 +71,6 @@ return {
 				},
 			}
 
-			--TODO python configuration below is wrong
 			dap.adapters.python = function(cb, config)
 				if config.request == "attach" then
 					---@diagnostic disable-next-line: undefined-field
@@ -114,7 +114,7 @@ return {
 						elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
 							return cwd .. "/.venv/bin/python"
 						else
-							return "/usr/bin/python"
+							return "/home/vishal340/anaconda3/bin/python"
 						end
 					end,
 				},
@@ -202,7 +202,7 @@ return {
 		"rcarriga/nvim-dap-ui",
 		lazy = true,
 		opts = {},
-		config = function()
+		init = function()
 			keymap({ "n", "v" }, "<localleader>dh", function()
 				require("dap.ui.widgets").hover()
 			end, opts)

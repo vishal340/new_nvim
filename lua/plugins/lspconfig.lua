@@ -2,7 +2,7 @@ local keymap = vim.keymap.set
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -79,10 +79,6 @@ return {
 					},
 				},
 			})
-			lspconfig.tsserver.setup({})
-			lspconfig.jsonls.setup({})
-			lspconfig.rust_analyzer.setup({})
-			lspconfig.taplo.setup({})
 
 			lspconfig.clangd.setup({
 				root_dir = function(fname)
@@ -118,8 +114,6 @@ return {
 				},
 			})
 
-			lspconfig.gopls.setup({})
-
 			lspconfig.lua_ls.setup({
 				single_file_support = true,
 				settings = {
@@ -145,14 +139,6 @@ return {
 				},
 			})
 
-			lspconfig.vimls.setup({})
-			lspconfig.bashls.setup({})
-			lspconfig.html.setup({})
-			lspconfig.cmake.setup({})
-			lspconfig.dockerls.setup({})
-			lspconfig.docker_compose_language_service.setup({})
-			lspconfig.gradle_ls.setup({})
-
 			lspconfig.ltex.setup({
 				settings = {
 					ltex = {
@@ -163,11 +149,19 @@ return {
 			lspconfig.sqlls.setup({
 				filetypes = { "sql", "mysql", "postgres" },
 			})
+
+			lspconfig.gopls.setup({})
+			lspconfig.tsserver.setup({})
+			lspconfig.jsonls.setup({})
+			lspconfig.rust_analyzer.setup({})
+			lspconfig.taplo.setup({})
+			lspconfig.vimls.setup({})
+			lspconfig.bashls.setup({})
+			lspconfig.html.setup({})
+			lspconfig.cmake.setup({})
+			lspconfig.dockerls.setup({})
+			lspconfig.docker_compose_language_service.setup({})
+			lspconfig.gradle_ls.setup({})
 		end,
 	},
-	-- {
-	-- 	"OlegGulevskyy/better-ts-errors.nvim",
-	-- 	event = "BufEnter *.js,BufEnter *.ts, BufEnter *.jsx, BufEnter *.tsx",
-	-- 	dependencies = { "MunifTanjim/nui.nvim" },
-	-- },
 }
