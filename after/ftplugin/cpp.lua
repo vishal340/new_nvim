@@ -18,4 +18,5 @@ endfunction
 command! -nargs=* Make tabnew | let $mkpath = SetMkfile() | make <args> -C $mkpath | c
 
 ]])
-vim.keymap.set('i', 'std', 'std::', { buffer = true })
+
+vim.keymap.set("i", "std", "std::", { buffer = true })

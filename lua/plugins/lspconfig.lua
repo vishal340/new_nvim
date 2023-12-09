@@ -1,5 +1,28 @@
 local keymap = vim.keymap.set
+local builtin = require("telescope.builtin")
 
+local diagnostic_list_from_git_root = function()
+	local function is_git_repo()
+		vim.fn.system("git rev-parse --is-inside-work-tree")
+
+		return vim.v.shell_error == 0
+	end
+
+	local function get_git_root()
+		local dot_git_path = vim.fn.finddir(".git", ".;")
+		return vim.fn.fnamemodify(dot_git_path, ":h")
+	end
+
+	local opt = {}
+
+	if is_git_repo() then
+		opt = {
+			cwd = get_git_root(),
+		}
+	end
+
+	builtin.diagnostics(opt)
+end
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(_, bufnr)
@@ -19,22 +42,22 @@ local on_attach = function(_, bufnr)
 	keymap("n", "<leader>gvi", "<cmd>vs| lua vim.lsp.buf.implementation()<cr>", bufopts)
 	keymap("n", "<leader>ghi", "<cmd>sp| lua vim.lsp.buf.implementation()<cr>", bufopts)
 	keymap("n", "<leader>gi", function()
-		require("telescope.builtin").lsp_implementations()
+		builtin.lsp_implementations()
 	end, bufopts)
 	keymap("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", bufopts)
 	keymap("n", "<leader>gd", function()
-		require("telescope.builtin").lsp_definitions()
+		builtin.lsp_definitions()
 	end, bufopts)
 	keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", bufopts)
 	keymap("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<cr>", bufopts)
 	keymap("n", "<leader>ll", function()
-		require("telescope.builtin").treesitter()
+		builtin.treesitter()
 	end, bufopts)
 	keymap("n", "<leader>lic", function()
-		require("telescope.builtin").lsp_incoming_calls()
+		builtin.lsp_incoming_calls()
 	end, bufopts)
 	keymap("n", "<leader>loc", function()
-		require("telescope.builtin").lsp_outgoing_calls()
+		builtin.lsp_outgoing_calls()
 	end, bufopts)
 	keymap("n", "<leader>bf", "<cmd>lua vim.lsp.buf.formatting()<cr>", bufopts)
 
@@ -42,7 +65,7 @@ local on_attach = function(_, bufnr)
 	keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_prev()<cr>", bufopts)
 	keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<cr>", bufopts)
 	keymap("n", "<leader>dl", function()
-		require("telescope.builtin").diagnostics()
+		diagnostic_list_from_git_root()
 	end, bufopts)
 	keymap("n", "<leader>dh", "<cmd>lua vim.diagnostic.hide()<cr>", bufopts)
 	keymap("n", "<leader>ds", "<cmd>lua vim.diagnostic.show()<cr>", bufopts)
@@ -153,6 +176,7 @@ return {
 			lspconfig.gopls.setup({})
 			lspconfig.tsserver.setup({})
 			lspconfig.jsonls.setup({})
+			lspconfig.yamlls.setup({})
 			lspconfig.rust_analyzer.setup({})
 			lspconfig.taplo.setup({})
 			lspconfig.vimls.setup({})

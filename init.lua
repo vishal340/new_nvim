@@ -11,9 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
-require('options')
-require('color')
-require('lazy').setup('plugins')
-require('script')
-require('mapping')
+require("options")
+require("lazy").setup("plugins")
+require("script")
+require("mapping")
+require("color")
