@@ -4,10 +4,6 @@ return {
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-cmdline",
 	"saadparwaiz1/cmp_luasnip",
-	{
-		"petertriho/cmp-git",
-		opts = {},
-	},
 	"onsails/lspkind.nvim",
 	"nvim-lua/plenary.nvim",
 	{
@@ -56,11 +52,9 @@ return {
 	{
 		"Fildo7525/pretty_hover",
 		event = "LspAttach",
-		opts = {},
-	},
-	{
-		"AckslD/messages.nvim",
-		opts = {},
+		opts = {
+			toggle = true,
+		},
 	},
 	"romainl/vim-qf",
 	{

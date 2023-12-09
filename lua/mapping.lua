@@ -55,6 +55,11 @@ keymap("i", "<M-d>", "<C-o>d", opts)
 keymap("i", "<M-y>", "<C-o>y", opts)
 keymap("i", "<M-s>", "<C-o>s", opts)
 
+keymap("n", "<localleader>gt", ":normal gt<cr>", opts)
+
+keymap("n", "<F3>", ":buffer ")
+keymap("n", "<F2>", ":ls<cr>", opts)
+
 local map_split = function(buf_id, lhs, direction)
 	local rhs = function()
 		local new_target_window
