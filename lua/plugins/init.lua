@@ -23,10 +23,6 @@ return {
 		"ur4ltz/surround.nvim",
 		opts = { mappings_style = "surround" },
 	},
-	{
-		"numToStr/Comment.nvim",
-		opts = {},
-	},
 	"itchyny/vim-gitbranch",
 	"mhinz/vim-startify",
 	{

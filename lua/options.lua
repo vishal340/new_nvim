@@ -26,7 +26,7 @@ set termguicolors
 set noswapfile
 set path+=**
 set modifiable
-set autochdir
+" set autochdir
 set completeopt=menu,menuone,noselect
 " set guicursor=n-v-c:block,i-ci-ve:ver10,r-cr:hor100,o:hor100
 set viewoptions=cursor,folds,slash,unix
@@ -69,3 +69,5 @@ vim.g.mkdp_auto_start = 1
 vim.g.mkdp_auto_close = 1
 vim.g.mkdp_command_for_global = 1
 vim.g.mkdp_echo_preview_url = 1
+
+vim.g.skip_ts_context_commentstring_module = true

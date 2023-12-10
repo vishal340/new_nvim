@@ -8,7 +8,7 @@ return {
 				i = {
 					select = "<cr>",
 					paste = "<c-p>",
-					paste_behind = "<c-k>",
+					paste_behind = "<c-P>",
 					replay = "<c-q>", -- replay a macro
 					delete = "<c-d>", -- delete an entry
 					edit = "<c-e>", -- edit an entry
