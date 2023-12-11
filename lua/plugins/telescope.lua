@@ -1,11 +1,13 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
-	lazy = true,
 	event = "VeryLazy",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-telescope/telescope-fzf-native.nvim",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+		},
 		"debugloop/telescope-undo.nvim",
 	},
 	optional = true,

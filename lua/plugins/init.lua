@@ -1,26 +1,38 @@
 return {
-	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-cmdline",
 	"saadparwaiz1/cmp_luasnip",
-	"onsails/lspkind.nvim",
+	{
+		"onsails/lspkind.nvim",
+		event = "LspAttach",
+	},
 	"nvim-lua/plenary.nvim",
 	{
 		"rmagatti/goto-preview",
 		event = "LspAttach",
 		opts = {},
 	},
-	{ "folke/neodev.nvim", opts = {} },
+	{
+		"folke/neodev.nvim",
+		opts = {},
+		event = "LspAttach",
+		ft = "lua",
+	},
 	"rafamadriz/friendly-snippets",
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		opts = {},
 	},
-	"tpope/vim-repeat",
+	{
+		"tpope/vim-repeat",
+		event = "InsertEnter",
+	},
 	{
 		"ur4ltz/surround.nvim",
+		event = "InsertEnter",
 		opts = { mappings_style = "surround" },
 	},
 	"itchyny/vim-gitbranch",
@@ -34,13 +46,20 @@ return {
 		end,
 		ft = "markdown",
 	},
-	"mfussenegger/nvim-jdtls",
+	{
+		"mfussenegger/nvim-jdtls",
+		event = "LspAttach",
+		ft = "java",
+	},
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {},
 	},
 	"tpope/vim-fugitive",
-	"sindrets/diffview.nvim",
+	{
+		"sindrets/diffview.nvim",
+		lazy = true,
+	},
 	{
 		"mattn/vim-gist",
 		lazy = true,
@@ -75,9 +94,5 @@ return {
 		"echasnovski/mini.files",
 		version = "*",
 		opts = {},
-	},
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 	},
 }

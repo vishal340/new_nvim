@@ -1,5 +1,6 @@
 return {
-	'L3MON4D3/LuaSnip',
+	"L3MON4D3/LuaSnip",
+	event = "LspAttach",
 	dependencies = { "rafamadriz/friendly-snippets" },
 	version = "v2.*",
 	build = "make install_jsregexp",

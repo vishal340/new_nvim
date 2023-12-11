@@ -4,29 +4,22 @@ local builtin = require("telescope.builtin")
 local diagnostic_list_from_git_root = function()
 	local function is_git_repo()
 		vim.fn.system("git rev-parse --is-inside-work-tree")
-
 		return vim.v.shell_error == 0
 	end
-
 	local function get_git_root()
 		local dot_git_path = vim.fn.finddir(".git", ".;")
 		return vim.fn.fnamemodify(dot_git_path, ":h")
 	end
-
 	local opt = {}
-
 	if is_git_repo() then
 		opt = {
 			cwd = get_git_root(),
 		}
 	end
-
 	builtin.diagnostics(opt)
 end
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+
 local on_attach = function(_, bufnr)
-	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	keymap("n", "<leader>gtD", "<cmd>tab split| lua vim.lsp.buf.declaration()<cr>", bufopts)
@@ -83,6 +76,7 @@ end
 return {
 	{
 		"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
+		event = "LspAttach",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 		},
