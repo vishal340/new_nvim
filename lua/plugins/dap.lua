@@ -114,7 +114,7 @@ return {
 						elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
 							return cwd .. "/.venv/bin/python"
 						else
-							return "/home/vishal340/anaconda3/bin/python"
+							return "/usr/bin/python"
 						end
 					end,
 				},

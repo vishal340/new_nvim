@@ -57,11 +57,11 @@ keymap("i", "<M-s>", "<C-o>s", opts)
 
 keymap("n", "<localleader>gt", ":normal gt<cr>", opts)
 
-keymap("n", "zb", ":buffer ")
+keymap("n", "<localleader>be", ":buffer ")
 keymap("n", "ze", ":e ")
-keymap("n", "zl", ":ls<cr>", opts)
-keymap("n", "zn", ":bn<cr>", opts)
-keymap("n", "zp", ":bp<cr>", opts)
+keymap("n", "<localleader>bl", ":ls<cr>", opts)
+keymap("n", "<localleader>bn", ":bn<cr>", opts)
+keymap("n", "<localleader>bp", ":bp<cr>", opts)
 
 local map_split = function(buf_id, lhs, direction)
 	local rhs = function()
@@ -90,6 +90,7 @@ vim.api.nvim_create_autocmd("User", {
 keymap("n", "<leader>e", "<cmd>lua MiniFiles.open()<cr>", opts)
 
 local builtin = require("telescope.builtin")
+keymap("n", "<F5>", ":Telescope ")
 
 local find_files_from_project_git_root = function()
 	local function is_git_repo()
@@ -143,19 +144,6 @@ keymap("n", "<leader>fb", ":Telescope buffers<cr>")
 keymap("n", "<leader>fh", ":Telescope help_tags preview=true<cr>")
 keymap("n", "<leader>fq", ":Telescope quickfix preview=true<cr>")
 keymap("n", "<leader>fo", ":Telescope oldfiles preview=false<cr>")
-keymap("n", "<localleader>gc", function()
-	builtin.git_bcommits()
-end)
-keymap("v", "<localleader>gc", function()
-	builtin.git_bcommits_range()
-end)
-keymap("n", "<localleader>gb", function()
-	builtin.git_branches()
-end)
-keymap("n", "<localleader>gs", function()
-	builtin.git_status()
-end)
-keymap("n", "<F5>", ":Telescope ")
 
 vim.cmd([[
 autocmd TermEnter term://*toggleterm#*
@@ -184,5 +172,4 @@ function! GetUniqueSessionName()
 endfunction
 ]])
 
-keymap("n", "<leader>S", ":execute 'SLoad '  . GetUniqueSessionName()<cr>")
-keymap("n", "<leader>s", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
+keymap("n", "<localleader>s", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")

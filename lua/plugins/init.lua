@@ -95,4 +95,8 @@ return {
 		version = "*",
 		opts = {},
 	},
+	{
+		"ruifm/gitlinker.nvim",
+		dependencies = "nvim-lua/plenary.nvim",
+	},
 }
