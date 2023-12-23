@@ -20,6 +20,11 @@ return {
 		event = "LspAttach",
 		ft = "lua",
 	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
+	},
 	"rafamadriz/friendly-snippets",
 	{
 		"windwp/nvim-autopairs",

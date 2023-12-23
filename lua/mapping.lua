@@ -2,6 +2,8 @@ local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 vim.cmd("verbose imap <tab>")
 
+keymap("n", "<localleader>gt", ":normal gt<cr>", opts)
+
 --TODO: the line below doesn't work as intended
 keymap("n", "gft", ":tabnew <bar> :edit <cfile><cr>")
 
@@ -47,7 +49,7 @@ keymap("i", "<M-B>", "<C-o>B", opts)
 keymap("i", "<M-e>", "<C-o>e", opts)
 keymap("i", "<M-E>", "<C-o>E", opts)
 keymap("i", "<M-i>", "<C-o>^", opts)
-keymap("i", "<M-a>", "<C-o>$", opts)
+keymap("i", "<M-A>", "<C-o>$", opts)
 keymap("i", "<M-.>", "<C-o>.", opts)
 keymap("i", "<M-u>", "<C-o>u", opts)
 keymap("i", "<M-5>", "<C-o>%", opts)
@@ -55,13 +57,12 @@ keymap("i", "<M-d>", "<C-o>d", opts)
 keymap("i", "<M-y>", "<C-o>y", opts)
 keymap("i", "<M-s>", "<C-o>s", opts)
 
-keymap("n", "<localleader>gt", ":normal gt<cr>", opts)
-
 keymap("n", "<localleader>be", ":buffer ")
 keymap("n", "ze", ":e ")
 keymap("n", "<localleader>bl", ":ls<cr>", opts)
 keymap("n", "<localleader>bn", ":bn<cr>", opts)
 keymap("n", "<localleader>bp", ":bp<cr>", opts)
+keymap("n", "<localleader>bd", ":bdelete ", opts)
 
 local map_split = function(buf_id, lhs, direction)
 	local rhs = function()
@@ -172,4 +173,5 @@ function! GetUniqueSessionName()
 endfunction
 ]])
 
-keymap("n", "<localleader>s", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
+keymap("n", "<localleader>ss", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
+keymap("n", "<localleader>st", ":Startify<cr>")
