@@ -44,10 +44,9 @@ return {
 	"mhinz/vim-startify",
 	{
 		"iamcco/markdown-preview.nvim",
-		build = "cd app && npm install",
-		event = "LspAttach",
-		init = function()
-			vim.g.mkdp_filetypes = { "markdown" }
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
 		end,
 		ft = "markdown",
 	},

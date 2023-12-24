@@ -64,7 +64,7 @@ vim.g.gist_token = "github_pat_11AKYU7CY0RoXW1SWzVzbh_34FK7ZoMvf1n17x1cFaSfYJdjS
 vim.g.gist_clip_command = "xclip -selection clipboard"
 vim.g.gist_show_privates = 1
 
--- vim.g.mkdp_browser = '/usr/bin/firefox'
+-- vim.g.mkdp_browser = "/usr/bin/microsoft-edge-beta"
 vim.g.mkdp_auto_start = 1
 vim.g.mkdp_auto_close = 1
 vim.g.mkdp_command_for_global = 1
