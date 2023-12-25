@@ -100,6 +100,17 @@ return {
 		opts = {},
 	},
 	{
+		"dhruvasagar/vim-table-mode",
+		ft = { "text", "markdown", "org" },
+		config = function()
+			vim.cmd("TableModeEnable")
+		end,
+	},
+	{
+		"lervag/vimtex",
+		ft = "tex",
+	},
+	{
 		"ruifm/gitlinker.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
 	},

@@ -71,3 +71,7 @@ vim.g.mkdp_command_for_global = 1
 vim.g.mkdp_echo_preview_url = 1
 
 vim.g.skip_ts_context_commentstring_module = true
+
+vim.g.vimtex_view_general_viewer = "evince"
+vim.g.vimtex_view_general_options = "-reuse-instance @pdf"
+vim.g.vimtex_view_general_options_latexmk = "-reuse-instance"

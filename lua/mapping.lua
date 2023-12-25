@@ -154,8 +154,8 @@ nnoremap <silent><leader>t <Cmd>exe v:count1 . "ToggleTerm size=40 direction=ver
 nnoremap <silent><C-t> :ToggleTerm<CR>
 ]])
 
-keymap("n", "<leader>*", ":Ggrep! -q <cword> <bar> cclose <bar> Telescope quickfix<cr>")
-keymap("v", "<leader>*", 'y<c-u>:Ggrep! -q <c-r>" <bar> cclose <bar> Telescope quickfix<cr>')
+keymap("n", "<leader>*", ":Ggrep! -Iq <cword> <bar> cclose <bar> Telescope quickfix<cr>")
+keymap("v", "<leader>*", 'y<c-u>:Ggrep! -Iq <c-r>" <bar> cclose <bar> Telescope quickfix<cr>')
 
 vim.cmd([[
 function! GetUniqueSessionName()
