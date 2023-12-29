@@ -58,8 +58,8 @@ return {
 				{ name = "nvim_lsp" },
 				{ name = "buffer" },
 				{ name = "luasnip" }, -- For luasnip users.
-			}, {
 				{ name = "path" },
+				{ name = "orgmode" },
 			}),
 			formatting = {
 				fields = { "abbr", "menu", "kind" },

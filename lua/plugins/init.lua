@@ -15,6 +15,21 @@ return {
 		opts = {},
 	},
 	{
+		"simrat39/symbols-outline.nvim",
+		config = function()
+			require("symbols-outline").setup()
+		end,
+		keys = {
+			{
+				"<localleader>so",
+				mode = { "n" },
+				function()
+					vim.cmd("SymbolsOutline")
+				end,
+			},
+		},
+	},
+	{
 		"folke/neodev.nvim",
 		opts = {},
 		event = "LspAttach",
@@ -48,7 +63,7 @@ return {
 		build = function()
 			vim.fn["mkdp#util#install"]()
 		end,
-		ft = "markdown",
+		ft = { "markdown", "org" },
 	},
 	{
 		"mfussenegger/nvim-jdtls",
@@ -103,7 +118,7 @@ return {
 		"dhruvasagar/vim-table-mode",
 		ft = { "text", "markdown", "org" },
 		config = function()
-			vim.cmd("TableModeEnable")
+			vim.cmd("silent TableModeEnable")
 		end,
 	},
 	{
@@ -113,5 +128,8 @@ return {
 	{
 		"ruifm/gitlinker.nvim",
 		dependencies = "nvim-lua/plenary.nvim",
+		config = function()
+			require("gitlinker").setup()
+		end,
 	},
 }

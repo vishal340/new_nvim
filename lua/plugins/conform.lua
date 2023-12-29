@@ -14,6 +14,7 @@ return {
 			mysql = { "sqlfmt" },
 			markdown = { "prettier" },
 			lua = { "stylua" },
+			sh = { "shfmt" },
 		},
 		format_on_save = {
 			lsp_fallback = true,
