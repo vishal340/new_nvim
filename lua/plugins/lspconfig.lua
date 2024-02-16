@@ -185,6 +185,7 @@ return {
 			lspconfig.vimls.setup({})
 			lspconfig.bashls.setup({})
 			lspconfig.html.setup({})
+			lspconfig.htmx.setup({})
 			lspconfig.cmake.setup({})
 			lspconfig.dockerls.setup({})
 			lspconfig.docker_compose_language_service.setup({})
