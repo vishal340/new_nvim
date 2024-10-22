@@ -177,7 +177,7 @@ return {
 				},
 			})
 			lspconfig.gopls.setup({})
-			lspconfig.tsserver.setup({})
+			lspconfig.ts_ls.setup({})
 			lspconfig.jsonls.setup({})
 			lspconfig.yamlls.setup({})
 			lspconfig.rust_analyzer.setup({})
