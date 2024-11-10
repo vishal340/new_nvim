@@ -65,11 +65,11 @@ return {
 		end,
 		ft = { "markdown", "org" },
 	},
-	{
-		"mfussenegger/nvim-jdtls",
-		event = "LspAttach",
-		ft = "java",
-	},
+	-- {
+	-- 	"mfussenegger/nvim-jdtls",
+	-- 	ft = "java",
+	-- 	event = "LspAttach",
+	-- },
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {},

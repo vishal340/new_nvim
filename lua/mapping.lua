@@ -65,7 +65,7 @@ keymap("n", "zd", ":buffers<cr>:bdelete ")
 local map_split = function(buf_id, lhs, direction)
 	local rhs = function()
 		local new_target_window
-		vim.api.nvim_win_call(MiniFiles.get_target_window(), function()
+		vim.api.nvim_win_call(MiniFiles.get_explorer_state().target_window, function()
 			vim.cmd(direction .. " split")
 			new_target_window = vim.api.nvim_get_current_win()
 		end)
@@ -175,3 +175,5 @@ endfunction
 
 keymap("n", "<localleader>ss", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
 keymap("n", "<localleader>st", ":Startify<cr>")
+
+keymap("n", "<localleader>a", "<cmd>AerialToggle!<cr>")
