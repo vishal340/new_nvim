@@ -22,6 +22,15 @@ return {
 			desc = "Flash Treesitter",
 		},
 		{
+			"<localleader>fs",
+			mode = { "o", "x" },
+			function()
+				require("flash").treesitter_search()
+			end,
+			desc = "Treesitter Search",
+		},
+
+		{
 			"<localleader>fr",
 			mode = "o",
 			function()

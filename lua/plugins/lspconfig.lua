@@ -88,7 +88,7 @@ return {
 			lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 			lsp_defaults.on_attach = on_attach
-			lspconfig.ruff_lsp.setup({
+			lspconfig.ruff.setup({
 				init_options = {
 					settings = {
 						-- Any extra CLI arguments for `ruff` go here.
