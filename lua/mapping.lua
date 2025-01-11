@@ -56,11 +56,14 @@ keymap("i", "<M-d>", "<C-o>d", opts)
 keymap("i", "<M-y>", "<C-o>y", opts)
 keymap("i", "<M-s>", "<C-o>s", opts)
 
-keymap("n", "ze", ":buffers<cr>:buffer ")
+keymap("n", "ze", ':buffers<cmd>call feedkeys("<ENTER>")<cr> :buffer ')
 keymap("n", "zo", ":e <cmd>call feedkeys('<TAB>')<cr>")
 keymap("n", "zn", ":bn<cr>", opts)
 keymap("n", "zp", ":bp<cr>", opts)
 keymap("n", "zd", ":buffers<cr>:bdelete ")
+
+keymap("n", "<F6>", ":registers<cr>")
+keymap("n", "<F7>", ":marks<cr>")
 
 local map_split = function(buf_id, lhs, direction)
 	local rhs = function()
