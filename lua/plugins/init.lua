@@ -11,8 +11,9 @@ return {
 	"nvim-lua/plenary.nvim",
 	{
 		"rmagatti/goto-preview",
-		event = "LspAttach",
-		opts = {},
+		dependencies = { "rmagatti/logger.nvim" },
+		event = "BufEnter",
+		config = true, -- necessary as per https://github.com/rmagatti/goto-preview/issues/88
 	},
 	{
 		"simrat39/symbols-outline.nvim",
