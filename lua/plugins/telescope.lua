@@ -15,6 +15,15 @@ return {
 		local actions = require("telescope.actions")
 		require("telescope").setup({
 			defaults = {
+				layout_strategy = "vertical",
+				layout_config = {
+					height = 0.95,
+					prompt_position = "top",
+					vertical = {
+						mirror = true,
+						preview_cutoff = 0,
+					},
+				},
 				mappings = {
 					i = {
 						["<M-t>"] = actions.select_tab,
