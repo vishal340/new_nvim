@@ -13,11 +13,14 @@ return {
 		dependencies = {
 			"jmbuhr/otter.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			"nvimtools/hydra.nvim",
 		},
 	},
 	{
 		"3rd/image.nvim",
-		opts = {},
+		opts = {
+			backend = "ueberzug",
+		},
 	},
 	{
 		"benlubas/molten-nvim",
