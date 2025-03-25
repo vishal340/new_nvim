@@ -6,7 +6,7 @@ return {
 			cpp = { "clang_format" },
 			c = { "clang_format" },
 			java = { "clang_format" },
-			python = { "black" },
+			python = { "ruff" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 			javascript = { "prettier" },

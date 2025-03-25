@@ -1,15 +1,12 @@
 return {
 	{
-		"nvimtools/hydra.nvim",
-		config = function()
-			-- create hydras in here
-		end,
-	},
-	{
 		"GCBallesteros/jupytext.nvim",
-		config = true,
-		-- Depending on your nvim distro or config you may need to make the loading not lazy
-		-- ft = { "python" },
+		config = {
+			style = "markdown",
+			output_extension = "md",
+			force_ft = "markdown",
+		},
+		lazy = true,
 	},
 	{
 		"quarto-dev/quarto-nvim",
@@ -25,7 +22,6 @@ return {
 	{
 		"benlubas/molten-nvim",
 		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
-		-- ft = { "python" },
 		dependencies = { "3rd/image.nvim" },
 		build = ":UpdateRemotePlugins",
 		init = function()
@@ -33,5 +29,25 @@ return {
 			vim.g.molten_image_provider = "image.nvim"
 			vim.g.molten_output_win_max_height = 20
 		end,
+		keys = {
+			{
+				"<localleader>meo",
+				mode = "n",
+				":MoltenEvaluateOperator<CR>",
+				{ desc = "evaluate operator", silent = true },
+			},
+			{
+				"<localleader>mec",
+				mode = "n",
+				":MoltenEvaluateCell<CR>",
+				{ desc = "re-eval cell", silent = true },
+			},
+			{
+				"<localleader>me",
+				mode = "v",
+				":<C-u>MoltenEvaluateVisual<CR>gv",
+				{ desc = "execute visual selection", silent = true },
+			},
+		},
 	},
 }
