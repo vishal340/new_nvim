@@ -2,8 +2,6 @@ local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 vim.cmd("verbose imap <tab>")
 
-keymap("n", "<localleader>gt", ":normal gt<cr>", opts)
-
 --TODO: the line below doesn't work as intended
 keymap("n", "gft", ":tabnew <bar> :edit <cfile><cr>")
 
@@ -65,6 +63,17 @@ keymap("n", "zd", ":buffers<cr>:bdelete ")
 
 keymap("n", "<F6>", ":registers<cr>")
 keymap("n", "<F7>", ":marks<cr>")
+
+keymap("n", "<localleader>gT", function()
+	for i = 1, vim.v.count do
+		vim.cmd("normal! gT")
+	end
+end)
+keymap("n", "<localleader>gt", function()
+	for i = 1, vim.v.count do
+		vim.cmd("normal! gt")
+	end
+end)
 
 local map_split = function(buf_id, lhs, direction)
 	local rhs = function()

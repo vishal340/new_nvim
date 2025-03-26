@@ -6,7 +6,6 @@ return {
 			output_extension = "md",
 			force_ft = "markdown",
 		},
-		lazy = true,
 	},
 	{
 		"quarto-dev/quarto-nvim",
@@ -14,6 +13,25 @@ return {
 			"jmbuhr/otter.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"nvimtools/hydra.nvim",
+		},
+		ft = { "quarto", "markdown" },
+		opts = {
+			lspFeatures = {
+				-- NOTE: put whatever languages you want here:
+				languages = { "r", "python" },
+				chunks = "all",
+				diagnostics = {
+					enabled = true,
+					triggers = { "BufWritePost" },
+				},
+				completion = {
+					enabled = true,
+				},
+			},
+			codeRunner = {
+				enabled = true,
+				default_method = "molten",
+			},
 		},
 	},
 	{
@@ -30,7 +48,10 @@ return {
 		init = function()
 			-- these are examples, not defaults. Please see the readme
 			vim.g.molten_image_provider = "image.nvim"
-			vim.g.molten_output_win_max_height = 20
+			vim.g.molten_wrap_output = true
+			vim.g.molten_virt_text_output = true
+			vim.g.molten_virt_lines_off_by_1 = true
+			vim.g.molten_auto_open_output = false
 		end,
 		keys = {
 			{
@@ -50,6 +71,24 @@ return {
 				mode = "v",
 				":<C-u>MoltenEvaluateVisual<CR>gv",
 				{ desc = "execute visual selection", silent = true },
+				{
+					"<localleader>mo",
+					mode = "n",
+					":noautocmd MoltenEnterOutput<CR>",
+					{ desc = "open output window", silent = true },
+				},
+				{
+					"<localleader>mh",
+					mode = "n",
+					":MoltenHideOutput<CR>",
+					{ desc = "close output window", silent = true },
+				},
+				{
+					"<localleader>md",
+					mode = "n",
+					":MoltenDelete<CR>",
+					{ desc = "delete Molten cell", silent = true },
+				},
 			},
 		},
 	},
