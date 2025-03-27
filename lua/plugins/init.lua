@@ -10,12 +10,6 @@ return {
 	},
 	"nvim-lua/plenary.nvim",
 	{
-		"folke/neodev.nvim",
-		opts = {},
-		event = "LspAttach",
-		ft = "lua",
-	},
-	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
@@ -54,13 +48,6 @@ return {
 	{
 		"mattn/vim-gist",
 		lazy = true,
-	},
-	{
-		"Fildo7525/pretty_hover",
-		event = "LspAttach",
-		opts = {
-			toggle = true,
-		},
 	},
 	"romainl/vim-qf",
 	{

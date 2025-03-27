@@ -63,7 +63,6 @@ local on_attach = function(_, bufnr)
 	keymap("n", "<leader>dh", "<cmd>lua vim.diagnostic.hide()<cr>", bufopts)
 	keymap("n", "<leader>ds", "<cmd>lua vim.diagnostic.show()<cr>", bufopts)
 	keymap("n", "<leader>gft", '<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', bufopts)
-	keymap("n", "K", '<cmd>lua require("pretty_hover").hover()<cr>', bufopts)
 	keymap("n", "<leader>ih", function()
 		if vim.lsp.inlay_hint.is_enabled(0) then
 			vim.lsp.inlay_hint.enable(0, false)
