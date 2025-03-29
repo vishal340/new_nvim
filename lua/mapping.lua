@@ -188,5 +188,3 @@ endfunction
 
 keymap("n", "<localleader>ss", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
 keymap("n", "<localleader>st", ":Startify<cr>")
-
-keymap("n", "<localleader>a", "<cmd>AerialToggle!<cr>")

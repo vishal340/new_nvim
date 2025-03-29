@@ -10,14 +10,14 @@ return {
 		},
 		"debugloop/telescope-undo.nvim",
 	},
-	optional = true,
+	-- optional = true,
 	config = function()
 		local actions = require("telescope.actions")
 		require("telescope").setup({
 			defaults = {
 				layout_strategy = "vertical",
 				layout_config = {
-					height = 0.95,
+					height = 1,
 					prompt_position = "top",
 					vertical = {
 						mirror = true,
@@ -51,14 +51,9 @@ return {
 			preview = {
 				filesize_limit = 0.1,
 			},
-			extensions = {
-				undo = {},
-				fzf = {},
-				quicknote = {},
-			},
+			-- extensions = {},
 		})
 		require("telescope").load_extension("fzf")
 		require("telescope").load_extension("undo")
-		require("telescope").load_extension("quicknote")
 	end,
 }
