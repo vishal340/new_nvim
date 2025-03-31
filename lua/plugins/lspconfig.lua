@@ -154,14 +154,7 @@ return {
 					},
 				},
 			})
-
-			lspconfig.ltex.setup({
-				settings = {
-					ltex = {
-						language = "en-US",
-					},
-				},
-			})
+			require("lspconfig").ltex_plus.setup({})
 			lspconfig.sqlls.setup({
 				filetypes = { "sql", "mysql", "postgres" },
 			})
