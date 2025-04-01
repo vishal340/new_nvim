@@ -73,14 +73,21 @@ local on_attach = function(_, bufnr)
 end
 
 return {
-	"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
-	event = "LspAttach",
-	dependencies = {
-		"saghen/blink.cmp",
-	},
-	opts = {
-		servers = {
-			clangd = {
+	{
+		"neovim/nvim-lspconfig",
+		event = "LspAttach",
+		dependencies = {
+			"saghen/blink.cmp",
+		},
+		init = function()
+			local lspconfig = require("lspconfig")
+			local lsp_defaults = lspconfig.util.default_config
+			lsp_defaults.capabilities = require("blink.cmp").get_lsp_capabilities(lsp_defaults.capabilities)
+			lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+			lsp_defaults.on_attach = on_attach
+
+			lspconfig.clangd.setup({
 				root_dir = function(fname)
 					return require("lspconfig.util").root_pattern(
 						"Makefile",
@@ -93,6 +100,9 @@ return {
 						"compile_flags.txt"
 					)(fname) or require("lspconfig.util").find_git_ancestor(fname)
 				end,
+				capabilities = {
+					offsetEncoding = { "utf-16" },
+				},
 				cmd = {
 					"clangd",
 					"--background-index",
@@ -109,8 +119,9 @@ return {
 					completeUnimported = true,
 					clangdFileStatus = true,
 				},
-			},
-			lua_ls = {
+			})
+
+			lspconfig.lua_ls.setup({
 				single_file_support = true,
 				settings = {
 					Lua = {
@@ -133,11 +144,13 @@ return {
 						},
 					},
 				},
-			},
-			sqlls = {
+			})
+			lspconfig.ltex_plus.setup({})
+			lspconfig.sqlls.setup({
 				filetypes = { "sql", "mysql", "postgres" },
-			},
-			jdtls = {
+			})
+
+			lspconfig.jdtls.setup({
 				init_options = {
 					jvm_args = {},
 					workspace = "/home/user/.cache/jdtls/workspace",
@@ -145,37 +158,22 @@ return {
 						"$HOME/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-0.47.0.jar",
 					},
 				},
-			},
-			ltex_plus = {},
-			pyright = {},
-			gopls = {},
-			ts_ls = {},
-			jsonls = {},
-			yamlls = {},
-			rust_analyzer = {},
-			taplo = {},
-			vimls = {},
-			bashls = {},
-			html = {},
-			htmx = {},
-			cmake = {},
-			dockerls = {},
-			docker_compose_language_service = {},
-			gradle_ls = {},
-		},
+			})
+			lspconfig.pyright.setup({})
+			lspconfig.gopls.setup({})
+			lspconfig.ts_ls.setup({})
+			lspconfig.jsonls.setup({})
+			lspconfig.yamlls.setup({})
+			lspconfig.rust_analyzer.setup({})
+			lspconfig.taplo.setup({})
+			lspconfig.vimls.setup({})
+			lspconfig.bashls.setup({})
+			lspconfig.html.setup({})
+			lspconfig.htmx.setup({})
+			lspconfig.cmake.setup({})
+			lspconfig.dockerls.setup({})
+			lspconfig.docker_compose_language_service.setup({})
+			lspconfig.gradle_ls.setup({})
+		end,
 	},
-	config = function(_, opts)
-		local lspconfig = require("lspconfig")
-		local lsp_defaults = lspconfig.util.default_config
-		lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
-		for server, config in pairs(opts.servers) do
-			config.capabilities = vim.tbl_deep_extend(
-				"force",
-				lsp_defaults.capabilities,
-				require("blink.cmp").get_lsp_capabilities(config.capabilities)
-			)
-			lspconfig[server].setup(config)
-		end
-		lsp_defaults.on_attach = on_attach
-	end,
 }
