@@ -169,10 +169,13 @@ return {
 		local lsp_defaults = lspconfig.util.default_config
 		lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
 		for server, config in pairs(opts.servers) do
-			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+			config.capabilities = vim.tbl_deep_extend(
+				"force",
+				lsp_defaults.capabilities,
+				require("blink.cmp").get_lsp_capabilities(config.capabilities)
+			)
 			lspconfig[server].setup(config)
 		end
-
 		lsp_defaults.on_attach = on_attach
 	end,
 }
