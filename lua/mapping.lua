@@ -8,8 +8,6 @@ keymap("n", "gft", ":tabnew <bar> :edit <cfile><cr>")
 keymap("n", "gfv", ":vs <bar> :edit <cfile><cr>")
 keymap("n", "gfh", ":sp <bar> :edit <cfile><cr>")
 keymap("n", "<leader>cl", ":nohlsearch<cr>")
-keymap("n", "<F4>", ":w<cr>")
-keymap("i", "<F4>", "<C-o>:w<cr>")
 keymap("n", "<leader><right>", ":vertical resize +5<cr>")
 keymap("n", "<leader><left>", ":vertical resize -5<cr>")
 keymap("n", "<leader><up>", ":resize +2<cr>")
@@ -61,6 +59,10 @@ keymap("n", "zn", ":bn<cr>", opts)
 keymap("n", "zp", ":bp<cr>", opts)
 keymap("n", "zd", ":buffers<cr>:bdelete ")
 
+keymap("n", "<F3>", ":file<cr>")
+keymap("n", "<F4>", ":w<cr>")
+keymap("i", "<F4>", "<C-o>:w<cr>")
+keymap("n", "<F5>", ":Telescope ")
 keymap("n", "<F6>", ":registers<cr>")
 keymap("n", "<F7>", ":marks<cr>")
 
@@ -102,7 +104,6 @@ vim.api.nvim_create_autocmd("User", {
 keymap("n", "<leader>e", "<cmd>lua MiniFiles.open()<cr>", opts)
 
 local builtin = require("telescope.builtin")
-keymap("n", "<F5>", ":Telescope ")
 
 local find_files_from_project_git_root = function()
 	local function is_git_repo()

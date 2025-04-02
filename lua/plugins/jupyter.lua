@@ -18,7 +18,7 @@ return {
 		opts = {
 			lspFeatures = {
 				-- NOTE: put whatever languages you want here:
-				languages = { "r", "python" },
+				languages = { "r", "python", "julia" },
 				chunks = "all",
 				diagnostics = {
 					enabled = true,

@@ -1,5 +1,6 @@
 vim.cmd([[
 set encoding=utf-8
+set laststatus=0
 set mouse=a
 set tabstop=3
 set shiftwidth=3
