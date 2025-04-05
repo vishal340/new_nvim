@@ -1,5 +1,5 @@
 vim.cmd([[
-	setlocal spell spelllang=en_gb
+	" setlocal spell spelllang=en_gb
 	setlocal linebreak
 	setlocal conceallevel=2
 	setlocal foldexpr=

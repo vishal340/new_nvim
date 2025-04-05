@@ -8,6 +8,8 @@ return {
 		snippets = { preset = "luasnip" },
 		keymap = {
 			preset = "default",
+			["<Up>"] = {},
+			["<Down>"] = {},
 		},
 		appearance = {
 			nerd_font_variant = "mono",

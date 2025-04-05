@@ -156,7 +156,17 @@ return {
 					},
 				},
 			})
-			lspconfig.pyright.setup({})
+			lspconfig.pyright.setup({
+				settings = {
+					python = {
+						analysis = {
+							diagnosticSeverityOverrides = {
+								reportUnusedExpression = "none",
+							},
+						},
+					},
+				},
+			})
 			lspconfig.gopls.setup({})
 			lspconfig.ts_ls.setup({})
 			lspconfig.jsonls.setup({})

@@ -1,12 +1,13 @@
 return {
 	"stevearc/conform.nvim",
-	enable = true,
+	event = "LspAttach",
 	opts = {
+		quite = true,
 		formatters_by_ft = {
 			cpp = { "clang_format" },
 			c = { "clang_format" },
 			java = { "clang_format" },
-			python = { "ruff" },
+			python = { "black" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 			javascript = { "prettier" },
