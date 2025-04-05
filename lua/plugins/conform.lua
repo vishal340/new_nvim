@@ -23,4 +23,16 @@ return {
 			timeout_ms = 500,
 		},
 	},
+	config = function(_, opts)
+		local conform = require("conform")
+		conform.setup(opts)
+		conform.formatters.prettier = {
+			prepend_args = function()
+				return {
+					"--config-precedence",
+					"prefer-file",
+				}
+			end,
+		}
+	end,
 }

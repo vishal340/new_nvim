@@ -26,5 +26,9 @@ return {
 			implementation = "prefer_rust_with_warning",
 		},
 	},
-	opts_extend = { "sources.default" },
+	-- config = function()
+	-- 	vim.cmd(
+	-- 		"autocmd FileType sql,mysql,postgres lua require('blink.cmp').setup.opts_extend={'sources.default','vim-dadbod-completion'})"
+	-- 	)
+	-- end,
 }
