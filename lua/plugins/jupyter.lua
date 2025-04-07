@@ -57,6 +57,12 @@ return {
 		end,
 		keys = {
 			{
+				"<localleader>mso",
+				mode = "n",
+				":MoltenShowOutput<cr>",
+				{ desc = "output of cell", silent = true },
+			},
+			{
 				"<localleader>meo",
 				mode = "n",
 				":MoltenEvaluateOperator<cr>",
