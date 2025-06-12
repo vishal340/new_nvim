@@ -21,9 +21,6 @@ keymap("i", "<C-h>", "<C-o><C-w>h")
 keymap("i", "<C-j>", "<C-o><C-w>j")
 keymap("i", "<C-k>", "<C-o><C-w>k")
 keymap("i", "<C-l>", "<C-o><C-w>l")
---In insert mode, pressing ctrl + numpad's+/- increases/decreases the font respectively
-keymap("i", "<C-kPlus>", "<Esc>call AdjustFontSize(1)<CR>a")
-keymap("i", "<C-kMinus>", "<Esc>:call AdjustFontSize(-1)<CR>a")
 keymap("t", "<C-h>", "<C-\\><C-n><C-w>h")
 keymap("t", "<C-j>", "<C-\\><C-n><C-w>j")
 keymap("t", "<C-k>", "<C-\\><C-n><C-w>k")
@@ -59,6 +56,8 @@ keymap("n", "zn", ":bn<cr>", opts)
 keymap("n", "zp", ":bp<cr>", opts)
 keymap("n", "zd", ":buffers<cr>:bdelete ")
 
+keymap("n", "<F1>", ":q!<cr>")
+keymap("n", "<F2>", ":messages<cr>")
 keymap("n", "<F3>", ":file<cr>")
 keymap("n", "<F4>", ":w<cr>")
 keymap("i", "<F4>", "<C-o>:w<cr>")
@@ -66,12 +65,12 @@ keymap("n", "<F5>", ":Telescope ")
 keymap("n", "<F6>", ":registers<cr>")
 keymap("n", "<F7>", ":marks<cr>")
 
-keymap("n", "<localleader>gT", function()
+keymap("n", "gT", function()
 	for i = 1, vim.v.count do
 		vim.cmd("normal! gT")
 	end
 end)
-keymap("n", "<localleader>gt", function()
+keymap("n", "gt", function()
 	for i = 1, vim.v.count do
 		vim.cmd("normal! gt")
 	end

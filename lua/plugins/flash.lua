@@ -1,7 +1,13 @@
 return {
 	"folke/flash.nvim",
 	event = "VeryLazy",
-	opts = {},
+	opts = {
+		modes = {
+			search = {
+				enabled = true,
+			},
+		},
+	},
 	keys = {
 		{
 			"*",
@@ -37,6 +43,14 @@ return {
 				require("flash").remote()
 			end,
 			desc = "Remote Flash",
+		},
+		{
+			"<C-s>",
+			mode = { "c" },
+			function()
+				require("flash").toggle()
+			end,
+			desc = "Toggle Flash Search",
 		},
 	},
 }
