@@ -1,23 +1,4 @@
 local keymap = vim.keymap.set
-local builtin = require("telescope.builtin")
-
-local diagnostic_list_from_git_root = function()
-	local function is_git_repo()
-		vim.fn.system("git rev-parse --is-inside-work-tree")
-		return vim.v.shell_error == 0
-	end
-	local function get_git_root()
-		local dot_git_path = vim.fn.finddir(".git", ".;")
-		return vim.fn.fnamemodify(dot_git_path, ":h")
-	end
-	local opt = {}
-	if is_git_repo() then
-		opt = {
-			cwd = get_git_root(),
-		}
-	end
-	builtin.diagnostics(opt)
-end
 
 local on_attach = function(_, bufnr)
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -57,9 +38,6 @@ local on_attach = function(_, bufnr)
 	keymap("n", "<leader>df", "<cmd>lua vim.diagnostic.open_float()<cr>", bufopts)
 	keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_prev()<cr>", bufopts)
 	keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<cr>", bufopts)
-	keymap("n", "<leader>dl", function()
-		diagnostic_list_from_git_root()
-	end, bufopts)
 	keymap("n", "<leader>dh", "<cmd>lua vim.diagnostic.hide()<cr>", bufopts)
 	keymap("n", "<leader>ds", "<cmd>lua vim.diagnostic.show()<cr>", bufopts)
 	keymap("n", "<leader>gft", '<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', bufopts)
@@ -73,114 +51,78 @@ local on_attach = function(_, bufnr)
 end
 
 return {
-	{
-		"neovim/nvim-lspconfig",
-		event = "LspAttach",
-		dependencies = {
-			"saghen/blink.cmp",
-		},
-		init = function()
-			local lspconfig = require("lspconfig")
-			local lsp_defaults = lspconfig.util.default_config
-			lsp_defaults.capabilities = require("blink.cmp").get_lsp_capabilities(lsp_defaults.capabilities)
-			lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-			lsp_defaults.on_attach = on_attach
-
-			lspconfig.clangd.setup({
-				root_dir = function(fname)
-					return require("lspconfig.util").root_pattern(
-						"Makefile",
-						"configure.ac",
-						"configure.in",
-						"config.h.in",
-						"build.ninja"
-					)(fname) or require("lspconfig.util").root_pattern(
-						"compile_commands.json",
-						"compile_flags.txt"
-					)(fname) or require("lspconfig.util").find_git_ancestor(fname)
-				end,
-				cmd = {
-					"clangd",
-					"--background-index",
-					"--clang-tidy",
-					"--function-arg-placeholders",
-					"--fallback-style=llvm",
-					"--header-insertion=iwyu",
-					-- "--query-driver=/usr/lib/llvm-13/bin/clang++-15",
-					"--all-scopes-completion",
-					"--completion-style=detailed",
-				},
-				init_options = {
-					usePlaceholders = true,
-					completeUnimported = true,
-					clangdFileStatus = true,
-				},
-			})
-
-			lspconfig.lua_ls.setup({
-				single_file_support = true,
-				settings = {
-					Lua = {
-						runtime = {
-							-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-							version = "LuaJIT",
-						},
-						diagnostics = {
-							globals = { "vim" },
-						},
-						workspace = {
-							library = vim.env.VIMRUNTIME,
-							checkThirdParty = false,
-						},
-						telemetry = {
-							enable = false,
-						},
-						completion = {
-							callSnippet = "Replace",
-						},
-					},
-				},
-			})
-			lspconfig.ltex_plus.setup({})
-			lspconfig.sqlls.setup({
-				filetypes = { "sql", "mysql", "postgres" },
-			})
-
-			lspconfig.jdtls.setup({
-				init_options = {
-					jvm_args = {},
-					workspace = "/home/user/.cache/jdtls/workspace",
-					bundles = {
-						"$HOME/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-0.47.0.jar",
-					},
-				},
-			})
-			lspconfig.pyright.setup({
-				settings = {
-					python = {
-						analysis = {
-							diagnosticSeverityOverrides = {
-								reportUnusedExpression = "none",
-							},
-						},
-					},
-				},
-			})
-			lspconfig.gopls.setup({})
-			lspconfig.ts_ls.setup({})
-			lspconfig.jsonls.setup({})
-			lspconfig.yamlls.setup({})
-			lspconfig.rust_analyzer.setup({})
-			lspconfig.taplo.setup({})
-			lspconfig.vimls.setup({})
-			lspconfig.bashls.setup({})
-			lspconfig.html.setup({})
-			lspconfig.htmx.setup({})
-			lspconfig.cmake.setup({})
-			lspconfig.dockerls.setup({})
-			lspconfig.docker_compose_language_service.setup({})
-			lspconfig.gradle_ls.setup({})
-		end,
+	"neovim/nvim-lspconfig",
+	event = "LspAttach",
+	dependencies = {
+		"saghen/blink.cmp",
 	},
+	init = function()
+		local lspconfig = require("lspconfig")
+		local lsp_defaults = lspconfig.util.default_config
+		lsp_defaults.capabilities = require("blink.cmp").get_lsp_capabilities(lsp_defaults.capabilities)
+		lsp_defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
+	end,
+	-- 	lspconfig.lua_ls.setup({
+	-- 		single_file_support = true,
+	-- 		settings = {
+	-- 			Lua = {
+	-- 				runtime = {
+	-- 					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+	-- 					version = "LuaJIT",
+	-- 				},
+	-- 				diagnostics = {
+	-- 					globals = { "vim" },
+	-- 				},
+	-- 				workspace = {
+	-- 					library = vim.env.VIMRUNTIME,
+	-- 					checkThirdParty = false,
+	-- 				},
+	-- 				telemetry = {
+	-- 					enable = false,
+	-- 				},
+	-- 				completion = {
+	-- 					callSnippet = "Replace",
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	})
+	-- 	lspconfig.ltex_plus.setup({})
+	-- 	lspconfig.sqlls.setup({
+	-- 		filetypes = { "sql", "mysql", "postgres" },
+	-- 	})
+	--
+	-- 	lspconfig.jdtls.setup({
+	-- 		init_options = {
+	-- 			jvm_args = {},
+	-- 			workspace = "/home/user/.cache/jdtls/workspace",
+	-- 			bundles = {
+	-- 				"$HOME/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-0.47.0.jar",
+	-- 			},
+	-- 		},
+	-- 	})
+	-- 	lspconfig.pyright.setup({
+	-- 		settings = {
+	-- 			python = {
+	-- 				analysis = {
+	-- 					diagnosticSeverityOverrides = {
+	-- 						reportUnusedExpression = "none",
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	})
+	-- 	lspconfig.gopls.setup({})
+	-- 	lspconfig.ts_ls.setup({})
+	-- 	lspconfig.jsonls.setup({})
+	-- 	lspconfig.yamlls.setup({})
+	-- 	lspconfig.rust_analyzer.setup({})
+	-- 	lspconfig.taplo.setup({})
+	-- 	lspconfig.vimls.setup({})
+	-- 	lspconfig.bashls.setup({})
+	-- 	lspconfig.html.setup({})
+	-- 	lspconfig.htmx.setup({})
+	-- 	lspconfig.cmake.setup({})
+	-- 	lspconfig.dockerls.setup({})
+	-- 	lspconfig.docker_compose_language_service.setup({})
+	-- 	lspconfig.gradle_ls.setup({})
 }

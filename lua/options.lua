@@ -39,7 +39,9 @@ vim.diagnostic.config({
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+
 vim.o.exrc = true
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -73,7 +75,7 @@ vim.g.mkdp_filetypes = { "markdown", "org" }
 
 vim.g.skip_ts_context_commentstring_module = true
 
-vim.g.vimtex_view_method = "sioyek"
-vim.g.vimtex_view_general_viewer = "sioyek"
+vim.g.vimtex_view_method = "papers"
+vim.g.vimtex_view_general_viewer = "papers"
 vim.g.vimtex_view_general_options = "-reuse-instance @pdf"
 vim.g.vimtex_view_general_options_latexmk = "-reuse-instance"
