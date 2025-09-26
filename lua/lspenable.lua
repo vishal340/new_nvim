@@ -1,4 +1,21 @@
 local lsps = {
+
+	{ "ltex_plus" },
+	{ "sqlls", { filetypes = { "sql", "mysql", "postgres" } } },
+	{ "gopls" },
+	{ "ts_ls" },
+	{ "jsonls" },
+	{ "yamlls" },
+	{ "rust_analyzer" },
+	{ "taplo" },
+	{ "vimls" },
+	{ "bashls" },
+	{ "html" },
+	{ "htmx" },
+	{ "cmake" },
+	{ "dockerls" },
+	{ "docker_compose_language_service" },
+	{ "gradle_ls" },
 	{
 		"clangd",
 		{
@@ -28,6 +45,62 @@ local lsps = {
 				clangdFileStatus = true,
 			},
 			filetypes = { "c", "cpp" },
+		},
+	},
+	{
+		"lua_ls",
+		{
+			single_file_support = true,
+			settings = {
+				Lua = {
+					runtime = {
+						-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+						version = "LuaJIT",
+					},
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						library = vim.env.VIMRUNTIME,
+						checkThirdParty = false,
+					},
+					telemetry = {
+						enable = false,
+					},
+					completion = {
+						callSnippet = "Replace",
+					},
+				},
+			},
+			filetype = { "lua" },
+		},
+	},
+	{
+		"jdtls",
+		{
+			init_options = {
+				jvm_args = {},
+				workspace = "/home/user/.cache/jdtls/workspace",
+				bundles = {
+					"$HOME/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-0.47.0.jar",
+				},
+			},
+			filetype = { "java" },
+		},
+	},
+	{
+		"pyright",
+		{
+			settings = {
+				python = {
+					analysis = {
+						diagnosticSeverityOverrides = {
+							reportUnusedExpression = "none",
+						},
+					},
+				},
+			},
+			filetype = { "py" },
 		},
 	},
 }
