@@ -11,7 +11,7 @@ set number
 set relativenumber
 set numberwidth=3
 set wildmenu
-set scrolloff=1
+set scrolloff=3
 set history=100
 set belloff=all
 set clipboard+=unnamedplus
