@@ -1,26 +1,27 @@
 return {
-  "nvim-tree/nvim-tree.lua",
-  version = "*",
-  lazy = false,
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-  },
-  config = function()
-    require("nvim-tree").setup {
+	"nvim-tree/nvim-tree.lua",
+	version = "*",
+	lazy = false,
+	event = "VeryLazy",
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+	},
+	config = function()
+		require("nvim-tree").setup({
 			view = {
 				width = 25,
 			},
 			filters = {
 				dotfiles = false,
 			},
-		}
-  end,
+		})
+	end,
 	keys = {
 		{
 			"<leader>E",
-			mode = {"n"},
+			mode = { "n" },
 			"<cmd>NvimTreeToggle<cr>",
-			desc = "nvimtree toggle"
+			desc = "nvimtree toggle",
 		},
-	}
+	},
 }

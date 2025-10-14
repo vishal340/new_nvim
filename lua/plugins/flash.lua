@@ -4,7 +4,7 @@ return {
 	opts = {
 		modes = {
 			search = {
-				enabled = true,
+				enabled = flash,
 			},
 		},
 	},
@@ -46,7 +46,7 @@ return {
 		},
 		{
 			"<C-s>",
-			mode = { "c" },
+			mode = { "n", "c" },
 			function()
 				require("flash").toggle()
 			end,
