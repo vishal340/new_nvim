@@ -26,7 +26,6 @@ return {
 			})
 		end,
 		lazy = false, -- Load immediately for file detection
-		ft = { "python", "ipynb", "julia" },
 		priority = 100, -- Load early
 	},
 }

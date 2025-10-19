@@ -16,14 +16,6 @@ return {
 		require("telescope").setup({
 			defaults = {
 				layout_strategy = "vertical",
-				layout_config = {
-					prompt_position = "top",
-					vertical = {
-						height = 1,
-						mirror = true,
-						preview_cutoff = 0,
-					},
-				},
 				mappings = {
 					i = {
 						["<M-t>"] = actions.select_tab,
