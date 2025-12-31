@@ -43,9 +43,14 @@ return {
 			preview = {
 				filesize_limit = 0.1,
 			},
-			-- extensions = {},
+			extensions = {
+				quicknote = {
+					defaultScope = "CWD",
+				},
+			},
 		})
 		require("telescope").load_extension("fzf")
 		require("telescope").load_extension("undo")
+		require("telescope").load_extension("quicknote")
 	end,
 }

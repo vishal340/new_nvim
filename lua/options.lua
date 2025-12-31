@@ -1,6 +1,6 @@
 vim.cmd([[
 set encoding=utf-8
-set laststatus=0
+set laststatus=1
 set mouse=a
 set tabstop=3
 set shiftwidth=3
@@ -75,7 +75,7 @@ vim.g.mkdp_filetypes = { "markdown", "org" }
 
 vim.g.skip_ts_context_commentstring_module = true
 
-vim.g.vimtex_view_method = "papers"
-vim.g.vimtex_view_general_viewer = "papers"
+vim.g.vimtex_view_method = "preview"
+vim.g.vimtex_view_general_viewer = "preview"
 vim.g.vimtex_view_general_options = "-reuse-instance @pdf"
 vim.g.vimtex_view_general_options_latexmk = "-reuse-instance"

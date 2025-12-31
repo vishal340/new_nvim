@@ -29,12 +29,9 @@ return {
 	"tpope/vim-fugitive",
 	{
 		"sindrets/diffview.nvim",
-		lazy = true,
 	},
-	{
-		"mattn/vim-gist",
-		lazy = true,
-	},
+	"mattn/vim-gist",
+	"mattn/webapi-vim",
 	"romainl/vim-qf",
 	{
 		"echasnovski/mini.files",
