@@ -45,8 +45,4 @@ return {
 			vim.cmd("silent TableModeEnable")
 		end,
 	},
-	{
-		"lervag/vimtex",
-		ft = "tex",
-	},
 }

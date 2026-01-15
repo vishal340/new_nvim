@@ -21,14 +21,16 @@ return {
 			textobjects = {
 				move = {
 					enable = true,
-					set_jumps = false, -- you can change this if you want.
+					set_jumps = true, -- you can change this if you want.
 					goto_next_start = {
 						--- ... other keymaps
 						["]b"] = { query = "@code_cell.inner", desc = "next code block" },
+						["]f"] = { query = "@function.outer", desc = "next function" },
 					},
 					goto_previous_start = {
 						--- ... other keymaps
 						["[b"] = { query = "@code_cell.inner", desc = "previous code block" },
+						["[f"] = { query = "@function.outer", desc = "previous function" },
 					},
 				},
 				select = {
@@ -38,18 +40,8 @@ return {
 						--- ... other keymaps
 						["ib"] = { query = "@code_cell.inner", desc = "in block" },
 						["ab"] = { query = "@code_cell.outer", desc = "around block" },
-					},
-				},
-				swap = { -- Swap only works with code blocks that are under the same
-					-- markdown header
-					enable = true,
-					swap_next = {
-						--- ... other keymap
-						["<leader>sbl"] = "@code_cell.outer",
-					},
-					swap_previous = {
-						--- ... other keymap
-						["<leader>sbh"] = "@code_cell.outer",
+						["if"] = { query = "@function.inner", desc = "in function" },
+						["af"] = { query = "@function.outer", desc = "around function" },
 					},
 				},
 			},

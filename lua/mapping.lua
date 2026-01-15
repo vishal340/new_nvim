@@ -162,8 +162,6 @@ keymap("n", "<localleader>mp", ":MarkdownPreview<cr>")
 vim.cmd([[
 autocmd TermEnter term://*toggleterm#*
      \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-nnoremap <silent><leader>T <Cmd>exe v:count1 . "ToggleTerm direction=horizontal"<CR>
-nnoremap <silent><leader>t <Cmd>exe v:count1 . "ToggleTerm size=40 direction=vertical"<CR>
 nnoremap <silent><C-t> :ToggleTerm<CR>
 ]])
 
@@ -191,13 +189,7 @@ keymap("n", "<localleader>st", ":Startify<cr>")
 
 -- below are mappings specific for lsp
 local bufopts = { noremap = true, silent = true, buffer = bufnr }
-keymap("n", "<leader>gtD", "<cmd>tab split| lua vim.lsp.buf.declaration()<cr>", bufopts)
-keymap("n", "<leader>gvD", "<cmd>vs| lua vim.lsp.buf.declaration()<cr>", bufopts)
-keymap("n", "<leader>ghD", "<cmd>sp| lua vim.lsp.buf.declaration()<cr>", bufopts)
 keymap("n", "<leader>gfd", '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', bufopts)
-keymap("n", "<leader>gtd", "<cmd>tab split| lua vim.lsp.buf.definition()<cr>", bufopts)
-keymap("n", "<leader>gvd", "<cmd>vs| lua vim.lsp.buf.definition()<cr>", bufopts)
-keymap("n", "<leader>ghd", "<cmd>sp| lua vim.lsp.buf.definition()<cr>", bufopts)
 keymap("n", "<leader>gfi", '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>', bufopts)
 keymap("n", "<leader>gfr", '<cmd>lua require("goto-preview").goto_preview_references()<CR>', bufopts)
 keymap("n", "<leader>gti", "<cmd>tab split| lua vim.lsp.buf.implementation()<cr>", bufopts)
@@ -205,10 +197,6 @@ keymap("n", "<leader>gvi", "<cmd>vs| lua vim.lsp.buf.implementation()<cr>", bufo
 keymap("n", "<leader>ghi", "<cmd>sp| lua vim.lsp.buf.implementation()<cr>", bufopts)
 keymap("n", "<leader>gi", function()
 	builtin.lsp_implementations()
-end, bufopts)
-keymap("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", bufopts)
-keymap("n", "<leader>gd", function()
-	vim.lsp.buf.lsp_definitions()
 end, bufopts)
 keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", bufopts)
 keymap("n", "<leader>gr", "<cmd>lua vim.lsp.buf.references()<cr>", bufopts)
@@ -236,3 +224,39 @@ keymap("n", "<leader>ih", function()
 		vim.lsp.inlay_hint.enable(0, true)
 	end
 end)
+
+local tree_api = require("nvim-tree.api")
+
+local git_add = function()
+	local node = tree_api.tree.get_node_under_cursor()
+	local gs = node.git_status.file
+
+	-- If the current node is a directory get children status
+	if gs == nil then
+		gs = (node.git_status.dir.direct ~= nil and node.git_status.dir.direct[1])
+			or (node.git_status.dir.indirect ~= nil and node.git_status.dir.indirect[1])
+	end
+
+	-- If the file is untracked, unstaged or partially staged, we stage it
+	if gs == "??" or gs == "MM" or gs == "AM" or gs == " M" then
+		vim.cmd("silent !git add " .. node.absolute_path)
+
+	-- If the file is staged, we unstage
+	elseif gs == "M " or gs == "A " then
+		vim.cmd("silent !git restore --staged " .. node.absolute_path)
+	end
+
+	tree_api.tree.reload()
+end
+
+vim.keymap.set("n", "ga", git_add, opts)
+
+local swap_then_open_tab = function()
+	local node = tree_api.tree.get_node_under_cursor()
+	vim.cmd("wincmd l")
+	tree_api.node.open.tab(node)
+end
+
+keymap("n", "<leader>t", function()
+	swap_then_open_tab()
+end, bufopts)

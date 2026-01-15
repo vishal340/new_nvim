@@ -11,7 +11,6 @@ return {
 		local dap = require("dap")
 		require("dapui").setup({})
 
-		require("dap-python").setup()
 		require("dap-python").setup("~/.virtualenvs/debugpy/bin/python3")
 		require("dap-python").test_runner = "pytest"
 
