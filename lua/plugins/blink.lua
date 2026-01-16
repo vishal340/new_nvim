@@ -1,8 +1,9 @@
 return {
 	"saghen/blink.cmp",
 	version = "1.*",
-	dependecies = {
+	dependencies = {
 		"L3MON4D3/LuaSnip",
+		"Kaiser-Yang/blink-cmp-avante",
 	},
 	opts = {
 		snippets = { preset = "luasnip" },
@@ -20,7 +21,14 @@ return {
 		},
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
+			default = { "lsp", "avante", "path", "snippets", "buffer" },
+			providers = {
+				avante = {
+					module = "blink-cmp-avante",
+					name = "Avante",
+					opts = {},
+				},
+			},
 		},
 		fuzzy = {
 			implementation = "prefer_rust_with_warning",
