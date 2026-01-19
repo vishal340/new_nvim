@@ -65,13 +65,21 @@ keymap("n", "<F6>", ":registers<cr>")
 keymap("n", "<F7>", ":marks<cr>")
 
 keymap("n", "gT", function()
-	for i = 1, vim.v.count do
+	if vim.v.count == 0 then
 		vim.cmd("normal! gT")
+	else
+		for i = 1, vim.v.count do
+			vim.cmd("normal! gT")
+		end
 	end
 end)
 keymap("n", "gt", function()
-	for i = 1, vim.v.count do
+	if vim.v.count == 0 then
 		vim.cmd("normal! gt")
+	else
+		for i = 1, vim.v.count do
+			vim.cmd("normal! gt")
+		end
 	end
 end)
 
