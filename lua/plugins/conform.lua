@@ -22,6 +22,7 @@ return {
 			lsp_fallback = true,
 			timeout_ms = 500,
 		},
+		notify_on_error = false,
 	},
 	config = function(_, opts)
 		local conform = require("conform")

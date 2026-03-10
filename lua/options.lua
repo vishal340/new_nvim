@@ -67,15 +67,4 @@ vim.g.gist_token = "github_pat_11AKYU7CY0RoXW1SWzVzbh_34FK7ZoMvf1n17x1cFaSfYJdjS
 vim.g.gist_clip_command = "xclip -selection clipboard"
 vim.g.gist_show_privates = 1
 
-vim.g.mkdp_auto_start = 0
-vim.g.mkdp_auto_close = 1
-vim.g.mkdp_command_for_global = 1
-vim.g.mkdp_echo_preview_url = 1
-vim.g.mkdp_filetypes = { "markdown", "org" }
-
 vim.g.skip_ts_context_commentstring_module = true
-
-vim.g.vimtex_view_method = "preview"
-vim.g.vimtex_view_general_viewer = "preview"
-vim.g.vimtex_view_general_options = "-reuse-instance @pdf"
-vim.g.vimtex_view_general_options_latexmk = "-reuse-instance"

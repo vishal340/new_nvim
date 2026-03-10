@@ -143,7 +143,6 @@ return {
 		}
 		keymap("n", "<localleader>dn", ":DapNew<cr>", opts)
 		keymap("n", "<localleader>dc", ":lua  require('dap').continue()<cr>", opts)
-		keymap("n", "<localleader>drs", ":lua  require('dap').continue()<cr>", opts)
 		keymap("n", "<localleader>dsv", ":lua  require('dap').step_over()<cr>", opts)
 		keymap("n", "<localleader>dsi", ":lua  require('dap').step_into()<cr>", opts)
 		keymap("n", "<localleader>dso", ":lua  require('dap').step_out()<cr>", opts)
@@ -167,5 +166,14 @@ return {
 
 		keymap("n", "<localleader>dt", ':lua require("dapui").toggle()<cr>', opts)
 		keymap("v", "<localleader>de", ':lua require("dapui").eval()<cr>', opts)
+		vim.keymap.set("n", "<localleader>dzm", function()
+			require("dap-python").test_method()
+		end, { desc = "Debug test method" })
+		vim.keymap.set("n", "<localleader>dzc", function()
+			require("dap-python").test_class()
+		end, { desc = "Debug test class" })
+		vim.keymap.set("n", "<localleader>dzf", function()
+			require("dap-python").test_module()
+		end, { desc = "Debug test file" })
 	end,
 }

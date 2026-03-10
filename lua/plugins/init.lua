@@ -45,4 +45,5 @@ return {
 			vim.cmd("silent TableModeEnable")
 		end,
 	},
+	"direnv/direnv.vim",
 }

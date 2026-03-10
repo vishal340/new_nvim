@@ -48,7 +48,7 @@ keymap("i", "<M-d>", "<C-o>d", opts)
 keymap("i", "<M-y>", "<C-o>y", opts)
 keymap("i", "<M-s>", "<C-o>s", opts)
 
-keymap("n", "ze", ":buffers<cr>:buffer ")
+keymap("n", "ze", ":Telescope buffers<cr> ")
 keymap("n", "zv", ":buffers<cr>:vs | buffer ")
 keymap("n", "zh", ":buffers<cr>:sp | buffer ")
 keymap("n", "zn", ":bn<cr>", opts)
@@ -64,7 +64,7 @@ keymap("n", "<F5>", ":Telescope ")
 keymap("n", "<F6>", ":registers<cr>")
 keymap("n", "<F7>", ":marks<cr>")
 
-keymap("n", "gT", function()
+keymap("n", "<leader>gT", function()
 	if vim.v.count == 0 then
 		vim.cmd("normal! gT")
 	else
@@ -73,7 +73,7 @@ keymap("n", "gT", function()
 		end
 	end
 end)
-keymap("n", "gt", function()
+keymap("n", "<leader>gt", function()
 	if vim.v.count == 0 then
 		vim.cmd("normal! gt")
 	else
