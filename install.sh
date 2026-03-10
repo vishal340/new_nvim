@@ -2,6 +2,7 @@
 
 # Installation script for vishal340/new_nvim Neovim configuration
 # Supports macOS and Linux
+# Installs all dependencies for configured LSPs and development tools
 
 set -e # Exit on error
 
@@ -60,7 +61,6 @@ install_neovim() {
 				exit 1
 			fi
 		elif [[ "$OS" == "linux" ]]; then
-			# Try different package managers
 			if command -v apt &>/dev/null; then
 				sudo apt update
 				sudo apt install -y neovim
@@ -107,11 +107,33 @@ install_git() {
 	fi
 }
 
-# Install LSP servers and tools
-install_lsp_tools() {
-	print_info "Installing LSP servers and development tools..."
+# Install Python and related tools
+install_python() {
+	print_info "Checking Python 3 installation..."
 
-	# Try to install Node.js if not present (needed for some LSPs)
+	if ! command -v python3 &>/dev/null; then
+		print_info "Installing Python 3..."
+		if [[ "$OS" == "macos" ]]; then
+			brew install python3
+		elif [[ "$OS" == "linux" ]]; then
+			if command -v apt &>/dev/null; then
+				sudo apt install -y python3 python3-pip python3-venv
+			elif command -v pacman &>/dev/null; then
+				sudo pacman -S python python-pip
+			elif command -v dnf &>/dev/null; then
+				sudo dnf install -y python3 python3-pip
+			elif command -v yum &>/dev/null; then
+				sudo yum install -y python3 python3-pip
+			fi
+		fi
+	fi
+	print_success "Python 3 is available"
+}
+
+# Install Node.js (TypeScript, JSON, JavaScript support)
+install_node() {
+	print_info "Checking Node.js installation..."
+
 	if ! command -v node &>/dev/null; then
 		print_info "Installing Node.js..."
 		if [[ "$OS" == "macos" ]]; then
@@ -127,29 +149,141 @@ install_lsp_tools() {
 				sudo yum install -y nodejs npm
 			fi
 		fi
-		print_success "Node.js installed"
 	fi
+	print_success "Node.js is available"
+}
 
-	# Try to install Python if not present (needed for DAP and some LSPs)
-	if ! command -v python3 &>/dev/null; then
-		print_info "Installing Python 3..."
+# Install Go (gopls support)
+install_go() {
+	print_info "Checking Go installation..."
+
+	if ! command -v go &>/dev/null; then
+		print_info "Installing Go..."
 		if [[ "$OS" == "macos" ]]; then
-			brew install python3
+			brew install go
 		elif [[ "$OS" == "linux" ]]; then
 			if command -v apt &>/dev/null; then
-				sudo apt install -y python3 python3-pip
+				sudo apt install -y golang-go
 			elif command -v pacman &>/dev/null; then
-				sudo pacman -S python python-pip
+				sudo pacman -S go
 			elif command -v dnf &>/dev/null; then
-				sudo dnf install -y python3 python3-pip
+				sudo dnf install -y golang
 			elif command -v yum &>/dev/null; then
-				sudo yum install -y python3 python3-pip
+				sudo yum install -y golang
 			fi
 		fi
-		print_success "Python 3 installed"
 	fi
+	print_success "Go is available"
+}
 
-	# Install Ripgrep (used by Telescope)
+# Install Rust (rust_analyzer support)
+install_rust() {
+	print_info "Checking Rust installation..."
+
+	if ! command -v rustc &>/dev/null; then
+		print_info "Installing Rust..."
+		if [[ "$OS" == "macos" ]] || [[ "$OS" == "linux" ]]; then
+			curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+			# Source the cargo environment
+			source "$HOME/.cargo/env"
+		fi
+	fi
+	print_success "Rust is available"
+}
+
+# Install C/C++ compiler and tools (clangd support)
+install_cpp() {
+	print_info "Checking C/C++ compiler installation..."
+
+	if [[ "$OS" == "macos" ]]; then
+		if ! command -v clang &>/dev/null; then
+			print_info "Installing Xcode Command Line Tools..."
+			xcode-select --install
+		fi
+	elif [[ "$OS" == "linux" ]]; then
+		if ! command -v gcc &>/dev/null && ! command -v clang &>/dev/null; then
+			print_info "Installing C/C++ compiler..."
+			if command -v apt &>/dev/null; then
+				sudo apt install -y build-essential clang
+			elif command -v pacman &>/dev/null; then
+				sudo pacman -S base-devel clang
+			elif command -v dnf &>/dev/null; then
+				sudo dnf install -y gcc gcc-c++ clang
+			elif command -v yum &>/dev/null; then
+				sudo yum install -y gcc gcc-c++ clang
+			fi
+		fi
+	fi
+	print_success "C/C++ compiler is available"
+}
+
+# Install Docker (for docker LSP)
+install_docker() {
+	print_info "Checking Docker installation..."
+
+	if command -v docker &>/dev/null; then
+		print_success "Docker is already installed"
+	else
+		print_warning "Docker is not installed. It's optional but recommended for Docker Compose LSP."
+		if [[ "$OS" == "macos" ]]; then
+			print_info "To install Docker on macOS, visit: https://docs.docker.com/desktop/install/mac-install/"
+		elif [[ "$OS" == "linux" ]]; then
+			print_info "To install Docker on Linux, visit: https://docs.docker.com/desktop/install/linux-install/"
+		fi
+	fi
+}
+
+# Install Gradle (gradle_ls support)
+install_gradle() {
+	print_info "Checking Gradle installation..."
+
+	if ! command -v gradle &>/dev/null; then
+		print_info "Installing Gradle..."
+		if [[ "$OS" == "macos" ]]; then
+			brew install gradle
+		elif [[ "$OS" == "linux" ]]; then
+			if command -v apt &>/dev/null; then
+				sudo apt install -y gradle
+			elif command -v pacman &>/dev/null; then
+				sudo pacman -S gradle
+			elif command -v dnf &>/dev/null; then
+				sudo dnf install -y gradle
+			elif command -v yum &>/dev/null; then
+				sudo yum install -y gradle
+			fi
+		fi
+	fi
+	print_success "Gradle is available"
+}
+
+# Install CMake (cmake LSP support)
+install_cmake() {
+	print_info "Checking CMake installation..."
+
+	if ! command -v cmake &>/dev/null; then
+		print_info "Installing CMake..."
+		if [[ "$OS" == "macos" ]]; then
+			brew install cmake
+		elif [[ "$OS" == "linux" ]]; then
+			if command -v apt &>/dev/null; then
+				sudo apt install -y cmake
+			elif command -v pacman &>/dev/null; then
+				sudo pacman -S cmake
+			elif command -v dnf &>/dev/null; then
+				sudo dnf install -y cmake
+			elif command -v yum &>/dev/null; then
+				sudo yum install -y cmake
+			fi
+		fi
+	fi
+	print_success "CMake is available"
+}
+
+# Install essential search and utility tools
+install_search_tools() {
+	print_info "Installing search and utility tools..."
+
+	# Ripgrep (used by Telescope)
 	if ! command -v rg &>/dev/null; then
 		print_info "Installing Ripgrep..."
 		if [[ "$OS" == "macos" ]]; then
@@ -165,10 +299,9 @@ install_lsp_tools() {
 				sudo yum install -y ripgrep
 			fi
 		fi
-		print_success "Ripgrep installed"
 	fi
 
-	# Install FZF (for Telescope)
+	# FZF (for Telescope)
 	if ! command -v fzf &>/dev/null; then
 		print_info "Installing FZF..."
 		if [[ "$OS" == "macos" ]]; then
@@ -176,7 +309,7 @@ install_lsp_tools() {
 		elif [[ "$OS" == "linux" ]]; then
 			if command -v apt &>/dev/null; then
 				sudo apt install -y fzf
-			elif command -v pacman &>/dev/can/dev/null; then
+			elif command -v pacman &>/dev/null; then
 				sudo pacman -S fzf
 			elif command -v dnf &>/dev/null; then
 				sudo dnf install -y fzf
@@ -184,8 +317,17 @@ install_lsp_tools() {
 				sudo yum install -y fzf
 			fi
 		fi
-		print_success "FZF installed"
 	fi
+
+	# sed and other tools
+	if [[ "$OS" == "macos" ]]; then
+		if ! command -v gsed &>/dev/null; then
+			print_info "Installing GNU sed..."
+			brew install gnu-sed
+		fi
+	fi
+
+	print_success "Search and utility tools installed"
 }
 
 # Clone the configuration
@@ -223,10 +365,62 @@ initialize_lazy() {
 	print_success "Plugins installed successfully"
 }
 
+# Show installation summary
+show_summary() {
+	echo ""
+	echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
+	echo -e "${BLUE}║  Installation Summary                                      ║${NC}"
+	echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
+	echo ""
+	echo -e "${GREEN}Core Tools:${NC}"
+	echo "  ✓ Neovim"
+	echo "  ✓ Git"
+	echo "  ✓ Ripgrep (search)"
+	echo "  ✓ FZF (fuzzy finding)"
+	echo ""
+	echo -e "${GREEN}Language Runtimes & Compilers:${NC}"
+	echo "  ✓ Python 3 (pyright)"
+	echo "  ✓ Node.js (ts_ls, jsonls, yamlls)"
+	echo "  ✓ Go (gopls)"
+	echo "  ✓ Rust (rust_analyzer)"
+	echo "  ✓ C/C++ Compiler (clangd)"
+	echo "  ✓ CMake (cmake LSP)"
+	echo "  ✓ Gradle (gradle_ls)"
+	echo "  ✓ Docker (docker LSP)"
+	echo ""
+	echo -e "${GREEN}LSPs Configured:${NC}"
+	echo "  • ltex_plus (grammar checking)"
+	echo "  • sqlls (SQL)"
+	echo "  • gopls (Go)"
+	echo "  • ts_ls (TypeScript/JavaScript)"
+	echo "  • jsonls (JSON)"
+	echo "  • yamlls (YAML)"
+	echo "  �� rust_analyzer (Rust)"
+	echo "  • taplo (TOML)"
+	echo "  • vimls (VimScript)"
+	echo "  • bashls (Bash)"
+	echo "  • html (HTML)"
+	echo "  • htmx (HTMX)"
+	echo "  • cmake (CMake)"
+	echo "  • dockerls (Dockerfile)"
+	echo "  • docker_compose_language_service"
+	echo "  • gradle_ls (Gradle)"
+	echo "  • clangd (C/C++)"
+	echo "  • pyright (Python)"
+	echo ""
+	echo -e "${GREEN}Configuration Location:${NC}"
+	echo "  $HOME/.config/nvim"
+	echo ""
+	echo -e "${GREEN}Launch Neovim:${NC}"
+	echo "  nvim"
+	echo ""
+}
+
 # Main installation flow
 main() {
 	echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
 	echo -e "${BLUE}║  vishal340/new_nvim Installation Script                     ║${NC}"
+	echo -e "${BLUE}║  Complete setup with all LSP dependencies                  ║${NC}"
 	echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
 	echo ""
 
@@ -234,30 +428,49 @@ main() {
 	print_info "Starting installation process..."
 	echo ""
 
+	# Core tools
+	print_info "=== Installing Core Tools ==="
 	install_neovim
 	echo ""
-
 	install_git
 	echo ""
-
-	install_lsp_tools
+	install_search_tools
 	echo ""
 
+	# Language runtimes
+	print_info "=== Installing Language Runtimes & Compilers ==="
+	echo ""
+	install_python
+	echo ""
+	install_node
+	echo ""
+	install_go
+	echo ""
+	install_rust
+	echo ""
+	install_cpp
+	echo ""
+	install_cmake
+	echo ""
+	install_gradle
+	echo ""
+	install_docker
+	echo ""
+
+	# Configuration setup
+	print_info "=== Setting Up Configuration ==="
+	echo ""
 	clone_config
 	echo ""
-
 	initialize_lazy
 	echo ""
+
+	# Show summary
+	show_summary
 
 	echo -e "${GREEN}╔════════════════════════════════════════════════════════════╗${NC}"
 	echo -e "${GREEN}║  Installation completed successfully!                      ║${NC}"
 	echo -e "${GREEN}╚════════════════════════════════════════════════════════════╝${NC}"
-	echo ""
-	print_success "Your Neovim configuration is ready to use!"
-	print_info "Launch Neovim with: nvim"
-	echo ""
-	print_info "Configuration location: $HOME/.config/nvim"
-	echo ""
 }
 
 # Run main function
