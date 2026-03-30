@@ -1,10 +1,16 @@
--- Render Markdown configuration for Neovim
-
--- Enable C++ and Python code block support
-
-vim.g.vim_markdown_conceal = 0  -- Do not conceal markdown features
-
--- C++ code block settings
-vim.g.vim_markdown_fenced_languages = {'cpp', 'python'}
-
--- Additional settings can be added here
+return {
+    "render_markdown.nvim",
+    event = { "BufReadPost *.md", "BufNewFile *.md" },
+    config = function()
+        require('render_markdown').setup({
+            highlight_code_blocks = true,
+            languages = { 'cpp', 'python' },
+            auto_enable = true,
+            commands = {
+                toggle = function() require('render_markdown').toggle() end,
+                enable = function() require('render_markdown').enable() end,
+                disable = function() require('render_markdown').disable() end,
+            },
+        })
+    end,
+}
