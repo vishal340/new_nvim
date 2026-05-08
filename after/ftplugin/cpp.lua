@@ -20,3 +20,4 @@ command! -nargs=* Make tabnew | let $mkpath = SetMkfile() | make <args> -C $mkpa
 ]])
 
 vim.keymap.set("i", "std", "std::", { buffer = true })
+vim.opt.keywordprg = "man"
