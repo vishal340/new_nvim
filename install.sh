@@ -279,6 +279,40 @@ install_cmake() {
 	print_success "CMake is available"
 }
 
+# Install documentation tools (for K keywordprg mapping)
+install_docs() {
+	print_info "Installing documentation tools..."
+
+	# Python documentation (pydoc)
+	# pydoc comes with Python, so we just verify it's available
+	if command -v pydoc &>/dev/null || command -v pydoc3 &>/dev/null; then
+		print_success "Python documentation tool (pydoc) is available"
+	else
+		print_warning "pydoc not found. It should come with Python 3."
+	fi
+
+	# C/C++ documentation (man-db)
+	if ! command -v man &>/dev/null; then
+		print_info "Installing man pages and man-db..."
+		if [[ "$OS" == "macos" ]]; then
+			print_info "man is typically included in macOS by default"
+		elif [[ "$OS" == "linux" ]]; then
+			if command -v apt &>/dev/null; then
+				sudo apt install -y man-db manpages-dev
+			elif command -v pacman &>/dev/null; then
+				sudo pacman -S man-db
+			elif command -v dnf &>/dev/null; then
+				sudo dnf install -y man-db man-pages
+			elif command -v yum &>/dev/null; then
+				sudo yum install -y man-db man-pages
+			fi
+		fi
+		print_success "Man pages and man-db installed"
+	else
+		print_success "Man pages are available"
+	fi
+}
+
 # Install essential search and utility tools
 install_search_tools() {
 	print_info "Installing search and utility tools..."
@@ -368,9 +402,9 @@ initialize_lazy() {
 # Show installation summary
 show_summary() {
 	echo ""
-	echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
+	echo -e "${BLUE}╔══════════════════════════════════════════════════════════╗${NC}"
 	echo -e "${BLUE}║  Installation Summary                                      ║${NC}"
-	echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
+	echo -e "${BLUE}╚══════════════════════════════════════════════════════════╝${NC}"
 	echo ""
 	echo -e "${GREEN}Core Tools:${NC}"
 	echo "  ✓ Neovim"
@@ -395,7 +429,7 @@ show_summary() {
 	echo "  • ts_ls (TypeScript/JavaScript)"
 	echo "  • jsonls (JSON)"
 	echo "  • yamlls (YAML)"
-	echo "  �� rust_analyzer (Rust)"
+	echo "  • rust_analyzer (Rust)"
 	echo "  • taplo (TOML)"
 	echo "  • vimls (VimScript)"
 	echo "  • bashls (Bash)"
@@ -408,6 +442,10 @@ show_summary() {
 	echo "  • clangd (C/C++)"
 	echo "  • pyright (Python)"
 	echo ""
+	echo -e "${GREEN}Documentation Tools (K keywordprg):${NC}"
+	echo "  ✓ Python: pydoc (press K on a Python keyword)"
+	echo "  ✓ C/C++: man pages (press K on a C/C++ keyword)"
+	echo ""
 	echo -e "${GREEN}Configuration Location:${NC}"
 	echo "  $HOME/.config/nvim"
 	echo ""
@@ -418,10 +456,10 @@ show_summary() {
 
 # Main installation flow
 main() {
-	echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
+	echo -e "${BLUE}╔══════════════════════════════════════════════════════════╗${NC}"
 	echo -e "${BLUE}║  vishal340/new_nvim Installation Script                     ║${NC}"
 	echo -e "${BLUE}║  Complete setup with all LSP dependencies                  ║${NC}"
-	echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
+	echo -e "${BLUE}╚══════════════════════════════════════════════════════════╝${NC}"
 	echo ""
 
 	detect_os
@@ -457,6 +495,12 @@ main() {
 	install_docker
 	echo ""
 
+	# Documentation tools
+	print_info "=== Installing Documentation Tools ==="
+	echo ""
+	install_docs
+	echo ""
+
 	# Configuration setup
 	print_info "=== Setting Up Configuration ==="
 	echo ""
@@ -468,9 +512,9 @@ main() {
 	# Show summary
 	show_summary
 
-	echo -e "${GREEN}╔════════════════════════════════════════════════════════════╗${NC}"
+	echo -e "${GREEN}╔══════════════════════════════════════════════════════════╗${NC}"
 	echo -e "${GREEN}║  Installation completed successfully!                      ║${NC}"
-	echo -e "${GREEN}╚════════════════════════════════════════════════════════════╝${NC}"
+	echo -e "${GREEN}╚══════════════════════════════════════════════════════════╝${NC}"
 }
 
 # Run main function
