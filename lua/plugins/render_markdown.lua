@@ -1,23 +1,23 @@
 return {
-	"MeanderingProgrammer/render_markdown.nvim",
+	"MeanderingProgrammer/render-markdown.nvim",
+	dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" },
 	event = { "BufReadPost *.md", "BufNewFile *.md" },
 	config = function()
-		require("render_markdown").setup({
+		require("render-markdown").setup({
 			highlight_code_blocks = true,
 			languages = { "cpp", "python" },
 			auto_enable = true,
 			commands = {
 				toggle = function()
-					require("render_markdown").toggle()
+					require("render-markdown").toggle()
 				end,
 				enable = function()
-					require("render_markdown").enable()
+					require("render-markdown").enable()
 				end,
 				disable = function()
-					require("render_markdown").disable()
+					require("render-markdown").disable()
 				end,
 			},
 		})
 	end,
 }
-
