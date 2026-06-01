@@ -44,7 +44,17 @@ local lsps = {
 				completeUnimported = true,
 				clangdFileStatus = true,
 			},
-			filetypes = { "c", "cpp" },
+			filetypes = { "c", "cpp", "cc", "cxx", "c++", "h", "hpp", "hh" },
+			settings = {
+				clangd = {
+					InlayHints = {
+						Enabled = true,
+						ParameterHints = true,
+						TypeHints = true,
+						ChainingHints = true,
+					},
+				},
+			},
 		},
 	},
 	{
