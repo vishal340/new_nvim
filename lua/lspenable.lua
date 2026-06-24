@@ -19,6 +19,7 @@ local lsps = {
 	{
 		"clangd",
 		{
+			single_file_support = true,
 			root_markers = {
 				"Makefile",
 				"configure.ac",
