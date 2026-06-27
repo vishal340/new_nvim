@@ -17,11 +17,6 @@ return {
 	},
 	"itchyny/vim-gitbranch",
 	"mhinz/vim-startify",
-	-- {
-	-- 	"mfussenegger/nvim-jdtls",
-	-- 	ft = "java",
-	-- 	event = "LspAttach",
-	-- },
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {},

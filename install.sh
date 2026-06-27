@@ -399,6 +399,34 @@ initialize_lazy() {
 	print_success "Plugins installed successfully"
 }
 
+# Install global clangd user config (macOS/Linux)
+install_clangd_config() {
+	print_info "Setting up global clangd configuration..."
+
+	local src="$HOME/test_codes/codeforce/.clangd"
+	local fallback
+	fallback="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/config/clangd-config.yaml"
+	local dest
+
+	if [[ "$OS" == "macos" ]]; then
+		dest="$HOME/Library/Preferences/clangd/config.yaml"
+	else
+		dest="${XDG_CONFIG_HOME:-$HOME/.config}/clangd/config.yaml"
+	fi
+
+	if [[ -f "$src" ]]; then
+		mkdir -p "$(dirname "$dest")"
+		cp "$src" "$dest"
+		print_success "Installed clangd user config from $src"
+	elif [[ -f "$fallback" ]]; then
+		mkdir -p "$(dirname "$dest")"
+		cp "$fallback" "$dest"
+		print_warning "Using bundled clangd config (source not found: $src)"
+	else
+		print_warning "No clangd config found at $src or $fallback"
+	fi
+}
+
 # Show installation summary
 show_summary() {
 	echo ""
@@ -448,6 +476,11 @@ show_summary() {
 	echo ""
 	echo -e "${GREEN}Configuration Location:${NC}"
 	echo "  $HOME/.config/nvim"
+	if [[ "$OS" == "macos" ]]; then
+		echo "  $HOME/Library/Preferences/clangd/config.yaml (global clangd)"
+	else
+		echo "  ${XDG_CONFIG_HOME:-$HOME/.config}/clangd/config.yaml (global clangd)"
+	fi
 	echo ""
 	echo -e "${GREEN}Launch Neovim:${NC}"
 	echo "  nvim"
@@ -487,6 +520,8 @@ main() {
 	install_rust
 	echo ""
 	install_cpp
+	echo ""
+	install_clangd_config
 	echo ""
 	install_cmake
 	echo ""

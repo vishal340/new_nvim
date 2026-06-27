@@ -1,5 +1,10 @@
-local keymap = vim.keymap.set
-local opts = { noremap = true, silent = true }
+local mason_data = vim.fn.stdpath("data") .. "/mason/packages"
+
+local function mason_bin(pkg, ...)
+	local parts = { mason_data, pkg, ... }
+	return table.concat(parts, "/")
+end
+
 return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
@@ -9,17 +14,45 @@ return {
 	},
 	config = function()
 		local dap = require("dap")
-		require("dapui").setup({})
+		local dapui = require("dapui")
 
-		require("dap-python").setup("~/.virtualenvs/debugpy/bin/python3")
-		require("dap-python").test_runner = "pytest"
+		dapui.setup({
+			icons = { expanded = "▾", collapsed = "▸", current_frame = "→" },
+			floating = { border = "rounded" },
+		})
 
-		dap.adapters.codelldb = {
-			type = "executable",
-			command = "codelldb", -- adjust as needed
-		}
+		local function setup_dap_python()
+			local candidates = {
+				vim.fn.expand("~/.virtualenvs/debugpy/bin/python3"),
+				mason_bin("debugpy", "venv/bin/python"),
+				mason_bin("debugpy", "venv/bin/python3"),
+			}
+			for _, python in ipairs(candidates) do
+				if vim.fn.executable(python) == 1 then
+					require("dap-python").setup(python)
+					require("dap-python").test_runner = "pytest"
+					return
+				end
+			end
+			vim.notify("debugpy not found; install with :MasonInstall debugpy", vim.log.levels.WARN)
+		end
+		setup_dap_python()
 
-		dap.configurations.cpp = {
+		local codelldb = mason_bin("codelldb", "extension/adapter/codelldb")
+		if vim.fn.executable(codelldb) == 1 then
+			dap.adapters.codelldb = {
+				type = "executable",
+				command = codelldb,
+				args = { "--port", "${port}" },
+			}
+		else
+			dap.adapters.codelldb = {
+				type = "executable",
+				command = "codelldb",
+			}
+		end
+
+		local cpp_launch = {
 			{
 				name = "Launch file",
 				type = "codelldb",
@@ -30,36 +63,48 @@ return {
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,
 			},
+			{
+				name = "Attach to process",
+				type = "codelldb",
+				request = "attach",
+				pid = function()
+					return tonumber(vim.fn.input("Process ID: "))
+				end,
+				cwd = "${workspaceFolder}",
+			},
 		}
+		dap.configurations.cpp = cpp_launch
+		dap.configurations.c = cpp_launch
+		dap.configurations.rust = cpp_launch
 
-		dap.configurations.c = dap.configurations.cpp
-		dap.configurations.rust = dap.configurations.cpp
-
-		dap.adapters.nlua = function(callback, config)
-			callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
+		dap.adapters.nlua = function(_, config)
+			return { type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 }
 		end
 		dap.configurations.lua = {
 			{
 				type = "nlua",
 				request = "attach",
 				name = "Attach to running Neovim instance",
+				host = "127.0.0.1",
+				port = 8086,
 			},
 		}
 
+		local bashdb = mason_bin("bash-debug-adapter", "extension/bashdb_dir/bashdb")
+		local bashdb_lib = mason_bin("bash-debug-adapter", "extension/bashdb_dir")
 		dap.adapters.bashdb = {
 			type = "executable",
-			command = "bash-debug-adapter",
+			command = mason_bin("bash-debug-adapter", "extension/debugAdapter.sh"),
 			name = "bashdb",
 		}
-
 		dap.configurations.sh = {
 			{
 				type = "bashdb",
 				request = "launch",
 				name = "Launch file",
 				showDebugOutput = true,
-				pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
-				pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
+				pathBashdb = bashdb,
+				pathBashdbLib = bashdb_lib,
 				trace = true,
 				file = "${file}",
 				program = "${file}",
@@ -82,7 +127,6 @@ return {
 				args = { "dap", "-l", "127.0.0.1:${port}" },
 			},
 		}
-
 		dap.configurations.go = {
 			{
 				type = "delve",
@@ -92,12 +136,11 @@ return {
 			},
 			{
 				type = "delve",
-				name = "Debug test", -- configuration for debugging test files
+				name = "Debug test",
 				request = "launch",
 				mode = "test",
 				program = "${file}",
 			},
-			-- works with go.mod packages and sub packages
 			{
 				type = "delve",
 				name = "Debug test (go.mod)",
@@ -107,16 +150,17 @@ return {
 			},
 		}
 
+		local js_adapter = mason_bin("js-debug-adapter", "js-debug-adapter")
 		dap.adapters["pwa-node"] = {
 			type = "server",
 			host = "localhost",
 			port = "${port}",
 			executable = {
-				command = "js-debug-adapter",
+				command = vim.fn.executable(js_adapter) == 1 and js_adapter or "js-debug-adapter",
 				args = { "${port}" },
 			},
 		}
-		dap.configurations.javascript = {
+		local js_launch = {
 			{
 				type = "pwa-node",
 				request = "launch",
@@ -126,12 +170,14 @@ return {
 				runtimeExecutable = "node",
 			},
 		}
-		dap.configurations.typescript = dap.configurations.javascript
+		dap.configurations.javascript = js_launch
+		dap.configurations.typescript = js_launch
 		dap.configurations.java = {
 			{
 				javaExec = "java",
 				request = "launch",
 				type = "java",
+				name = "Launch Java",
 			},
 			{
 				type = "java",
@@ -141,39 +187,62 @@ return {
 				port = 5005,
 			},
 		}
-		keymap("n", "<localleader>dn", ":DapNew<cr>", opts)
-		keymap("n", "<localleader>dc", ":lua  require('dap').continue()<cr>", opts)
-		keymap("n", "<localleader>dsv", ":lua  require('dap').step_over()<cr>", opts)
-		keymap("n", "<localleader>dsi", ":lua  require('dap').step_into()<cr>", opts)
-		keymap("n", "<localleader>dso", ":lua  require('dap').step_out()<cr>", opts)
-		keymap("n", "<localleader>db", ":lua  require('dap').toggle_breakpoint()<cr>", opts)
-		keymap("n", "<localleader>dro", ":lua  require('dap').repl.open()<cr>", opts)
-		keymap("n", "<localleader>dl", ":lua  require('dap').run_last()<cr>", opts)
-		keymap({ "n", "v" }, "<localleader>dh", function()
+
+		dap.listeners.after.event_initialized["dapui"] = function()
+			dapui.open({})
+		end
+		dap.listeners.before.event_terminated["dapui"] = function()
+			dapui.close({})
+		end
+		dap.listeners.before.event_exited["dapui"] = function()
+			dapui.close({})
+		end
+
+		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DiagnosticInfo", linehl = "Visual", numhl = "" })
+
+		local map = function(mode, lhs, rhs, desc)
+			vim.keymap.set(mode, lhs, rhs, { noremap = true, silent = true, desc = desc })
+		end
+
+		map("n", "<localleader>dn", ":DapNew<cr>", "Debug: select configuration")
+		map("n", "<localleader>dc", dap.continue, "Debug: continue")
+		map("n", "<localleader>dsv", dap.step_over, "Debug: step over")
+		map("n", "<localleader>dsi", dap.step_into, "Debug: step into")
+		map("n", "<localleader>dso", dap.step_out, "Debug: step out")
+		map("n", "<localleader>db", dap.toggle_breakpoint, "Debug: toggle breakpoint")
+		map("n", "<localleader>dB", function()
+			dap.toggle_breakpoint(vim.fn.input("Breakpoint condition: "))
+		end, "Debug: conditional breakpoint")
+		map("n", "<localleader>dx", dap.terminate, "Debug: terminate")
+		map("n", "<localleader>dr", dap.restart, "Debug: restart")
+		map("n", "<localleader>dro", dap.repl.open, "Debug: open REPL")
+		map("n", "<localleader>dl", dap.run_last, "Debug: run last")
+		map({ "n", "v" }, "<localleader>dh", function()
 			require("dap.ui.widgets").hover()
-		end, opts)
-		keymap({ "n", "v" }, "<localleader>dp", function()
+		end, "Debug: hover")
+		map({ "n", "v" }, "<localleader>dp", function()
 			require("dap.ui.widgets").preview()
-		end, opts)
-		keymap("n", "<localleader>df", function()
+		end, "Debug: preview")
+		map("n", "<localleader>df", function()
 			local widgets = require("dap.ui.widgets")
 			widgets.centered_float(widgets.frames)
-		end, opts)
-		keymap("n", "<localleader>dfs", function()
+		end, "Debug: frames")
+		map("n", "<localleader>dfs", function()
 			local widgets = require("dap.ui.widgets")
 			widgets.centered_float(widgets.scopes)
-		end, opts)
-
-		keymap("n", "<localleader>dt", ':lua require("dapui").toggle()<cr>', opts)
-		keymap("v", "<localleader>de", ':lua require("dapui").eval()<cr>', opts)
-		vim.keymap.set("n", "<localleader>dzm", function()
+		end, "Debug: scopes")
+		map("n", "<localleader>dt", dapui.toggle, "Debug: toggle UI")
+		map("v", "<localleader>de", dapui.eval, "Debug: evaluate")
+		map("n", "<localleader>dzm", function()
 			require("dap-python").test_method()
-		end, { desc = "Debug test method" })
-		vim.keymap.set("n", "<localleader>dzc", function()
+		end, "Debug: Python test method")
+		map("n", "<localleader>dzc", function()
 			require("dap-python").test_class()
-		end, { desc = "Debug test class" })
-		vim.keymap.set("n", "<localleader>dzf", function()
+		end, "Debug: Python test class")
+		map("n", "<localleader>dzf", function()
 			require("dap-python").test_module()
-		end, { desc = "Debug test file" })
+		end, "Debug: Python test file")
 	end,
 }

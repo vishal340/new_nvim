@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - -std=c++23
+    - -nostdinc++
+    - -isystem/opt/homebrew/include
+    - -isystem/opt/homebrew/Cellar/gcc/16.1.0/include/c++/16
+    - -isystem/opt/homebrew/Cellar/gcc/16.1.0/include/c++/16/aarch64-apple-darwin25

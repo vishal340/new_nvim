@@ -195,42 +195,19 @@ endfunction
 keymap("n", "<localleader>ss", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
 keymap("n", "<localleader>st", ":Startify<cr>")
 
--- below are mappings specific for lsp
-local bufopts = { noremap = true, silent = true, buffer = bufnr }
-keymap("n", "<leader>gfd", '<cmd>lua require("goto-preview").goto_preview_definition()<CR>', bufopts)
-keymap("n", "<leader>gfi", '<cmd>lua require("goto-preview").goto_preview_implementation()<CR>', bufopts)
-keymap("n", "<leader>gfr", '<cmd>lua require("goto-preview").goto_preview_references()<CR>', bufopts)
-keymap("n", "<leader>gti", "<cmd>tab split| lua vim.lsp.buf.implementation()<cr>", bufopts)
-keymap("n", "<leader>gvi", "<cmd>vs| lua vim.lsp.buf.implementation()<cr>", bufopts)
-keymap("n", "<leader>ghi", "<cmd>sp| lua vim.lsp.buf.implementation()<cr>", bufopts)
-keymap("n", "<leader>gi", function()
-	builtin.lsp_implementations()
-end, bufopts)
-keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", bufopts)
-keymap("n", "<leader>ll", function()
-	builtin.treesitter()
-end, bufopts)
-keymap("n", "<leader>lic", function()
-	builtin.lsp_incoming_calls()
-end, bufopts)
-keymap("n", "<leader>loc", function()
-	builtin.lsp_outgoing_calls()
-end, bufopts)
-keymap("n", "<leader>bf", "<cmd>lua vim.lsp.buf.formatting()<cr>", bufopts)
-
-keymap("n", "<leader>df", "<cmd>lua vim.diagnostic.open_float()<cr>", bufopts)
-keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_prev()<cr>", bufopts)
-keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<cr>", bufopts)
-keymap("n", "<leader>dh", "<cmd>lua vim.diagnostic.hide()<cr>", bufopts)
-keymap("n", "<leader>ds", "<cmd>lua vim.diagnostic.show()<cr>", bufopts)
-keymap("n", "<leader>gft", '<cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', bufopts)
-keymap("n", "<leader>ih", function()
-	if vim.lsp.inlay_hint.is_enabled(0) then
-		vim.lsp.inlay_hint.enable(0, false)
-	else
-		vim.lsp.inlay_hint.enable(0, true)
-	end
-end)
+-- goto-preview (global; LSP buffer maps live in lspenable.lua)
+keymap("n", "<leader>gfd", function()
+	require("goto-preview").goto_preview_definition()
+end, opts)
+keymap("n", "<leader>gfi", function()
+	require("goto-preview").goto_preview_implementation()
+end, opts)
+keymap("n", "<leader>gfr", function()
+	require("goto-preview").goto_preview_references()
+end, opts)
+keymap("n", "<leader>gft", function()
+	require("goto-preview").goto_preview_type_definition()
+end, opts)
 
 local tree_api = require("nvim-tree.api")
 
@@ -266,4 +243,4 @@ end
 
 keymap("n", "<leader>t", function()
 	swap_then_open_tab()
-end, bufopts)
+end, opts)

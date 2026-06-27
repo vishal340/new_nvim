@@ -2,7 +2,7 @@ return {
 	"stevearc/conform.nvim",
 	event = "LspAttach",
 	opts = {
-		quite = true,
+		quiet = true,
 		formatters_by_ft = {
 			cpp = { "clang_format" },
 			c = { "clang_format" },

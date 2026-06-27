@@ -6,6 +6,32 @@ return {
 		local configs = require("nvim-treesitter.configs")
 		configs.setup({
 			sync_install = false,
+			auto_install = true,
+			ensure_installed = {
+				"c",
+				"cpp",
+				"lua",
+				"vim",
+				"vimdoc",
+				"query",
+				"java",
+				"python",
+				"go",
+				"rust",
+				"javascript",
+				"typescript",
+				"json",
+				"yaml",
+				"bash",
+				"html",
+				"dockerfile",
+				"cmake",
+				"markdown",
+				"markdown_inline",
+				"sql",
+				"regex",
+				"comment",
+			},
 			highlight = {
 				enable = true,
 				additional_vim_regex_highlighting = false, -- Required for spellcheck, some LaTex highlights and code block highlights that do not have ts grammar

@@ -1,0 +1,51 @@
+return function(client, bufnr)
+	local map = function(mode, lhs, rhs, desc)
+		vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, noremap = true, desc = desc })
+	end
+
+	map("n", "<leader>rn", vim.lsp.buf.rename, "LSP rename")
+	map("n", "<leader>bf", function()
+		vim.lsp.buf.format({ async = false })
+	end, "Format buffer")
+	map("n", "<leader>df", vim.diagnostic.open_float, "Line diagnostics")
+	map("n", "<leader>dp", vim.diagnostic.goto_prev, "Previous diagnostic")
+	map("n", "<leader>dn", vim.diagnostic.goto_next, "Next diagnostic")
+	map("n", "<leader>dh", vim.diagnostic.hide, "Hide diagnostics")
+	map("n", "<leader>ds", vim.diagnostic.show, "Show diagnostics")
+	map("n", "<leader>gti", function()
+		vim.cmd("tab split")
+		vim.lsp.buf.implementation()
+	end, "Implementation in tab")
+	map("n", "<leader>gvi", function()
+		vim.cmd("vs")
+		vim.lsp.buf.implementation()
+	end, "Implementation in vertical split")
+	map("n", "<leader>ghi", function()
+		vim.cmd("sp")
+		vim.lsp.buf.implementation()
+	end, "Implementation in horizontal split")
+	map("n", "<leader>gi", function()
+		require("telescope.builtin").lsp_implementations()
+	end, "Telescope implementations")
+	map("n", "<leader>lic", function()
+		require("telescope.builtin").lsp_incoming_calls()
+	end, "Incoming calls")
+	map("n", "<leader>loc", function()
+		require("telescope.builtin").lsp_outgoing_calls()
+	end, "Outgoing calls")
+	map("n", "<leader>ll", function()
+		require("telescope.builtin").treesitter()
+	end, "Treesitter symbols")
+	map("n", "<leader>ih", function()
+		local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+		vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+	end, "Toggle inlay hints")
+
+	if client.server_capabilities.codeLensProvider then
+		map("n", "<leader>cl", vim.lsp.codelens.run, "Run codelens")
+		vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+			buffer = bufnr,
+			callback = vim.lsp.codelens.refresh,
+		})
+	end
+end

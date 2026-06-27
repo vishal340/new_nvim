@@ -6,10 +6,36 @@
 			"using namespace std;",
 			"",
 			"int main(){",
-			"\t return 0;",
+			"\treturn 0;",
 			"}"
 		],
 		"description": "code snippet for less includes",
 		"scope": "cpp"
-	}
+	},
+	"codeforce": {
+	"prefix": "codeforce",
+	"body": [
+		"#include <bits/stdc++.h>",
+		"using namespace std;",
+		"",
+		"using vi = vector<int>;",
+		"",
+		"void solve() {",
+    	"\tint n;",
+    	"\tcin >> n;",
+		"}",
+		"",
+		"int main() {",
+    	"\tios::sync_with_stdio(false);",
+    	"\tcin.tie(0);",
+		"",
+    	"\tint t;",
+    	"\tcin >> t;",
+    	"\twhile (t--) solve();",
+		"\treturn 0;",
+		"}"
+	],
+	"description": "for codeforce fast start",
+	"scope": "cpp"
+}
 }
