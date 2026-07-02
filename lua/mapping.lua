@@ -109,55 +109,10 @@ vim.api.nvim_create_autocmd("User", {
 })
 keymap("n", "<leader>e", "<cmd>lua MiniFiles.open()<cr>", opts)
 
-local builtin = require("telescope.builtin")
+local telescope = require("utils.telescope")
 
-local find_files_from_project_git_root = function()
-	local function is_git_repo()
-		vim.fn.system("git rev-parse --is-inside-work-tree")
-		return vim.v.shell_error == 0
-	end
-	local function get_git_root()
-		local dot_git_path = vim.fn.finddir(".git", ".;")
-		return vim.fn.fnamemodify(dot_git_path, ":h")
-	end
-	local opt = {}
-	if is_git_repo() then
-		opt = {
-			cwd = get_git_root(),
-		}
-	end
-	builtin.find_files(opt)
-end
-
-local live_grep_from_project_git_root = function()
-	local function is_git_repo()
-		vim.fn.system("git rev-parse --is-inside-work-tree")
-
-		return vim.v.shell_error == 0
-	end
-
-	local function get_git_root()
-		local dot_git_path = vim.fn.finddir(".git", ".;")
-		return vim.fn.fnamemodify(dot_git_path, ":h")
-	end
-
-	local opt = {}
-
-	if is_git_repo() then
-		opt = {
-			cwd = get_git_root(),
-		}
-	end
-
-	builtin.live_grep(opt)
-end
-
-keymap("n", "<leader>ff", function()
-	find_files_from_project_git_root()
-end)
-keymap("n", "<leader>fg", function()
-	live_grep_from_project_git_root()
-end)
+keymap("n", "<leader>ff", telescope.find_files)
+keymap("n", "<leader>fg", telescope.live_grep)
 keymap("n", "<leader>fm", ":Telescope marks preview=true<cr>")
 keymap("n", "<leader>fb", ":Telescope buffers<cr>")
 keymap("n", "<leader>fh", ":Telescope help_tags preview=true<cr>")
@@ -176,26 +131,12 @@ nnoremap <silent><C-t> :ToggleTerm<CR>
 keymap("n", "<leader>*", ":Ggrep! -Iq <cword> <bar> cclose <bar> Telescope quickfix<cr>")
 keymap("v", "<leader>*", 'y<c-u>:Ggrep! -Iq <c-r>" <bar> cclose <bar> Telescope quickfix<cr>')
 
-vim.cmd([[
-function! GetUniqueSessionName()
-	let l:branch = gitbranch#name()
-	let l:branch = empty(l:branch) ? '' : '-' . l:branch
-	let l:container={}
-	function container.is_git_repo()
-		let _= system("git rev-parse --is-inside-work-tree")
-		return v:shell_error==0
-	endfunction
-	if container.is_git_repo()
-		return substitute(fnamemodify(finddir(".git",".;"),":~:h") . l:branch, '/', '-', 'g')
-	endif
-	return substitute(fnamemodify(getcwd(),":~:h") . l:branch, '/', '-', 'g')
-endfunction
-]])
-
-keymap("n", "<localleader>ss", ":execute 'SSave!'  . GetUniqueSessionName()<cr>")
+keymap("n", "<localleader>ss", function()
+	vim.cmd("SSave! " .. require("utils.git").session_name())
+end, opts)
 keymap("n", "<localleader>st", ":Startify<cr>")
 
--- goto-preview (global; LSP buffer maps live in lspenable.lua)
+-- goto-preview (global; LSP buffer maps live in lsp.on_attach)
 keymap("n", "<leader>gfd", function()
 	require("goto-preview").goto_preview_definition()
 end, opts)

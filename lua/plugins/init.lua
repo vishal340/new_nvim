@@ -2,11 +2,6 @@ return {
 	"nvim-lua/plenary.nvim",
 	"rafamadriz/friendly-snippets",
 	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {},
-	},
-	{
 		"tpope/vim-repeat",
 		event = "InsertEnter",
 	},

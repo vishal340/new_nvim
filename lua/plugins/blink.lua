@@ -11,6 +11,13 @@ return {
 			preset = "default",
 			["<Up>"] = {},
 			["<Down>"] = {},
+			["<CR>"] = {
+				function(cmp)
+					return require("utils.smart_enter").handle(cmp)
+				end,
+				"accept",
+				"fallback",
+			},
 		},
 		appearance = {
 			nerd_font_variant = "mono",

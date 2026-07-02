@@ -2,40 +2,14 @@
 	"fast start": {
 		"prefix": "comp",
 		"body": [
-			"#include<bits/stdc++.h>",
+			"#include <bits/stdc++.h>",
 			"using namespace std;",
 			"",
-			"int main(){",
-			"\treturn 0;",
+			"int main() {",
+			"  $0",
 			"}"
 		],
-		"description": "code snippet for less includes",
+		"description": "competitive programming starter",
 		"scope": "cpp"
-	},
-	"codeforce": {
-	"prefix": "codeforce",
-	"body": [
-		"#include <bits/stdc++.h>",
-		"using namespace std;",
-		"",
-		"using vi = vector<int>;",
-		"",
-		"void solve() {",
-    	"\tint n;",
-    	"\tcin >> n;",
-		"}",
-		"",
-		"int main() {",
-    	"\tios::sync_with_stdio(false);",
-    	"\tcin.tie(0);",
-		"",
-    	"\tint t;",
-    	"\tcin >> t;",
-    	"\twhile (t--) solve();",
-		"\treturn 0;",
-		"}"
-	],
-	"description": "for codeforce fast start",
-	"scope": "cpp"
-}
+	}
 }

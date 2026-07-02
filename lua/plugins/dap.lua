@@ -1,10 +1,3 @@
-local mason_data = vim.fn.stdpath("data") .. "/mason/packages"
-
-local function mason_bin(pkg, ...)
-	local parts = { mason_data, pkg, ... }
-	return table.concat(parts, "/")
-end
-
 return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
@@ -15,6 +8,7 @@ return {
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
+		local mason = require("utils.mason")
 
 		dapui.setup({
 			icons = { expanded = "▾", collapsed = "▸", current_frame = "→" },
@@ -24,8 +18,8 @@ return {
 		local function setup_dap_python()
 			local candidates = {
 				vim.fn.expand("~/.virtualenvs/debugpy/bin/python3"),
-				mason_bin("debugpy", "venv/bin/python"),
-				mason_bin("debugpy", "venv/bin/python3"),
+				mason.packages("debugpy", "venv/bin/python"),
+				mason.packages("debugpy", "venv/bin/python3"),
 			}
 			for _, python in ipairs(candidates) do
 				if vim.fn.executable(python) == 1 then
@@ -38,7 +32,7 @@ return {
 		end
 		setup_dap_python()
 
-		local codelldb = mason_bin("codelldb", "extension/adapter/codelldb")
+		local codelldb = mason.packages("codelldb", "extension/adapter/codelldb")
 		if vim.fn.executable(codelldb) == 1 then
 			dap.adapters.codelldb = {
 				type = "executable",
@@ -90,11 +84,11 @@ return {
 			},
 		}
 
-		local bashdb = mason_bin("bash-debug-adapter", "extension/bashdb_dir/bashdb")
-		local bashdb_lib = mason_bin("bash-debug-adapter", "extension/bashdb_dir")
+		local bashdb = mason.packages("bash-debug-adapter", "extension/bashdb_dir/bashdb")
+		local bashdb_lib = mason.packages("bash-debug-adapter", "extension/bashdb_dir")
 		dap.adapters.bashdb = {
 			type = "executable",
-			command = mason_bin("bash-debug-adapter", "extension/debugAdapter.sh"),
+			command = mason.packages("bash-debug-adapter", "extension/debugAdapter.sh"),
 			name = "bashdb",
 		}
 		dap.configurations.sh = {
@@ -150,7 +144,7 @@ return {
 			},
 		}
 
-		local js_adapter = mason_bin("js-debug-adapter", "js-debug-adapter")
+		local js_adapter = mason.packages("js-debug-adapter", "js-debug-adapter")
 		dap.adapters["pwa-node"] = {
 			type = "server",
 			host = "localhost",
