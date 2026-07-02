@@ -2,13 +2,6 @@ local ls = require("luasnip")
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
-local events = require("luasnip.util.events")
-
-local function detach_snippet()
-	if ls.in_snippet() then
-		ls.unlink_current()
-	end
-end
 
 return {
 	s("codeforce", {
@@ -42,12 +35,5 @@ return {
 			"  return 0;",
 			"}",
 		}),
-	}, {
-		callbacks = {
-			-- Node index 2 is i(1): land here on expand, then leave snippet mode.
-			[2] = {
-				[events.enter] = detach_snippet,
-			},
-		},
 	}),
 }

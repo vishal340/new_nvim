@@ -43,7 +43,21 @@ return {
 					end
 				end,
 			},
-			indent = { enable = true },
+			indent = {
+				enable = true,
+				disable = function(lang, buf)
+					-- Treesitter c/cpp indent queries error on some Neovim builds;
+					-- cindent in after/ftplugin/cpp.lua handles brace indent instead.
+					if lang == "cpp" or lang == "c" then
+						return true
+					end
+					local max_filesize = 1024 * 1024
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then
+						return true
+					end
+				end,
+			},
 			textobjects = {
 				move = {
 					enable = true,
