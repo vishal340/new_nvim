@@ -107,7 +107,13 @@ vim.api.nvim_create_autocmd("User", {
 		map_split(buf_id, "gv", "belowright vertical")
 	end,
 })
-keymap("n", "<leader>e", "<cmd>lua MiniFiles.open()<cr>", opts)
+keymap("n", "<leader>e", function()
+	require("mini.files").open()
+end, vim.tbl_extend("force", opts, { desc = "Mini files" }))
+
+keymap("n", "<leader>E", function()
+	require("nvim-tree.api").tree.toggle()
+end, vim.tbl_extend("force", opts, { desc = "NvimTree toggle" }))
 
 local telescope = require("utils.telescope")
 
@@ -150,9 +156,8 @@ keymap("n", "<leader>gft", function()
 	require("goto-preview").goto_preview_type_definition()
 end, opts)
 
-local tree_api = require("nvim-tree.api")
-
 local git_add = function()
+	local tree_api = require("nvim-tree.api")
 	local node = tree_api.tree.get_node_under_cursor()
 	local gs = node.git_status.file
 
@@ -177,6 +182,7 @@ end
 vim.keymap.set("n", "ga", git_add, opts)
 
 local swap_then_open_tab = function()
+	local tree_api = require("nvim-tree.api")
 	local node = tree_api.tree.get_node_under_cursor()
 	vim.cmd("wincmd l")
 	tree_api.node.open.tab(node)

@@ -10,22 +10,47 @@ return {
 		event = "InsertEnter",
 		opts = { mappings_style = "surround" },
 	},
-	"itchyny/vim-gitbranch",
-	"mhinz/vim-startify",
+	{
+		"itchyny/vim-gitbranch",
+		event = "VeryLazy",
+	},
+	{
+		"mhinz/vim-startify",
+		-- cmd = "Startify",
+	},
 	{
 		"lewis6991/gitsigns.nvim",
-		opts = {},
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		opts = {
+			watch_gitdir = { enable = true, follow_files = false },
+			update_debounce = 200,
+			current_line_blame = false,
+		},
 	},
-	"tpope/vim-fugitive",
+	{
+		"tpope/vim-fugitive",
+		cmd = { "Git", "G", "Gdiffsplit", "Gwrite", "Ggrep", "GMove", "GDelete" },
+	},
 	{
 		"sindrets/diffview.nvim",
+		cmd = {
+			"DiffviewOpen",
+			"DiffviewClose",
+			"DiffviewToggleFiles",
+			"DiffviewFocusFiles",
+			"DiffviewRefresh",
+		},
 	},
-	"mattn/vim-gist",
+	{
+		"mattn/vim-gist",
+		cmd = { "Gist", "GistList" },
+	},
 	"mattn/webapi-vim",
 	"romainl/vim-qf",
 	{
 		"echasnovski/mini.files",
 		version = "*",
+		lazy = true,
 		opts = {},
 	},
 	{

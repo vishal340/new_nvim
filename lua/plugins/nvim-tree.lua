@@ -111,12 +111,4 @@ return {
 			end,
 		})
 	end,
-	keys = {
-		{
-			"<leader>E",
-			mode = { "n" },
-			"<cmd>NvimTreeToggle<cr>",
-			desc = "nvimtree toggle",
-		},
-	},
 }

@@ -1,6 +1,7 @@
 return {
 	"saghen/blink.cmp",
 	version = "1.*",
+	event = { "InsertEnter", "CmdlineEnter" },
 	dependencies = {
 		"L3MON4D3/LuaSnip",
 		"Kaiser-Yang/blink-cmp-avante",
@@ -30,6 +31,13 @@ return {
 		sources = {
 			default = { "lsp", "avante", "path", "snippets", "buffer" },
 			providers = {
+				buffer = {
+					opts = {
+						use_cache = true,
+						max_sync_buffer_size = 10000,
+						max_async_buffer_size = 100000,
+					},
+				},
 				avante = {
 					module = "blink-cmp-avante",
 					name = "Avante",

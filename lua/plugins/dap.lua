@@ -1,5 +1,14 @@
 return {
 	"mfussenegger/nvim-dap",
+	lazy = true,
+	cmd = {
+		"DapContinue",
+		"DapToggleBreakpoint",
+		"DapNew",
+		"DapTerminate",
+		"DapRestart",
+		"DapRunLast",
+	},
 	dependencies = {
 		"nvim-neotest/nvim-nio",
 		"rcarriga/nvim-dap-ui",
